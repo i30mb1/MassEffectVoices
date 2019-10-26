@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name" translatable="false">MEV</string>
+    <string name="javik">Javik</string>
+    <string name="edi">Edi</string>
+    <string name="thane">Thane</string>
+    <string name="legion">Legion</string>
+    <string name="open">Open</string>
+    <string name="file_loaded">File loaded</string>
+    <string name="established">Done!</string>
+    <string name="all_grand_permission">Please Grand Permissions</string>
+    <string name="all_enable">ENABLE</string>
+    <string name="all_enable_permission_from_setting">Enable Permission from setting</string>
+    <string name="all_permission_denied">Permission denied</string>
+    <string name="garrus">Garrus</string>
+    <string-array name="hero_responses_menu">
+        <item>Download</item>
+        <item>Set on ringtone</item>
+    </string-array>
+    <string name="title_legion" translatable="false">module_legion</string>
+    <string name="title_edi" translatable="false">module_edi</string>
+    <string name="title_garrus" translatable="false">module_garrus</string>
+    <string name="title_grunt" translatable="false">module_grunt</string>
+    <string name="title_illusive_man" translatable="false">module_illusive_man</string>
+    <string name="title_jack" translatable="false">module_jack</string>
+    <string name="title_avina" translatable="false">module_avina</string>
+    <string name="title_jacob" translatable="false">module_jacob</string>
+    <string name="title_joker" translatable="false">module_joker</string>
+    <string name="title_kasumi" translatable="false">module_kasumi</string>
+    <string name="title_liara" translatable="false">module_liara</string>
+    <string name="title_miranda" translatable="false">module_miranda</string>
+    <string name="title_mordin" translatable="false">module_mordin</string>
+    <string name="title_zaeed" translatable="false">module_zaeed</string>
+    <string name="title_vega" translatable="false">module_vega</string>
+    <string name="title_thane" translatable="false">module_thane</string>
+    <string name="title_tali" translatable="false">module_tali</string>
+    <string name="title_samara" translatable="false">module_samara</string>
+    <string name="title_reaper" translatable="false">module_reaper</string>
+    <string name="title_javik" translatable="false">module_javik</string>
+    <string name="modules_fragment_add_module">add module</string>
+    <string name="dialog_delete_module">delete module?</string>
+    <string name="n7" translatable="false">n7</string>
+    <string name="dialog_rate_app_summary">Rate this app in Google Play and leave the comment that this is the your favorite application on the citadel</string>
+    <string name="dialog_rate_app_title">Mankind need your help!</string>
+    <string name="network_error" translatable="false">network_error</string>
+    <string name="downloading">downloading</string>
+    <string name="installing">installing</string>
+    <string name="installed">installed</string>
+    <string name="delete_when_ready">will be deleted as soon as possible</string>
+    <string name="dialog_donate_title">Fund for your future</string>
+    <string name="dialog_donate_summary">Show your support! Donate in element zero and 1 pint of beer for creator!</string>
+    <string name="deleted" translatable="false">will be deleted when system needs space</string>
+    <string name="require" translatable="false">requires_user_confirmation</string>
+    <string name="title_dlc_citadel" translatable="false">dlc_citadel</string>
+</resources>

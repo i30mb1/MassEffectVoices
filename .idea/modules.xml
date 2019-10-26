@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/MassEffectVoices.iml" filepath="$PROJECT_DIR$/MassEffectVoices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/avina/avina.iml" filepath="$PROJECT_DIR$/avina/avina.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" filepath="$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/edi/edi.iml" filepath="$PROJECT_DIR$/edi/edi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/garrus/garrus.iml" filepath="$PROJECT_DIR$/garrus/garrus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/grunt/grunt.iml" filepath="$PROJECT_DIR$/grunt/grunt.iml" />
+      <module fileurl="file://$PROJECT_DIR$/illusive_man/illusive_man.iml" filepath="$PROJECT_DIR$/illusive_man/illusive_man.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jack/jack.iml" filepath="$PROJECT_DIR$/jack/jack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jacob/jacob.iml" filepath="$PROJECT_DIR$/jacob/jacob.iml" />
+      <module fileurl="file://$PROJECT_DIR$/javik/javik.iml" filepath="$PROJECT_DIR$/javik/javik.iml" />
+      <module fileurl="file://$PROJECT_DIR$/joker/joker.iml" filepath="$PROJECT_DIR$/joker/joker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kasumi/kasumi.iml" filepath="$PROJECT_DIR$/kasumi/kasumi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/legion/legion.iml" filepath="$PROJECT_DIR$/legion/legion.iml" />
+      <module fileurl="file://$PROJECT_DIR$/liara/liara.iml" filepath="$PROJECT_DIR$/liara/liara.iml" />
+      <module fileurl="file://$PROJECT_DIR$/miranda/miranda.iml" filepath="$PROJECT_DIR$/miranda/miranda.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mordin/mordin.iml" filepath="$PROJECT_DIR$/mordin/mordin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/reaper/reaper.iml" filepath="$PROJECT_DIR$/reaper/reaper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/samara/samara.iml" filepath="$PROJECT_DIR$/samara/samara.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tali/tali.iml" filepath="$PROJECT_DIR$/tali/tali.iml" />
+      <module fileurl="file://$PROJECT_DIR$/thane/thane.iml" filepath="$PROJECT_DIR$/thane/thane.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vega/vega.iml" filepath="$PROJECT_DIR$/vega/vega.iml" />
+      <module fileurl="file://$PROJECT_DIR$/zaeed/zaeed.iml" filepath="$PROJECT_DIR$/zaeed/zaeed.iml" />
+    </modules>
+  </component>
+</project>

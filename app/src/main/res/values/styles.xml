@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- ActionMode -->
+        <item name="actionModeStyle">@style/MyActionModeStyle</item>
+        <!-- Поверх toolbara или под ним -->
+        <item name="windowActionModeOverlay">true</item>
+        <!--<item name="actionModeCloseDrawable">@drawable/n7</item>-->
+        <item name="actionMenuTextColor">@color/textColor</item>
+    </style>
+
+    <style name="DialogTheme">
+        <item name="android:windowEnterAnimation">@anim/slide_from_left</item>
+        <item name="android:windowExitAnimation">@anim/slide_to_right</item>
+    </style>
+
+    <style name="MyActionModeStyle" parent="Widget.AppCompat.ActionMode">
+        <item name="background">?attr/actionModeBackground</item>
+        <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
+        <item name="height">?attr/actionBarSize</item>
+    </style>
+</resources>

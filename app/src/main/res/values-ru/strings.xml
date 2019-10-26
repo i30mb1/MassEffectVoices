@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="hero_responses_menu">
+        <item>Скачать</item>
+        <item>Установить на уведомления</item>
+    </string-array>
+    <string name="established">Готово!</string>
+    <string name="open">Открыть</string>
+    <string name="file_loaded">Файл загружен</string>
+    <string name="javik">Javik</string>
+    <string name="edi">Edi</string>
+    <string name="thane">Thane</string>
+    <string name="legion">Legion</string>
+    <string name="garrus">Garrus</string>
+    <string name="all_grand_permission">Дайте разрешение</string>
+    <string name="all_enable">ДА</string>
+    <string name="all_enable_permission_from_setting">Дайте разрешение из настроек</string>
+    <string name="all_permission_denied">Отклоненно</string>
+    <string name="modules_fragment_add_module">добавить модуль</string>
+    <string name="dialog_rate_app_title">Человечеству нужна твоя помощь!</string>
+    <string name="dialog_rate_app_summary">Оцени приложение в Google Play и напиши что это лучшее приложение на цитодели</string>
+    <string name="dialog_delete_module">удалить модуль?</string>
+    <string name="downloading">скачиваем</string>
+    <string name="installing">устанавливаем</string>
+    <string name="installed">установлен</string>
+    <string name="delete_when_ready">будет удалён как можно скорее</string>
+    <string name="dialog_donate_title">Вложись в будущее</string>
+    <string name="dialog_donate_summary">Докажи свою поддержку! Задонать в нулевой элемент и на кружку пива создателю!</string>
+</resources>

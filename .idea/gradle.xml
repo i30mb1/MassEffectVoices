@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="distributionType" value="DEFAULT_WRAPPED" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/avina" />
+            <option value="$PROJECT_DIR$/dlc_citadel" />
+            <option value="$PROJECT_DIR$/edi" />
+            <option value="$PROJECT_DIR$/garrus" />
+            <option value="$PROJECT_DIR$/grunt" />
+            <option value="$PROJECT_DIR$/illusive_man" />
+            <option value="$PROJECT_DIR$/jack" />
+            <option value="$PROJECT_DIR$/jacob" />
+            <option value="$PROJECT_DIR$/javik" />
+            <option value="$PROJECT_DIR$/joker" />
+            <option value="$PROJECT_DIR$/kasumi" />
+            <option value="$PROJECT_DIR$/legion" />
+            <option value="$PROJECT_DIR$/liara" />
+            <option value="$PROJECT_DIR$/miranda" />
+            <option value="$PROJECT_DIR$/mordin" />
+            <option value="$PROJECT_DIR$/reaper" />
+            <option value="$PROJECT_DIR$/samara" />
+            <option value="$PROJECT_DIR$/tali" />
+            <option value="$PROJECT_DIR$/thane" />
+            <option value="$PROJECT_DIR$/vega" />
+            <option value="$PROJECT_DIR$/zaeed" />
+          </set>
+        </option>
+        <option name="resolveModulePerSourceSet" value="false" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>
