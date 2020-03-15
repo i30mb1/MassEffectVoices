@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import n7.mev.R
 import n7.mev.databinding.SoundItemBinding
 
-class SoundPagedListAdapter internal constructor(private val mainViewModel: MainViewModel?) : PagedListAdapter<SoundModel?, SoundPagedListAdapter.ViewHolder>(diffCallback) {
+class SoundPagedListAdapter internal constructor(private val mainViewModel: MainViewModel?) : PagedListAdapter<SoundModel, SoundPagedListAdapter.ViewHolder>(diffCallback) {
     private var inflater: LayoutInflater? = null
     private var maxPosition = 0
     private fun setAnimation(itemView: View, position: Int) {

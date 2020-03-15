@@ -3,17 +3,18 @@ package n7.mev.main
 import androidx.paging.DataSource
 
 class SoundSourceFactory(private val soundStorage: SoundStorage) : DataSource.Factory<Int, SoundModel>() {
-    private var soundDataSource: SoundDataSource? = null
+    private lateinit var soundDataSource: SoundDataSource
+
     override fun create(): DataSource<Int, SoundModel> {
         soundDataSource = SoundDataSource(soundStorage)
         return soundDataSource
     }
 
     init {
-        soundStorage.setInvalidate {
-            if (soundDataSource != null) {
-                soundDataSource!!.invalidate()
+        soundStorage.setListener(object : Invalidate {
+            override fun invalidate() {
+                soundDataSource.invalidate()
             }
-        }
+        })
     }
 }

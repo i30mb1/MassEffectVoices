@@ -31,6 +31,12 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (savedInstanceState != null) {
+            lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
+            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)
+        } else {
+            moduleName = requireActivity().intent.getStringExtra(ModulesFragment.Companion.MODULE_NAME)
+        }
         binding = MainFragmentBinding.bind(view).apply {
             this.viewModel = mViewModel
         }
@@ -38,13 +44,10 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (savedInstanceState != null) {
-            lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
-            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)
-        } else {
-            moduleName = requireActivity().intent.getStringExtra(ModulesFragment.Companion.MODULE_NAME)
-        }
-        mViewModel.createPagedListData(lastVisibleItem).observe(viewLifecycleOwner, Observer { soundModels -> adapter.submitList(soundModels) })
+
+        mViewModel.createPagedListData(lastVisibleItem).observe(viewLifecycleOwner, Observer {
+            soundModels -> adapter.submitList(soundModels)
+        })
         binding.viewModel = mViewModel
         binding.executePendingBindings()
 

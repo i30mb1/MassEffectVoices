@@ -48,7 +48,7 @@ class SoundStorage(private val application: Application, private val moduleName:
         return Pair(sounds, startPosition)
     }
 
-    fun setInvalidate(invalidate: Invalidate?) {
+    fun setListener(invalidate: Invalidate) {
         this.invalidate = invalidate
     }
 
