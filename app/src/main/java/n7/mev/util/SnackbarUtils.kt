@@ -13,31 +13,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package n7.mev.util
 
-package n7.mev.util;
-
-import android.view.View;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.View
+import com.google.android.material.snackbar.Snackbar
 
 /**
  * Provides a method to show a Snackbar.
  */
-public class SnackbarUtils {
-
-    public static void showSnackbar(View v, String snackbarText) {
+object SnackbarUtils {
+    fun showSnackbar(v: View?, snackbarText: String?) {
         if (v == null || snackbarText == null) {
-            return;
+            return
         }
-//        Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).setAnchorView(viewAbove).show();
-        Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).show();
+        //        Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).setAnchorView(viewAbove).show();
+        Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).show()
     }
 
-    public static void showSnackbarWithAction(View v, String snackbarText, String actionText, View.OnClickListener actionClick) {
+    fun showSnackbarWithAction(v: View?, snackbarText: String?, actionText: String?, actionClick: View.OnClickListener?) {
         if (v == null || snackbarText == null) {
-            return;
+            return
         }
-        Snackbar snackbar = Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).setAction(actionText, actionClick);
-        snackbar.show();
+        val snackbar = Snackbar.make(v, snackbarText, Snackbar.LENGTH_LONG).setAction(actionText, actionClick)
+        snackbar.show()
     }
 }

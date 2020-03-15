@@ -12,39 +12,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package n7.mev.purchaseUtils;
+package n7.mev.purchaseUtils
 
 /**
  * Exception thrown when something went wrong with in-app billing.
  * An IabException has an associated IabResult (an error).
  * To get the IAB result that caused this exception to be thrown,
- * call {@link #getResult()}.
+ * call [.getResult].
  */
-class IabException extends Exception {
-    private final IabResult mResult;
-
-    private IabException(IabResult r) {
-        this(r, null);
-    }
-
-    public IabException(int response, String message) {
-        this(new IabResult(response, message));
-    }
-
-    private IabException(IabResult r, Exception cause) {
-        super(r.getMessage(), cause);
-        mResult = r;
-    }
-
-    public IabException(int response, String message, Exception cause) {
-        this(new IabResult(response, message), cause);
-    }
-
+internal class IabException private constructor(val result: IabResult, cause: Exception? = null) : Exception(result.message, cause) {
     /**
      * Returns the IAB result (error) that this exception signals.
      */
-    public IabResult getResult() {
-        return mResult;
-    }
+
+    constructor(response: Int, message: String?) : this(IabResult(response, message)) {}
+    constructor(response: Int, message: String?, cause: Exception?) : this(IabResult(response, message), cause) {}
+
 }

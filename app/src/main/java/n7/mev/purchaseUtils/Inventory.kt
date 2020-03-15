@@ -12,51 +12,44 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package n7.mev.purchaseUtils
 
-package n7.mev.purchaseUtils;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*
 
 /**
  * Represents a block of information about in-app items.
- * An Inventory is returned by such methods as {@link IabHelper#queryInventory}.
+ * An Inventory is returned by such methods as [IabHelper.queryInventory].
  */
-public class Inventory {
-    private final Map<String, SkuDetails> mSkuMap = new HashMap<>();
-    private final Map<String, Purchase> mPurchaseMap = new HashMap<>();
-
-    Inventory() {
-    }
+class Inventory internal constructor() {
+    private val mSkuMap: MutableMap<String?, SkuDetails> = HashMap()
+    private val mPurchaseMap: MutableMap<String?, Purchase> = HashMap()
 
     /**
      * Returns the listing details for an in-app product.
      */
-    public SkuDetails getSkuDetails(String sku) {
-        return mSkuMap.get(sku);
+    fun getSkuDetails(sku: String?): SkuDetails? {
+        return mSkuMap[sku]
     }
 
     /**
      * Returns purchase information for a given product, or null if there is no purchase.
      */
-    public Purchase getPurchase(String sku) {
-        return mPurchaseMap.get(sku);
+    fun getPurchase(sku: String?): Purchase? {
+        return mPurchaseMap[sku]
     }
 
     /**
      * Returns whether or not there exists a purchase of the given product.
      */
-    public boolean hasPurchase(String sku) {
-        return mPurchaseMap.containsKey(sku);
+    fun hasPurchase(sku: String?): Boolean {
+        return mPurchaseMap.containsKey(sku)
     }
 
     /**
      * Return whether or not details about the given product are available.
      */
-    public boolean hasDetails(String sku) {
-        return mSkuMap.containsKey(sku);
+    fun hasDetails(sku: String?): Boolean {
+        return mSkuMap.containsKey(sku)
     }
 
     /**
@@ -67,40 +60,38 @@ public class Inventory {
      * purchase data from the Inventory you already have is quicker than querying for
      * a new Inventory.
      */
-    public void erasePurchase(String sku) {
-        mPurchaseMap.remove(sku);
+    fun erasePurchase(sku: String?) {
+        mPurchaseMap.remove(sku)
     }
 
     /**
      * Returns a list of all owned product IDs.
      */
-    List<String> getAllOwnedSkus() {
-        return new ArrayList<>(mPurchaseMap.keySet());
-    }
+    val allOwnedSkus: List<String?>
+        get() = ArrayList(mPurchaseMap.keys)
 
     /**
      * Returns a list of all owned product IDs of a given type
      */
-    List<String> getAllOwnedSkus(String itemType) {
-        List<String> result = new ArrayList<>();
-        for (Purchase p : mPurchaseMap.values()) {
-            if (p.getItemType().equals(itemType)) result.add(p.getSku());
+    fun getAllOwnedSkus(itemType: String): List<String?> {
+        val result: MutableList<String?> = ArrayList()
+        for (p in mPurchaseMap.values) {
+            if (p.itemType == itemType) result.add(p.sku)
         }
-        return result;
+        return result
     }
 
     /**
      * Returns a list of all purchases.
      */
-    List<Purchase> getAllPurchases() {
-        return new ArrayList<>(mPurchaseMap.values());
+    val allPurchases: List<Purchase>
+        get() = ArrayList(mPurchaseMap.values)
+
+    fun addSkuDetails(d: SkuDetails) {
+        mSkuMap[d.sku] = d
     }
 
-    void addSkuDetails(SkuDetails d) {
-        mSkuMap.put(d.getSku(), d);
-    }
-
-    void addPurchase(Purchase p) {
-        mPurchaseMap.put(p.getSku(), p);
+    fun addPurchase(p: Purchase) {
+        mPurchaseMap[p.sku] = p
     }
 }
