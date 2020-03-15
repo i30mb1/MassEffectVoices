@@ -21,7 +21,7 @@ object CustomDataBinding {
 
     private val animation: Animation
         private get() {
-            val anim = RotateAnimation(0, 360, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+            val anim = RotateAnimation(0f, 360f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
             anim.duration = 1000
             anim.repeatCount = TranslateAnimation.INFINITE
             return anim

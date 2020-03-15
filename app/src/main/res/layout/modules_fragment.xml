@@ -31,7 +31,6 @@
                 <ImageView
                     android:id="@+id/iv_modules_fragment_n7"
                     android:transitionName="iv2"
-                    android:onClick="@{()->fragment.showDialogDonate()}"
                     android:onLongClick="@{fragment::test}"
                     animateWhenLoading="@{viewModel.isLoading}"
                     android:layout_width="50dp"

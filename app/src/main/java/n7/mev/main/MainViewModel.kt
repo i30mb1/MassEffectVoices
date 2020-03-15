@@ -28,19 +28,20 @@ import java.io.*
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class MainViewModel(private val application: Application, moduleName: String?) : AndroidViewModel(application) {
+class MainViewModel(application: Application, moduleName: String) : AndroidViewModel(application) {
     val grandSettingEvent = SingleLiveEvent<Void?>()
     val startActivityForResultSaveFile = MutableLiveData<Intent?>()
     val fileToSaveFile = MutableLiveData<ByteArray?>()
     val grandSPermission = SingleLiveEvent<Void?>()
     val showSnackBarFolder = SingleLiveEvent<Void?>()
+
     @kotlin.jvm.JvmField
     var isLoading = ObservableBoolean(true)
     private var lastPlaying: ObservableBoolean? = null
     private val soundStorage: SoundStorage
     private val diskIO: Executor
     private var mediaPlayer: MediaPlayer? = null
-    fun createPagedListData(lastVisibleItem: Int): LiveData<PagedList<SoundModel>> {
+    fun createPagedListData(lastVisibleItem: Int): LiveData<PagedList<SoundModel?>> {
         val soundSourceFactory = SoundSourceFactory(soundStorage)
         val config = PagedList.Config.Builder()
                 .setEnablePlaceholders(false)
@@ -58,14 +59,10 @@ class MainViewModel(private val application: Application, moduleName: String?) :
     val fileSaveFile: LiveData<ByteArray?>
         get() = fileToSaveFile
 
-    fun handleActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == MainFragment.Companion.REQUESTED_PERMISSION && resultCode == Activity.RESULT_OK) {
-        }
-    }
 
     private fun canWriteInSystem(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Settings.System.canWrite(application)) {
+            if (Settings.System.canWrite(getApplication())) {
                 true
             } else {
                 grandSettingEvent.call()
@@ -75,7 +72,7 @@ class MainViewModel(private val application: Application, moduleName: String?) :
     }
 
     private fun canWriteExternalStorage(): Boolean {
-        return if (ContextCompat.checkSelfPermission(application, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        return if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             grandSPermission.call()
             false
         } else {
@@ -97,7 +94,7 @@ class MainViewModel(private val application: Application, moduleName: String?) :
                     //                            callForShowSnackbarForFolder();
                 }
                 1 -> if (canWriteExternalStorage() && canWriteInSystem()) {
-                    setAsRingtone(application, soundModel)
+                    setAsRingtone(getApplication(), soundModel)
                 }
             }
             dialog.dismiss()
@@ -172,10 +169,10 @@ class MainViewModel(private val application: Application, moduleName: String?) :
             val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
             val contentUri = Uri.fromFile(myFile)
             scanIntent.data = contentUri
-            application.sendBroadcast(scanIntent)
+            getApplication<Application>().sendBroadcast(scanIntent)
         } else {
             val intent = Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()))
-            application.sendBroadcast(intent)
+            getApplication<Application>().sendBroadcast(intent)
         }
     }
 

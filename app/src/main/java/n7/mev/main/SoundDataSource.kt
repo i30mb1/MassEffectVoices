@@ -8,15 +8,15 @@ class SoundDataSource(private val soundStorage: SoundStorage) : PositionalDataSo
         val pair = soundStorage.getData(initialKey, params.requestedLoadSize)
         val totalCount = soundStorage.size
         if (params.placeholdersEnabled) {
-            callback.onResult(pair!!.first!!, pair.second!!, totalCount)
+            callback.onResult(pair.first, pair.second, totalCount)
         } else {
-            callback.onResult(pair!!.first!!, pair.second!!)
+            callback.onResult(pair.first, pair.second)
         }
     }
 
     override fun loadRange(params: LoadRangeParams, callback: LoadRangeCallback<SoundModel?>) {
         val pair = soundStorage.getData(params.startPosition, params.loadSize)
-        callback.onResult(pair!!.first!!)
+        callback.onResult(pair.first)
     }
 
 }

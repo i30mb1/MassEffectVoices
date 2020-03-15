@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -22,20 +21,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.snackbar.Snackbar
 import n7.mev.R
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
 import n7.mev.main.MainActivity
-import n7.mev.purchaseUtils.IabHelper
-import n7.mev.purchaseUtils.IabHelper.*
 import n7.mev.util.SnackbarUtils
 import java.text.SimpleDateFormat
 import java.util.*
 
 class ModulesFragment : Fragment(R.layout.modules_fragment) {
-    private val sku_beer = "once_per_month_subscription"
     private val viewModel: ModulesViewModel by viewModels()
     private lateinit var binding: ModulesFragmentBinding
     private var scaleDown: ObjectAnimator? = null
@@ -89,7 +84,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun openActivityFromModule() {
-        if (viewModel!!.modulesCanBeInstall().contains("avina")) {
+        if (viewModel.modulesCanBeInstall().contains("avina")) {
             return
         }
         val packageName = "n7.mev.avina"
@@ -100,15 +95,15 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     fun showAvailableModules(view: View?) {
-        val bottomSheetDialog = BottomSheetDialog(context!!)
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
         val binding: BottomDrawerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottom_drawer, null, false)
         bottomSheetDialog.setContentView(binding.root)
-        for (module in viewModel!!.modulesCanBeInstall()) {
+        for (module in viewModel.modulesCanBeInstall()) {
             binding.navBottomDrawer.menu.add(module)
         }
         binding.navBottomDrawer.setNavigationItemSelectedListener { item ->
             bottomSheetDialog.dismiss()
-            viewModel!!.installModule(item.title.toString())
+            viewModel.installModule(item.title.toString())
             true
         }
         bottomSheetDialog.show()
@@ -116,13 +111,14 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
     private fun setupAnimation() {
         scaleDown = ObjectAnimator.ofPropertyValuesHolder(
-                binding!!.ivModulesFragmentN7,
+                binding.ivModulesFragmentN7,
                 PropertyValuesHolder.ofFloat(View.SCALE_X, 0.8f),
                 PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.8f)
-        )
-        scaleDown.setDuration(1000L)
-        scaleDown.setRepeatCount(ObjectAnimator.INFINITE)
-        scaleDown.setRepeatMode(ObjectAnimator.REVERSE)
+        ).apply {
+            duration = 1000L
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.RESTART
+        }
     }
 
     override fun onPause() {
@@ -140,8 +136,14 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupListeners() {
-        viewModel!!.showSnackbar.observe(this, Observer { snackbarMessageResourceId -> SnackbarUtils.showSnackbar(view, getString(snackbarMessageResourceId!!)) })
-        viewModel!!.startConfirmationDialog.observe(this, Observer { viewModel!!.startConfirmationDialog(activity) })
+        viewModel.showSnackbar.observe(viewLifecycleOwner, Observer { snackbarMessageResourceId ->
+            snackbarMessageResourceId?.let {
+                SnackbarUtils.showSnackbar(view, getString(snackbarMessageResourceId))
+            }
+        })
+        viewModel.startConfirmationDialog.observe(viewLifecycleOwner, Observer {
+            viewModel.startConfirmationDialog(activity)
+        })
     }
 
     private fun checkDayForDialogProm() {
@@ -161,10 +163,10 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     private fun showDialogRate() {
         if (context == null) return
         val binding: DialogRateAppBinding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_rate_app, null, false)
-        val builder = AlertDialog.Builder(context!!)
+        val builder = AlertDialog.Builder(requireContext())
         builder.setView(binding.root)
         val dialog = builder.create()
-        dialog.window.attributes.windowAnimations = R.style.DialogTheme
+        dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
         dialog.show()
         binding.bDialogRateApp.setOnClickListener {
             openAppStore()
@@ -172,86 +174,24 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         }
     }
 
-    fun showDialogDonate() {
-        if (context == null) return
-        val binding: DialogRateAppBinding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_rate_app, null, false)
-        val builder = AlertDialog.Builder(context!!)
-        builder.setView(binding.root)
-        binding.tvDialogRateAppTitle.setText(R.string.dialog_donate_title)
-        binding.tvDialogRateAppSummary.setText(R.string.dialog_donate_summary)
-        val dialog = builder.create()
-        dialog.window.attributes.windowAnimations = R.style.DialogTheme
-        dialog.show()
-        binding.bDialogRateApp.setOnClickListener {
-            setupPurchaseHelper()
-            dialog.dismiss()
-        }
-    }
-
-    private fun setupPurchaseHelper() {
-        //todo key
-        val base64EncodedPublicKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyr808/wY0nXtrh7WEp7ZXqkdZTcwgIaEfKvqKtjkR0KJm/O0B6mLAOn2lNYr8j/mrxprxUk1eLHJtUH2NGzCJzs40AdG5XL/2X34wQpKfLgHj95yybkOPQH7jtHdG15+jwkmT4X80icUpKfoEbHOLzwzQyUn97IdR4X2pQpbI4v5Xy6oYvBLtvcAZoYXUoTlUua+8N8ZGLFqTNlWeBk7rToC7jtXKEMDWYucjoMs2uyrZ2x04+/KFwakDH12MMsNmT1Xuo5Vx6gwZ9QflT6cMd5y0xQlXlGoWeeFUIEIMfyV4s1BSPs3LiYSgNrYLLJ24pznoPtW26Ro4xRpOV4cyQIDAQAB"
-        val mHelper = IabHelper(activity, base64EncodedPublicKey)
-        mHelper.startSetup { result ->
-            if (result.isSuccess) {
-                buy(mHelper)
-            }
-        }
-    }
-
-    private fun buy(mHelper: IabHelper?) {
-        try {
-            val requestCodePurchase = 1
-            mHelper!!.launchPurchaseFlow(activity, sku_beer, requestCodePurchase, OnIabPurchaseFinishedListener { result, info ->
-                if (mHelper == null) return@OnIabPurchaseFinishedListener
-                if (result.isFailure) return@OnIabPurchaseFinishedListener
-                checkInventor(mHelper)
-            })
-        } catch (e: IabAsyncInProgressException) {
-            e.printStackTrace()
-        }
-    }
-
-    private fun checkInventor(mHelper: IabHelper) {
-        try {
-            mHelper.queryInventoryAsync(QueryInventoryFinishedListener { result, inv ->
-                if (result!!.isFailure) return@QueryInventoryFinishedListener
-                if (inv!!.hasPurchase(sku_beer)) {
-                    try {
-                        mHelper.consumeAsync(inv.getPurchase(sku_beer)) { purchase, result ->
-                            Snackbar.make(binding!!.root, "NICE", Snackbar.LENGTH_LONG).show()
-                            MediaPlayer.create(context, R.raw.money).start()
-                        }
-                    } catch (e: IabAsyncInProgressException) {
-                        e.printStackTrace()
-                    }
-                }
-            })
-        } catch (e: IabAsyncInProgressException) {
-            e.printStackTrace()
-        }
-    }
-
     private fun openAppStore() {
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + context!!.packageName)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + requireActivity().packageName)))
         } catch (a: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + context!!.packageName)))
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + requireActivity().packageName)))
         }
     }
 
     private fun setupToolbar() {
-        (activity as ModulesActivity?)!!.setSupportActionBar(binding!!.toolbar)
-        activity!!.title = ""
+        (activity as ModulesActivity?)!!.setSupportActionBar(binding.toolbar)
+        requireActivity().title = ""
     }
 
     fun openModule(view: View?, moduleName: String?) {
         val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(MODULE_NAME, moduleName)
         if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity!!,
-                    Pair(binding!!.ivModulesFragmentN7, "iv2") //                    new Pair<View, String>(view.findViewById(R.id.iv_modules_item_icon), "iv")
-            )
+            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), Pair(binding.ivModulesFragmentN7, "iv2"))
             startActivity(intent, options.toBundle())
         } else {
             startActivity(intent)
@@ -260,25 +200,27 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
     fun showDialogDeleteModule(moduleName: String?): Boolean {
         if (context != null) {
-            val builder = AlertDialog.Builder(context!!)
+            val builder = AlertDialog.Builder(requireContext())
             builder.setMessage(getString(R.string.dialog_delete_module))
             builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                viewModel!!.deleteModule(moduleName)
+                viewModel.deleteModule(moduleName)
                 dialog.dismiss()
             }
             builder.setNegativeButton(android.R.string.no) { dialog, which -> dialog.dismiss() }
             val dialog = builder.create()
-            dialog.window.attributes.windowAnimations = R.style.DialogTheme
+            dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
             dialog.show()
         }
         return true
     }
 
     private fun setupPagedListAdapter() {
-        binding!!.rvModulesFragment.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+        binding.rvModulesFragment.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         val adapter = ModulesPagedListAdapter(this)
-        binding!!.rvModulesFragment.adapter = adapter
-        viewModel!!.availableModules.observe(this, Observer { strings -> adapter.addAll(strings) })
+        binding.rvModulesFragment.adapter = adapter
+        viewModel.availableModules.observe(viewLifecycleOwner, Observer { strings ->
+            adapter.addAll(strings)
+        })
     }
 
     companion object {

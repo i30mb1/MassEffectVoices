@@ -9,28 +9,41 @@ import android.widget.Toast
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallErrorCode
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import n7.mev.R
-import n7.mev.util.SnackbarMessage
 import java.util.*
 
+fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
+    this.value = value
+    this.value = null
+}
+
 class ModulesViewModel(application: Application) : AndroidViewModel(application), SplitInstallStateUpdatedListener {
-    val showSnackbar = SnackbarMessage()
-    val startConfirmationDialog = SnackbarMessage()
+
+    private val _showSnackbar = MutableLiveData<Int?>()
+    val showSnackbar: LiveData<Int?> = _showSnackbar
+
+    private val _startConfirmationDialog = MutableLiveData<Boolean?>()
+    val startConfirmationDialog: LiveData<Boolean?> = _startConfirmationDialog
     val splitInstallManager: SplitInstallManager
+
     @kotlin.jvm.JvmField
     var showButtonAddModule = ObservableBoolean(true)
     var availableModules = MutableLiveData<Set<String>>()
+
     @kotlin.jvm.JvmField
     var isLoading = ObservableBoolean(false)
+
     @kotlin.jvm.JvmField
     var pbMaxValue = ObservableInt()
+
     @kotlin.jvm.JvmField
     var pbProgressValue = ObservableInt()
-    var splitInstallSessionState = MutableLiveData<SplitInstallSessionState>()
+    private var splitInstallSessionState = MutableLiveData<SplitInstallSessionState>()
     private var context: Context
     private val allModules = HashSet(Arrays.asList(
             "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "avina",
@@ -57,8 +70,8 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     fun deleteModule(moduleName: String?) {
         splitInstallManager.deferredUninstall(listOf(moduleName))
-                .addOnSuccessListener { showSnackbar.value = R.string.deleted }
-        showSnackbar.value = R.string.delete_when_ready
+                .addOnSuccessListener { _showSnackbar.value = R.string.deleted }
+        _showSnackbar.value = R.string.delete_when_ready
         updateModulesInSystem()
     }
 
@@ -80,12 +93,12 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
                 .addOnFailureListener { e ->
                     when ((e as SplitInstallException).errorCode) {
                         SplitInstallErrorCode.NETWORK_ERROR -> {
-                            showSnackbar.value = R.string.network_error
+                            _showSnackbar.value = R.string.network_error
                             isLoading.set(false)
                             showButtonAddModule.set(true)
                         }
                         else -> {
-                            showSnackbar.value = R.string.network_error
+                            _showSnackbar.value = R.string.network_error
                             isLoading.set(false)
                             showButtonAddModule.set(true)
                         }
@@ -112,9 +125,9 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         val status = splitInstallSessionState.status()
         when (status) {
             SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                showSnackbar.value = R.string.require
+                _showSnackbar.setSingleEvent(R.string.require)
                 this.splitInstallSessionState.value = splitInstallSessionState
-                startConfirmationDialog.call()
+                _startConfirmationDialog.setSingleEvent(true)
             }
             SplitInstallSessionStatus.DOWNLOADING -> {
                 displayLoadingState(splitInstallSessionState)
@@ -124,12 +137,12 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
             }
             SplitInstallSessionStatus.INSTALLING -> {
                 displayLoadingState(splitInstallSessionState)
-                showSnackbar.value = R.string.installing
+                _showSnackbar.setSingleEvent(R.string.installing)
                 isLoading.set(true)
                 showButtonAddModule.set(false)
             }
             SplitInstallSessionStatus.INSTALLED -> {
-                showSnackbar.value = R.string.installed
+                _showSnackbar.setSingleEvent(R.string.installed)
                 isLoading.set(false)
                 showButtonAddModule.set(true)
                 updateModulesInSystem()
