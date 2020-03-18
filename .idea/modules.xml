@@ -28,6 +28,7 @@
       <module fileurl="file://$PROJECT_DIR$/zaeed/MassEffectVoices-zaeed.iml" filepath="$PROJECT_DIR$/zaeed/MassEffectVoices-zaeed.iml" group="MassEffectVoices/zaeed" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/avina/avina.iml" filepath="$PROJECT_DIR$/avina/avina.iml" />
+      <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" group="MassEffectVoices/buildSrc" />
       <module fileurl="file://$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" filepath="$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" />
       <module fileurl="file://$PROJECT_DIR$/edi/edi.iml" filepath="$PROJECT_DIR$/edi/edi.iml" />
       <module fileurl="file://$PROJECT_DIR$/garrus/garrus.iml" filepath="$PROJECT_DIR$/garrus/garrus.iml" />
