@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowLightStatusBar">true</item>
 
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+
         <!-- ActionMode -->
         <item name="actionModeStyle">@style/MyActionModeStyle</item>
         <!-- Поверх toolbara или под ним -->
@@ -17,8 +20,6 @@
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowBackground">@android:color/transparent</item>

@@ -16,7 +16,7 @@ import n7.mev.modules.ModulesActivity
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        const val DELAY_START_ACTIVITY = 2000L
+        const val DELAY_START_ACTIVITY = 1000L
         const val DELAY_FADE_ANIMATION = 600L
         const val FADE_DURATION_ANIMATION = 1000L
     }
