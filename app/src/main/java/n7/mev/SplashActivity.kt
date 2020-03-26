@@ -16,9 +16,9 @@ import n7.mev.modules.ModulesActivity
 class SplashActivity : AppCompatActivity() {
 
     companion object {
-        const val DELAY_BEFORE_FINISH_ACTIVITY = 2000L
-        const val START_DELAY_ANIMATION = 600L
-        const val DURATION_ANIMATION = 1000L
+        const val DELAY_START_ACTIVITY = 2000L
+        const val DELAY_FADE_ANIMATION = 600L
+        const val FADE_DURATION_ANIMATION = 1000L
     }
 
     private var fadeIn = false
@@ -46,7 +46,7 @@ class SplashActivity : AppCompatActivity() {
             window.decorView.run {
                 alpha = 0f
                 animate().cancel()
-                animate().setStartDelay(START_DELAY_ANIMATION).withEndAction { startAnimateText() }.alpha(1f).duration = DURATION_ANIMATION
+                animate().setStartDelay(DELAY_FADE_ANIMATION).withEndAction { startAnimateText() }.alpha(1f).duration = FADE_DURATION_ANIMATION
             }
             fadeIn = false
         }
@@ -56,7 +56,7 @@ class SplashActivity : AppCompatActivity() {
         lifecycleScope.launch {
             TransitionManager.beginDelayedTransition(binding.root as ViewGroup)
             binding.tvLogo.visibility = View.VISIBLE
-            delay(DELAY_BEFORE_FINISH_ACTIVITY)
+            delay(DELAY_START_ACTIVITY)
             finish()
             startActivity(Intent(this@SplashActivity, ModulesActivity::class.java))
         }
