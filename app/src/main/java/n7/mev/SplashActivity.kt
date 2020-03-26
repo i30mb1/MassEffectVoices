@@ -11,7 +11,6 @@ import androidx.transition.TransitionManager
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import n7.mev.databinding.ActivitySplashBinding
-import n7.mev.modules.ModulesActivity
 
 class SplashActivity : AppCompatActivity() {
 
@@ -28,11 +27,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 
-        if (savedInstanceState == null) { fadeIn = true }
+        if (savedInstanceState == null) {
+            fadeIn = true
+        }
 
+        binding.tvLogo.text = getErrorEmote()
         binding.ivLogo.setOnClickListener {
             finish()
-            startActivity(Intent(this, ModulesActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
@@ -58,8 +60,27 @@ class SplashActivity : AppCompatActivity() {
             binding.tvLogo.visibility = View.VISIBLE
             delay(DELAY_START_ACTIVITY)
             finish()
-            startActivity(Intent(this@SplashActivity, ModulesActivity::class.java))
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         }
 
     }
+
+}
+
+fun getErrorEmote(): String? {
+    val emotes = arrayOf(
+            "('.')",
+            "('x')",
+            "(>_<)",
+            "(>.<)",
+            "(;-;)",
+            "\\(o_o)/",
+            "(O_o)",
+            "(o_0)",
+            "(≥o≤)",
+            "(≥o≤)",
+            "(·.·)",
+            "(·_·)"
+    )
+    return emotes.random()
 }

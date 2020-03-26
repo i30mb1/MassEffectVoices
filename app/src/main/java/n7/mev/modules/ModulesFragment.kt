@@ -64,7 +64,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun startActionMode() {
-        val actionMode = (activity as ModulesActivity?)!!.startSupportActionMode(object : ActionMode.Callback {
+        val actionMode = (activity as MainActivity?)!!.startSupportActionMode(object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
                 mode.menuInflater.inflate(R.menu.menu_multi_download, menu)
                 return true
@@ -192,7 +192,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupToolbar() {
-        (activity as ModulesActivity?)!!.setSupportActionBar(binding.toolbar)
+        (activity as MainActivity?)!!.setSupportActionBar(binding.toolbar)
         requireActivity().title = ""
     }
 

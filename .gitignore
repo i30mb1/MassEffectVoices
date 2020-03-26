@@ -10,3 +10,4 @@
 *.ogg
 buildSrc/**/*
 !buildSrc/src/**/*
+*.log
