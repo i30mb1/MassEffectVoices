@@ -11,8 +11,6 @@
         android:name="android.permission.WRITE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
-    <!--<dist:module dist:instant="true" />-->
-
     <application
         android:name="com.google.android.play.core.splitcompat.SplitCompatApplication"
         android:allowBackup="false"
@@ -22,20 +20,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
-        <activity android:name=".modules.ModulesActivity" />
-
+        <activity android:name=".MainActivity"/>
         <activity android:name=".main.MainActivity" />
-
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
