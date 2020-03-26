@@ -104,13 +104,10 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
                         }
                     }
                 }
-        //                .addOnCompleteListener(new OnCompleteListener<Integer>() {
-//                    @Override
-//                    public void onComplete(Task<Integer> task) {
-//                        isLoading.set(false);
-//                        updateModulesInSystem();
-//                    }
-//                });
+                .addOnSuccessListener {
+                    isLoading.set(false)
+                    updateModulesInSystem()
+                }
     }
 
     fun refreshContext() {

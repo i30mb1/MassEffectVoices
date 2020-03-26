@@ -1,13 +1,21 @@
 package n7.mev.modules
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
+import com.google.android.play.core.splitcompat.SplitCompat
 import n7.mev.R
 
 class ModulesActivity : AppCompatActivity() {
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+        SplitCompat.installActivity(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.modules_activity)

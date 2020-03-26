@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ModulesFragment : Fragment(R.layout.modules_fragment) {
+
     private val viewModel: ModulesViewModel by viewModels()
     private lateinit var binding: ModulesFragmentBinding
     private var scaleDown: ObjectAnimator? = null
@@ -87,10 +88,18 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         if (viewModel.modulesCanBeInstall().contains("avina")) {
             return
         }
+
         val packageName = "n7.mev.avina"
         val avinaSampleClassName = "$packageName.SecretActivity"
         val intent = Intent()
         intent.setClassName(packageName, avinaSampleClassName)
+
+        try {
+            Class.forName(avinaSampleClassName, false, javaClass.classLoader)
+        } catch (ignored: ClassNotFoundException) {
+
+        }
+
         startActivity(intent)
     }
 
