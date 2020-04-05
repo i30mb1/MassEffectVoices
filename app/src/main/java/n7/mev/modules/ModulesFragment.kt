@@ -234,12 +234,22 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         })
     }
 
+
     companion object {
         const val MODULE_NAME = "MODULE_NAME"
         private const val LAST_DAY = "LAST_DAY"
         private const val DIALOG_SHOWED = "DIALOG_SHOWED"
         fun newInstance(): ModulesFragment {
             return ModulesFragment()
+        }
+
+        /** Use external media if it is available, our app's file directory otherwise */
+        fun getOutputDirectory(context: Context): File {
+            val appContext = context.applicationContext
+            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() } }
+            return if (mediaDir != null && mediaDir.exists())
+                mediaDir else appContext.filesDir
         }
     }
 }
