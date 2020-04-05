@@ -17,6 +17,8 @@
         <item name="windowActionModeOverlay">true</item>
         <!--<item name="actionModeCloseDrawable">@drawable/n7</item>-->
         <item name="actionMenuTextColor">@color/textColor</item>
+
+        <item name="android:windowAnimationStyle">@style/MyWindowAnimationTransition</item>
     </style>
 
     <style name="SplashTheme" parent="AppTheme">
@@ -25,6 +27,7 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowShowWallpaper">true</item>
         <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+
     </style>
 
     <style name="DialogTheme">
@@ -36,5 +39,10 @@
         <item name="background">?attr/actionModeBackground</item>
         <item name="backgroundSplit">?attr/actionModeSplitBackground</item>
         <item name="height">?attr/actionBarSize</item>
+    </style>
+
+    <style name="MyWindowAnimationTransition">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
     </style>
 </resources>
