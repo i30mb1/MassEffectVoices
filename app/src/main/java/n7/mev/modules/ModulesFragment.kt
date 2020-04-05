@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.ActionMode
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
@@ -18,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -64,7 +66,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun startActionMode() {
-        val actionMode = (activity as MainActivity?)!!.startSupportActionMode(object : ActionMode.Callback {
+        val actionMode = (activity as AppCompatActivity).startSupportActionMode(object : ActionMode.Callback {
             override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
                 mode.menuInflater.inflate(R.menu.menu_multi_download, menu)
                 return true
@@ -192,7 +194,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupToolbar() {
-        (activity as MainActivity?)!!.setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         requireActivity().title = ""
     }
 
