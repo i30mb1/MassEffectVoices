@@ -3,6 +3,7 @@ package n7.mev.modules
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -29,6 +30,7 @@ import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
 import n7.mev.main.MainActivity
 import n7.mev.util.SnackbarUtils
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
