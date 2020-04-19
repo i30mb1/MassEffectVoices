@@ -1,1 +1,1 @@
-include(":app", ":feature_miranda")
+include(":app")
