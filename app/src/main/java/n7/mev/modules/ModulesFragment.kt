@@ -8,20 +8,20 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import n7.mev.R
 import n7.mev.databinding.BottomDrawerBinding
-import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
 
 class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
-    private val viewModel: ModulesViewModel by viewModels()
+    private val viewModel: ModulesViewModel by navGraphViewModels(R.id.nav_graph)
     private lateinit var binding: ModulesFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,44 +37,33 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun openActivityFromModule() {
-        if (viewModel.modulesCanBeInstall().contains("avina")) {
-            return
-        }
-
-        val packageName = "n7.mev.avina"
-        val avinaSampleClassName = "$packageName.SecretActivity"
-        val intent = Intent()
-        intent.setClassName(packageName, avinaSampleClassName)
-
-        try {
-            Class.forName(avinaSampleClassName, false, javaClass.classLoader)
-        } catch (ignored: ClassNotFoundException) {
-
-        }
-
-        startActivity(intent)
+//        if (viewModel.installedModules().contains("avina")) {
+//            return
+//        }
+//
+//        val packageName = "n7.mev.avina"
+//        val avinaSampleClassName = "$packageName.SecretActivity"
+//        val intent = Intent()
+//        intent.setClassName(packageName, avinaSampleClassName)
+//
+//        try {
+//            Class.forName(avinaSampleClassName, false, javaClass.classLoader)
+//        } catch (ignored: ClassNotFoundException) {
+//
+//        }
+//
+//        startActivity(intent)
     }
 
     fun showAvailableModules(view: View?) {
-        val bottomSheetDialog = BottomSheetDialog(requireContext())
-        val binding: BottomDrawerBinding = DataBindingUtil.inflate(layoutInflater, R.layout.bottom_drawer, null, false)
-        bottomSheetDialog.setContentView(binding.root)
-        for (module in viewModel.modulesCanBeInstall()) {
-            binding.navBottomDrawer.menu.add(module)
-        }
-        binding.navBottomDrawer.setNavigationItemSelectedListener { item ->
-            bottomSheetDialog.dismiss()
-            viewModel.installModule(item.title.toString())
-            true
-        }
-        bottomSheetDialog.show()
+       findNavController().navigate(R.id.action_modulesFragment_to_bottomModulesSheetDialog)
     }
 
     private fun setupListeners() {
-        viewModel.showSnackbar.observe(viewLifecycleOwner) {
+        viewModel.showMessage.observe(viewLifecycleOwner) {
             it?.let { Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show() }
         }
-        viewModel.startConfirmationDialog.observe(viewLifecycleOwner) {
+        viewModel.showConfirmationDialog.observe(viewLifecycleOwner) {
             it?.let { viewModel.startConfirmationDialog(requireActivity()) }
         }
     }
@@ -98,7 +87,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 //        }
     }
 
-    fun showDialogDeleteModule(moduleName: String?): Boolean {
+    fun showDialogDeleteModule(moduleName: String): Boolean {
         if (context != null) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setMessage(getString(R.string.dialog_delete_module))

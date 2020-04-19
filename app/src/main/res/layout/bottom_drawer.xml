@@ -8,16 +8,10 @@
     </data>
 
         <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_bottom_drawer"
+            android:id="@+id/nav"
             tools:background="@color/backColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_gravity="bottom" />
 
 </layout>

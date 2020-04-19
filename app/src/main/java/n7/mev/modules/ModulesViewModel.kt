@@ -11,7 +11,6 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.splitinstall.SplitInstallException
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
@@ -20,8 +19,6 @@ import com.google.android.play.core.splitinstall.SplitInstallSessionState
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallErrorCode
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import n7.mev.R
 import n7.mev.data.source.local.FeatureModule
 
@@ -33,20 +30,21 @@ fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
 class ModulesViewModel(application: Application) : AndroidViewModel(application), SplitInstallStateUpdatedListener {
 
     companion object {
-        const val PREFFIX = "feature_"
+        const val PREFIX = "feature_"
     }
 
     private val _installedModules = MutableLiveData<List<FeatureModule>>()
     val installedModules: LiveData<List<FeatureModule>> = _installedModules
 
     private val _buttonVisibility = MutableLiveData<Boolean>()
-    val buttonVisibility : LiveData<Boolean> = _buttonVisibility
+    val buttonVisibility: LiveData<Boolean> = _buttonVisibility
 
-    private val _showSnackbar = MutableLiveData<Int?>()
-    val showSnackbar: LiveData<Int?> = _showSnackbar
+    private val _showMessage = MutableLiveData<Int>()
+    val showMessage: LiveData<Int?> = _showMessage
 
-    private val _startConfirmationDialog = MutableLiveData<Boolean?>()
-    val startConfirmationDialog: LiveData<Boolean?> = _startConfirmationDialog
+    private val _showConfirmationDialog = MutableLiveData<Boolean>()
+    val showConfirmationDialog: LiveData<Boolean?> = _showConfirmationDialog
+
     private val splitInstallManager: SplitInstallManager = SplitInstallManagerFactory.create(application)
 
 
@@ -74,7 +72,7 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     private fun updateInstalledModules() {
         val moduleList: List<FeatureModule> = splitInstallManager.installedModules.map {
-            FeatureModule(it.replace(PREFFIX, ""), it)
+            FeatureModule(it.replace(PREFIX, ""), it)
         }
         _installedModules.value = moduleList
         _buttonVisibility.value = allModules.size != _installedModules.value!!.size
@@ -88,18 +86,15 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun deleteModule(moduleName: String?) {
+    fun deleteModule(moduleName: String) {
         splitInstallManager.deferredUninstall(listOf(moduleName))
-                .addOnSuccessListener { _showSnackbar.value = R.string.deleted }
-        _showSnackbar.value = R.string.delete_when_ready
+                .addOnSuccessListener { _showMessage.value = R.string.delete_when_ready }
         updateInstalledModules()
     }
 
-    fun modulesCanBeInstall(): Set<String> {
-        val installedModules = splitInstallManager.installedModules
-        val list = allModules.clone() as MutableSet<String>
-        list.removeAll(installedModules)
-        return list
+    fun installedModules(): List<FeatureModule> {
+        val availableList = allModules - splitInstallManager.installedModules.toList()
+        return availableList.map { FeatureModule(it.replace(PREFIX, ""), it) }
     }
 
     fun installModule(moduleName: String) {
@@ -113,12 +108,12 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
                 .addOnFailureListener { e ->
                     when ((e as SplitInstallException).errorCode) {
                         SplitInstallErrorCode.NETWORK_ERROR -> {
-                            _showSnackbar.value = R.string.network_error
+                            _showMessage.value = R.string.network_error
                             isLoading.set(false)
                             _buttonVisibility.setValue(true)
                         }
                         else -> {
-                            _showSnackbar.value = R.string.network_error
+                            _showMessage.value = R.string.network_error
                             isLoading.set(false)
                             _buttonVisibility.setValue(true)
                         }
@@ -142,9 +137,9 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         val status = splitInstallSessionState.status()
         when (status) {
             SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                _showSnackbar.setSingleEvent(R.string.require)
+                _showMessage.setSingleEvent(R.string.require)
                 this.splitInstallSessionState.value = splitInstallSessionState
-                _startConfirmationDialog.setSingleEvent(true)
+                _showConfirmationDialog.setSingleEvent(true)
             }
             SplitInstallSessionStatus.DOWNLOADING -> {
                 displayLoadingState(splitInstallSessionState)
@@ -154,12 +149,12 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
             }
             SplitInstallSessionStatus.INSTALLING -> {
                 displayLoadingState(splitInstallSessionState)
-                _showSnackbar.setSingleEvent(R.string.installing)
+                _showMessage.setSingleEvent(R.string.installing)
                 isLoading.set(true)
                 _buttonVisibility.setValue(false)
             }
             SplitInstallSessionStatus.INSTALLED -> {
-                _showSnackbar.setSingleEvent(R.string.installed)
+                _showMessage.setSingleEvent(R.string.installed)
                 isLoading.set(false)
                 _buttonVisibility.setValue(true)
                 updateInstalledModules()

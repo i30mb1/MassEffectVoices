@@ -7,5 +7,13 @@
     <fragment
         android:id="@+id/modulesFragment"
         android:name="n7.mev.modules.ModulesFragment"
-        android:label="ModulesFragment" />
+        android:label="ModulesFragment" >
+        <action
+            android:id="@+id/action_modulesFragment_to_bottomModulesSheetDialog"
+            app:destination="@id/bottomModulesSheetDialog" />
+    </fragment>
+    <dialog
+        android:id="@+id/bottomModulesSheetDialog"
+        android:name="n7.mev.BottomModulesSheetDialog"
+        android:label="BottomModulesSheetDialog" />
 </navigation>
