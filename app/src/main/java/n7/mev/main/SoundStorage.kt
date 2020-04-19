@@ -17,7 +17,7 @@ class SoundStorage(private val application: Application, private val moduleName:
 //                    e.printStackTrace();
 //                }
             try {
-                currentSounds = application.assets.list(moduleName)
+                currentSounds = application.assets.list(moduleName!!)
             } catch (e: IOException) {
                 e.printStackTrace()
             } finally {

@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -19,7 +18,6 @@ import n7.mev.R
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
-import n7.mev.util.SnackbarUtils
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -78,14 +76,14 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupListeners() {
-        viewModel.showSnackbar.observe(viewLifecycleOwner, Observer { snackbarMessageResourceId ->
-            snackbarMessageResourceId?.let {
-                SnackbarUtils.showSnackbar(view, getString(snackbarMessageResourceId))
-            }
-        })
-        viewModel.startConfirmationDialog.observe(viewLifecycleOwner, Observer {
-            viewModel.startConfirmationDialog(requireActivity())
-        })
+//        viewModel.showSnackbar.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            it?.let {
+//                SnackbarUtils.showSnackbar(view, getString(it))
+//            }
+//        })
+//        viewModel.startConfirmationDialog.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+//            viewModel.startConfirmationDialog(requireActivity())
+//        })
     }
 
     private fun checkDayForDialogProm() {
@@ -158,7 +156,9 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             adapter = modulesPagedListAdapter
         }
 
-        viewModel.installedModules.observe(viewLifecycleOwner, modulesPagedListAdapter::submitList)
+//        viewModel.installedModules.observe(viewLifecycleOwner, Observer {
+//            modulesPagedListAdapter.submitList(it)
+//        })
     }
 
 
@@ -171,13 +171,13 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         }
 
         /** Use external media if it is available, our app's file directory otherwise */
-        fun getOutputDirectory(context: Context): File {
-            val appContext = context.applicationContext
-            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
-            }
-            return if (mediaDir != null && mediaDir.exists())
-                mediaDir else appContext.filesDir
-        }
+//        fun getOutputDirectory(context: Context): File {
+//            val appContext = context.applicationContext
+//            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+//                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
+//            }
+//            return if (mediaDir != null && mediaDir.exists())
+//                mediaDir else appContext.filesDir
+//        }
     }
 }

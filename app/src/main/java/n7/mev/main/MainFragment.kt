@@ -33,21 +33,21 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
             lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
-            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)
+            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)!!
         } else {
             moduleName = requireActivity().intent.getStringExtra(ModulesFragment.Companion.MODULE_NAME)
         }
-        binding = MainFragmentBinding.bind(view).apply {
-            this.viewModel = mViewModel
-        }
+//        binding = MainFragmentBinding.bind(view).apply {
+//            this.viewModel = mViewModel
+//        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        mViewModel.createPagedListData(lastVisibleItem).observe(viewLifecycleOwner, Observer {
-            soundModels -> adapter.submitList(soundModels)
-        })
+//        mViewModel.createPagedListData(lastVisibleItem).observe(viewLifecycleOwner, Observer {
+//            soundModels -> adapter.submitList(soundModels)
+//        })
         binding.viewModel = mViewModel
         binding.executePendingBindings()
 
