@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import coil.Coil
-import coil.api.get
-import coil.api.load
+import com.squareup.picasso.Picasso
 import n7.mev.R
 import n7.mev.databinding.ModulesItemBinding
 import java.util.*
@@ -45,7 +43,7 @@ class ModulesPagedListAdapter internal constructor(private val fragment: Modules
 
         private fun setDrawableFromResources(name: String?) {
             val resourceId = binding.ivModulesItemIcon.resources.getIdentifier(name, "drawable", binding.ivModulesItemIcon.context.packageName)
-            if (resourceId != 0) binding.ivModulesItemIcon.load(resourceId)
+            if (resourceId != 0) Picasso.get().load(resourceId).into(binding.ivModulesItemIcon)
             //            binding.ivModulesItemIcon.setImageResource(resourceId);
         }
 

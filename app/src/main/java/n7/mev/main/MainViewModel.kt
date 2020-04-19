@@ -100,7 +100,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
             dialog.dismiss()
         }
         val dialog = builder.create()
-        dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
+        dialog.window.attributes.windowAnimations = R.style.DialogTheme
         dialog.show()
         return true
     }
@@ -116,7 +116,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
             }
             lastPlaying = soundModel.playing
             mediaPlayer = MediaPlayer()
-            val fileDescriptor = context.assets.openFd(soundModel.path!!)
+            val fileDescriptor = context.assets.openFd(soundModel.path)
             mediaPlayer!!.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
             mediaPlayer!!.prepareAsync()
             mediaPlayer!!.setOnPreparedListener { mediaPlayer!!.start() }
@@ -133,7 +133,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         var `in`: InputStream? = null
         var out: OutputStream? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
+            `in` = assetManager.open(soundModel.path)
             val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
             if (!path.exists()) path.mkdirs()
             outFile = File(path, "MEV.RINGTONE.ogg")
@@ -191,7 +191,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         val out: OutputStream? = null
         var fileBytes: ByteArray? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
+            `in` = assetManager.open(soundModel.path)
             fileBytes = ByteArray(`in`.available())
             `in`.read(fileBytes)
             `in`.close()
@@ -217,7 +217,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         var `in`: InputStream? = null
         var out: OutputStream? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
+            `in` = assetManager.open(soundModel.path)
             val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
             if (!path.exists()) path.mkdirs()
             val outFile = File(path, "MEV." + soundModel.hashCode() + ".ogg")

@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="ad2.n7.jacob">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_jacob">
+        <dist:fusing dist:include="false" />
+    </dist:module>
+    <application android:hasCode="false" />
+</manifest>
+

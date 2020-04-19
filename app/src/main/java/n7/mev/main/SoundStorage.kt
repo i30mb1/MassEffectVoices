@@ -7,7 +7,7 @@ import java.io.IOException
 import java.util.*
 import java.util.concurrent.Executor
 
-class SoundStorage(private val application: Application, private val moduleName: String, private val executor: Executor) {
+class SoundStorage(private val application: Application, private val moduleName: String?, private val executor: Executor) {
     private var currentSounds: Array<String>? = arrayOf()
     var invalidate: Invalidate? = null
     fun load(isLoading: ObservableBoolean?) {

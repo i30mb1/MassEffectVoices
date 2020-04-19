@@ -33,7 +33,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         super.onViewCreated(view, savedInstanceState)
         if (savedInstanceState != null) {
             lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
-            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO) ?: ""
+            moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)
         } else {
             moduleName = requireActivity().intent.getStringExtra(ModulesFragment.Companion.MODULE_NAME)
         }
