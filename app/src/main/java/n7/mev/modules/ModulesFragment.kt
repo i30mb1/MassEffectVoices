@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -38,8 +37,9 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             it.fragment = this
         }
 
-        setupListeners()
         setupPagedListAdapter()
+
+        setupListeners()
         checkDayForDialogProm()
     }
 
@@ -84,7 +84,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             }
         })
         viewModel.startConfirmationDialog.observe(viewLifecycleOwner, Observer {
-            viewModel.startConfirmationDialog(activity)
+            viewModel.startConfirmationDialog(requireActivity())
         })
     }
 
@@ -152,11 +152,14 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupPagedListAdapter() {
-        binding.rvModulesFragment.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
-        val adapter = ModulesPagedListAdapter(this)
-        binding.rvModulesFragment.adapter = adapter
-        viewModel.availableModules.observe(viewLifecycleOwner, Observer { strings ->
-            adapter.addAll(strings)
+        val modulesPagedListAdapter = ModulesPagedListAdapter(this)
+        binding.rv.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = modulesPagedListAdapter
+        }
+
+        viewModel.installedModules.observe(viewLifecycleOwner, Observer { strings ->
+            modulesPagedListAdapter.addAll(strings)
         })
     }
 

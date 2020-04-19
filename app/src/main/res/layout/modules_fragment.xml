@@ -18,36 +18,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_modules_fragment"
+                android:id="@+id/rv"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/b_modules_fragment_add"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="match_parent"
                 tools:listitem="@layout/modules_item" />
 
             <Button
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/b_modules_fragment_add"
                 style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
                 android:layout_height="40dp"
                 android:onClick="@{fragment::showAvailableModules}"
                 android:text="@string/modules_fragment_add_module"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="14sp"
-                android:visibility="@{viewModel.showButtonAddModule? View.VISIBLE:View.GONE}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:visibility="@{viewModel.buttonVisibility? View.VISIBLE:View.GONE}" />
 
             <ProgressBar
                 android:id="@+id/pb_modules_fragment"
@@ -58,11 +47,7 @@
                 android:max="@{viewModel.pbMaxValue}"
                 android:progress="@{viewModel.pbProgressValue}"
                 android:scaleY="3"
-                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

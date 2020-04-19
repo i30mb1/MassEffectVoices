@@ -20,6 +20,7 @@ import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListene
 import com.google.android.play.core.splitinstall.model.SplitInstallErrorCode
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import n7.mev.R
+import n7.mev.data.source.local.FeatureModule
 
 fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
     this.value = value
@@ -28,16 +29,23 @@ fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
 
 class ModulesViewModel(application: Application) : AndroidViewModel(application), SplitInstallStateUpdatedListener {
 
+    companion object {
+        const val PREFFIX = "feature_"
+    }
+
+    private val _installedModules = MutableLiveData<List<FeatureModule>>()
+    val installedModules: LiveData<List<FeatureModule>> = _installedModules
+
+    private val _buttonVisibility = MutableLiveData<Boolean>()
+    val buttonVisibility : LiveData<Boolean> = _buttonVisibility
+
     private val _showSnackbar = MutableLiveData<Int?>()
     val showSnackbar: LiveData<Int?> = _showSnackbar
 
     private val _startConfirmationDialog = MutableLiveData<Boolean?>()
     val startConfirmationDialog: LiveData<Boolean?> = _startConfirmationDialog
-    val splitInstallManager: SplitInstallManager
+    private val splitInstallManager: SplitInstallManager = SplitInstallManagerFactory.create(application)
 
-    @kotlin.jvm.JvmField
-    var showButtonAddModule = ObservableBoolean(true)
-    var availableModules = MutableLiveData<Set<String>>()
 
     @kotlin.jvm.JvmField
     var isLoading = ObservableBoolean(false)
@@ -50,11 +58,26 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
     private var splitInstallSessionState = MutableLiveData<SplitInstallSessionState>()
     private var context: Context
     private val allModules = hashSetOf(
-            "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "avina",
+            "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "feature_avina",
             "jacob", "joker", "kasumi", "liara", "miranda", "mordin", "zaeed",
             "vega", "thane", "tali", "samara", "reaper", "javik", "dlc_citadel")
 
-    fun startConfirmationDialog(activity: Activity?) {
+
+    init {
+        context = application.applicationContext
+        splitInstallManager.registerListener(this)
+        updateInstalledModules()
+    }
+
+    private fun updateInstalledModules() {
+        val moduleList: List<FeatureModule> = splitInstallManager.installedModules.map {
+            FeatureModule(it.replace(PREFFIX, ""), it)
+        }
+        _installedModules.value = moduleList
+        _buttonVisibility.value = allModules.size != _installedModules.value!!.size
+    }
+
+    fun startConfirmationDialog(activity: Activity) {
         try {
             splitInstallManager.startConfirmationDialogForResult(splitInstallSessionState.value, activity, 0)
         } catch (e: SendIntentException) {
@@ -62,21 +85,11 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    private fun updateModulesInSystem() {
-        val installedModules = splitInstallManager.installedModules
-        availableModules.value = installedModules
-        if (allModules.size == installedModules.size) {
-            showButtonAddModule.set(false)
-        } else {
-            showButtonAddModule.set(true)
-        }
-    }
-
     fun deleteModule(moduleName: String?) {
         splitInstallManager.deferredUninstall(listOf(moduleName))
                 .addOnSuccessListener { _showSnackbar.value = R.string.deleted }
         _showSnackbar.value = R.string.delete_when_ready
-        updateModulesInSystem()
+        updateInstalledModules()
     }
 
     fun modulesCanBeInstall(): Set<String> {
@@ -89,7 +102,7 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
     fun installModule(moduleName: String) {
         if (!allModules.contains(moduleName)) return
         isLoading.set(true)
-        showButtonAddModule.set(false)
+        _buttonVisibility.setValue(false)
         val request = SplitInstallRequest.newBuilder()
                 .addModule(moduleName)
                 .build()
@@ -99,18 +112,18 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
                         SplitInstallErrorCode.NETWORK_ERROR -> {
                             _showSnackbar.value = R.string.network_error
                             isLoading.set(false)
-                            showButtonAddModule.set(true)
+                            _buttonVisibility.setValue(true)
                         }
                         else -> {
                             _showSnackbar.value = R.string.network_error
                             isLoading.set(false)
-                            showButtonAddModule.set(true)
+                            _buttonVisibility.setValue(true)
                         }
                     }
                 }
                 .addOnSuccessListener {
                     isLoading.set(false)
-                    updateModulesInSystem()
+                    updateInstalledModules()
                 }
     }
 
@@ -134,19 +147,19 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
                 displayLoadingState(splitInstallSessionState)
                 //                showSnackbar.setValue(R.string.downloading);
                 isLoading.set(true)
-                showButtonAddModule.set(false)
+                _buttonVisibility.setValue(false)
             }
             SplitInstallSessionStatus.INSTALLING -> {
                 displayLoadingState(splitInstallSessionState)
                 _showSnackbar.setSingleEvent(R.string.installing)
                 isLoading.set(true)
-                showButtonAddModule.set(false)
+                _buttonVisibility.setValue(false)
             }
             SplitInstallSessionStatus.INSTALLED -> {
                 _showSnackbar.setSingleEvent(R.string.installed)
                 isLoading.set(false)
-                showButtonAddModule.set(true)
-                updateModulesInSystem()
+                _buttonVisibility.setValue(true)
+                updateInstalledModules()
             }
             SplitInstallSessionStatus.FAILED -> {
                 val error = splitInstallSessionState.errorCode().toString() + " for module " + splitInstallSessionState.moduleNames()
@@ -167,10 +180,4 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         super.onCleared()
     }
 
-    init {
-        context = application.applicationContext
-        splitInstallManager = SplitInstallManagerFactory.create(context)
-        splitInstallManager.registerListener(this)
-        updateModulesInSystem()
-    }
 }
