@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -156,9 +157,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             adapter = modulesPagedListAdapter
         }
 
-//        viewModel.installedModules.observe(viewLifecycleOwner, Observer {
-//            modulesPagedListAdapter.submitList(it)
-//        })
+        viewModel.installedModules.observe(viewLifecycleOwner, modulesPagedListAdapter::submitList)
     }
 
 
