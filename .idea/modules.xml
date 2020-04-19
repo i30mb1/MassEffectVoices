@@ -2,53 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/AndroidProjects-MassEffectVoices.iml" filepath="$PROJECT_DIR$/AndroidProjects-MassEffectVoices.iml" group="MassEffectVoices" />
-      <module fileurl="file://$PROJECT_DIR$/MassEffectVoices.iml" filepath="$PROJECT_DIR$/MassEffectVoices.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/MassEffectVoices-app.iml" filepath="$PROJECT_DIR$/app/MassEffectVoices-app.iml" group="MassEffectVoices/app" />
-      <module fileurl="file://$PROJECT_DIR$/avina/MassEffectVoices-avina.iml" filepath="$PROJECT_DIR$/avina/MassEffectVoices-avina.iml" group="MassEffectVoices/avina" />
-      <module fileurl="file://$PROJECT_DIR$/dlc_citadel/MassEffectVoices-dlc_citadel.iml" filepath="$PROJECT_DIR$/dlc_citadel/MassEffectVoices-dlc_citadel.iml" group="MassEffectVoices/dlc_citadel" />
-      <module fileurl="file://$PROJECT_DIR$/edi/MassEffectVoices-edi.iml" filepath="$PROJECT_DIR$/edi/MassEffectVoices-edi.iml" group="MassEffectVoices/edi" />
-      <module fileurl="file://$PROJECT_DIR$/garrus/MassEffectVoices-garrus.iml" filepath="$PROJECT_DIR$/garrus/MassEffectVoices-garrus.iml" group="MassEffectVoices/garrus" />
-      <module fileurl="file://$PROJECT_DIR$/grunt/MassEffectVoices-grunt.iml" filepath="$PROJECT_DIR$/grunt/MassEffectVoices-grunt.iml" group="MassEffectVoices/grunt" />
-      <module fileurl="file://$PROJECT_DIR$/illusive_man/MassEffectVoices-illusive_man.iml" filepath="$PROJECT_DIR$/illusive_man/MassEffectVoices-illusive_man.iml" group="MassEffectVoices/illusive_man" />
-      <module fileurl="file://$PROJECT_DIR$/jack/MassEffectVoices-jack.iml" filepath="$PROJECT_DIR$/jack/MassEffectVoices-jack.iml" group="MassEffectVoices/jack" />
-      <module fileurl="file://$PROJECT_DIR$/jacob/MassEffectVoices-jacob.iml" filepath="$PROJECT_DIR$/jacob/MassEffectVoices-jacob.iml" group="MassEffectVoices/jacob" />
-      <module fileurl="file://$PROJECT_DIR$/javik/MassEffectVoices-javik.iml" filepath="$PROJECT_DIR$/javik/MassEffectVoices-javik.iml" group="MassEffectVoices/javik" />
-      <module fileurl="file://$PROJECT_DIR$/joker/MassEffectVoices-joker.iml" filepath="$PROJECT_DIR$/joker/MassEffectVoices-joker.iml" group="MassEffectVoices/joker" />
-      <module fileurl="file://$PROJECT_DIR$/kasumi/MassEffectVoices-kasumi.iml" filepath="$PROJECT_DIR$/kasumi/MassEffectVoices-kasumi.iml" group="MassEffectVoices/kasumi" />
-      <module fileurl="file://$PROJECT_DIR$/legion/MassEffectVoices-legion.iml" filepath="$PROJECT_DIR$/legion/MassEffectVoices-legion.iml" group="MassEffectVoices/legion" />
-      <module fileurl="file://$PROJECT_DIR$/liara/MassEffectVoices-liara.iml" filepath="$PROJECT_DIR$/liara/MassEffectVoices-liara.iml" group="MassEffectVoices/liara" />
-      <module fileurl="file://$PROJECT_DIR$/miranda/MassEffectVoices-miranda.iml" filepath="$PROJECT_DIR$/miranda/MassEffectVoices-miranda.iml" group="MassEffectVoices/miranda" />
-      <module fileurl="file://$PROJECT_DIR$/mordin/MassEffectVoices-mordin.iml" filepath="$PROJECT_DIR$/mordin/MassEffectVoices-mordin.iml" group="MassEffectVoices/mordin" />
-      <module fileurl="file://$PROJECT_DIR$/reaper/MassEffectVoices-reaper.iml" filepath="$PROJECT_DIR$/reaper/MassEffectVoices-reaper.iml" group="MassEffectVoices/reaper" />
-      <module fileurl="file://$PROJECT_DIR$/samara/MassEffectVoices-samara.iml" filepath="$PROJECT_DIR$/samara/MassEffectVoices-samara.iml" group="MassEffectVoices/samara" />
-      <module fileurl="file://$PROJECT_DIR$/tali/MassEffectVoices-tali.iml" filepath="$PROJECT_DIR$/tali/MassEffectVoices-tali.iml" group="MassEffectVoices/tali" />
-      <module fileurl="file://$PROJECT_DIR$/thane/MassEffectVoices-thane.iml" filepath="$PROJECT_DIR$/thane/MassEffectVoices-thane.iml" group="MassEffectVoices/thane" />
-      <module fileurl="file://$PROJECT_DIR$/vega/MassEffectVoices-vega.iml" filepath="$PROJECT_DIR$/vega/MassEffectVoices-vega.iml" group="MassEffectVoices/vega" />
-      <module fileurl="file://$PROJECT_DIR$/zaeed/MassEffectVoices-zaeed.iml" filepath="$PROJECT_DIR$/zaeed/MassEffectVoices-zaeed.iml" group="MassEffectVoices/zaeed" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/avina/avina.iml" filepath="$PROJECT_DIR$/avina/avina.iml" />
+      <module fileurl="file://$PROJECT_DIR$/MassEffectVoices.iml" filepath="$PROJECT_DIR$/MassEffectVoices.iml" group="MassEffectVoices" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MassEffectVoices/app" />
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" group="MassEffectVoices/buildSrc" />
-      <module fileurl="file://$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" filepath="$PROJECT_DIR$/dlc_citadel/dlc_citadel.iml" />
-      <module fileurl="file://$PROJECT_DIR$/edi/edi.iml" filepath="$PROJECT_DIR$/edi/edi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/garrus/garrus.iml" filepath="$PROJECT_DIR$/garrus/garrus.iml" />
-      <module fileurl="file://$PROJECT_DIR$/grunt/grunt.iml" filepath="$PROJECT_DIR$/grunt/grunt.iml" />
-      <module fileurl="file://$PROJECT_DIR$/illusive_man/illusive_man.iml" filepath="$PROJECT_DIR$/illusive_man/illusive_man.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jack/jack.iml" filepath="$PROJECT_DIR$/jack/jack.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jacob/jacob.iml" filepath="$PROJECT_DIR$/jacob/jacob.iml" />
-      <module fileurl="file://$PROJECT_DIR$/javik/javik.iml" filepath="$PROJECT_DIR$/javik/javik.iml" />
-      <module fileurl="file://$PROJECT_DIR$/joker/joker.iml" filepath="$PROJECT_DIR$/joker/joker.iml" />
-      <module fileurl="file://$PROJECT_DIR$/kasumi/kasumi.iml" filepath="$PROJECT_DIR$/kasumi/kasumi.iml" />
-      <module fileurl="file://$PROJECT_DIR$/legion/legion.iml" filepath="$PROJECT_DIR$/legion/legion.iml" />
-      <module fileurl="file://$PROJECT_DIR$/liara/liara.iml" filepath="$PROJECT_DIR$/liara/liara.iml" />
-      <module fileurl="file://$PROJECT_DIR$/miranda/miranda.iml" filepath="$PROJECT_DIR$/miranda/miranda.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mordin/mordin.iml" filepath="$PROJECT_DIR$/mordin/mordin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/reaper/reaper.iml" filepath="$PROJECT_DIR$/reaper/reaper.iml" />
-      <module fileurl="file://$PROJECT_DIR$/samara/samara.iml" filepath="$PROJECT_DIR$/samara/samara.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tali/tali.iml" filepath="$PROJECT_DIR$/tali/tali.iml" />
-      <module fileurl="file://$PROJECT_DIR$/thane/thane.iml" filepath="$PROJECT_DIR$/thane/thane.iml" />
-      <module fileurl="file://$PROJECT_DIR$/vega/vega.iml" filepath="$PROJECT_DIR$/vega/vega.iml" />
-      <module fileurl="file://$PROJECT_DIR$/zaeed/zaeed.iml" filepath="$PROJECT_DIR$/zaeed/zaeed.iml" />
     </modules>
   </component>
 </project>
