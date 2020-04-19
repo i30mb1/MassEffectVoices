@@ -158,9 +158,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             adapter = modulesPagedListAdapter
         }
 
-        viewModel.installedModules.observe(viewLifecycleOwner, Observer { strings ->
-            modulesPagedListAdapter.addAll(strings)
-        })
+        viewModel.installedModules.observe(viewLifecycleOwner, modulesPagedListAdapter::submitList)
     }
 
 

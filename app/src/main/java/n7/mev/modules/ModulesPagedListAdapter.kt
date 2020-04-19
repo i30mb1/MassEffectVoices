@@ -2,51 +2,43 @@ package n7.mev.modules
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import n7.mev.R
+import n7.mev.data.source.local.FeatureModule
 import n7.mev.databinding.ModulesItemBinding
-import java.util.*
 
-class ModulesPagedListAdapter internal constructor(private val fragment: ModulesFragment) : RecyclerView.Adapter<ModulesPagedListAdapter.ViewHolder>() {
-    private var inflater: LayoutInflater? = null
-    private val list = LinkedList<String?>()
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        if (inflater == null) inflater = LayoutInflater.from(parent.context)
-        val binding: ModulesItemBinding = DataBindingUtil.inflate(inflater!!, R.layout.modules_item, parent, false)
-        return ViewHolder(binding)
-    }
+class ModulesPagedListAdapter constructor(
+        private val fragment: ModulesFragment
+) : ListAdapter<FeatureModule, ModulesPagedListAdapter.ViewHolder>(DiffCallback()) {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val name = list[position]
-        holder.bindTo(name)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder.from(parent)
 
-    fun addAll(newList: Set<String?>?) {
-        list.clear()
-        list.addAll(newList!!)
-        notifyDataSetChanged()
-    }
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bindTo(getItem(position), fragment)
 
-    override fun getItemCount(): Int {
-        return list.size
-    }
+    class ViewHolder private constructor(
+            var binding: ModulesItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-    inner class ViewHolder(var binding: ModulesItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bindTo(name: String?) {
+        fun bindTo(model: FeatureModule, fragment: ModulesFragment) {
             binding.fragment = fragment
-            binding.name = name
+            binding.model = model
             binding.executePendingBindings()
-            setDrawableFromResources(name)
         }
 
-        private fun setDrawableFromResources(name: String?) {
-            val resourceId = binding.ivModulesItemIcon.resources.getIdentifier(name, "drawable", binding.ivModulesItemIcon.context.packageName)
-            if (resourceId != 0) Picasso.get().load(resourceId).into(binding.ivModulesItemIcon)
-            //            binding.ivModulesItemIcon.setImageResource(resourceId);
+        companion object {
+            fun from(parent: ViewGroup): ViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ModulesItemBinding.inflate(layoutInflater, parent, false)
+                return ViewHolder(binding)
+            }
         }
-
     }
 
+}
+
+class DiffCallback : DiffUtil.ItemCallback<FeatureModule>() {
+    override fun areItemsTheSame(oldItem: FeatureModule, newItem: FeatureModule) = oldItem.name == newItem.name
+
+    override fun areContentsTheSame(oldItem: FeatureModule, newItem: FeatureModule) = true
 }

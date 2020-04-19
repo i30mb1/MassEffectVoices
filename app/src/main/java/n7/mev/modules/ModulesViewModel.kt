@@ -11,6 +11,7 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import com.google.android.play.core.splitinstall.SplitInstallException
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
@@ -19,6 +20,8 @@ import com.google.android.play.core.splitinstall.SplitInstallSessionState
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallErrorCode
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import n7.mev.R
 import n7.mev.data.source.local.FeatureModule
 

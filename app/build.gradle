@@ -72,21 +72,20 @@ dependencies {
     api 'com.google.android.material:material:1.2.0-alpha05'
     api 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
     api 'androidx.vectordrawable:vectordrawable:1.1.0'
-    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     api 'androidx.paging:paging-runtime:2.1.0'
-    api 'com.google.android.play:core:1.7.1'
+    api "io.coil-kt:coil:0.9.5"
+    api 'com.google.android.play:core:1.7.2'
     api 'com.squareup.picasso:picasso:2.71828'
     api "androidx.core:core-ktx:1.2.0"
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    api "androidx.fragment:fragment-ktx:1.2.3"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    api "androidx.fragment:fragment-ktx:1.2.4"
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.70"
-
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3"
 
-    api "androidx.navigation:navigation-fragment-ktx:2.2.1"
-    api "androidx.navigation:navigation-ui-ktx:2.2.1"
-    api "androidx.navigation:navigation-runtime-ktx:2.2.1"
-}
-repositories {
-    mavenCentral()
+    api "androidx.navigation:navigation-fragment-ktx:2.2.2"
+    api "androidx.navigation:navigation-ui-ktx:2.2.2"
+    api "androidx.navigation:navigation-runtime-ktx:2.2.2"
 }

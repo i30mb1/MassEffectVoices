@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="name"
-            type="String" />
+            name="model"
+            type="n7.mev.data.source.local.FeatureModule" />
         <variable
             name="fragment"
             type="n7.mev.modules.ModulesFragment" />
@@ -19,8 +19,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
-        android:onClick="@{(view)->fragment.openModule(view,name)}"
-        android:onLongClick="@{()->fragment.showDialogDeleteModule(name)}"
+        android:onClick="@{(view)->fragment.openModule(view,model.name)}"
+        android:onLongClick="@{()->fragment.showDialogDeleteModule(model.name)}"
         app:cardElevation="1dp"
         app:cardUseCompatPadding="true">
 
@@ -34,6 +34,7 @@
                 android:layout_height="75dp"
                 android:contentDescription="@string/title_legion"
                 android:transitionName="iv"
+                loadImageByName="@{model.name}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -51,7 +52,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:text="@{name}"
+                android:text="@{model.name}"
                 android:textAllCaps="true"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
