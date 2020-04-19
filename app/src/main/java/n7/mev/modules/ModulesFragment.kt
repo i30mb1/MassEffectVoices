@@ -1,11 +1,9 @@
 package n7.mev.modules
 
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
@@ -15,13 +13,11 @@ import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.snackbar.Snackbar
 import n7.mev.R
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
-import java.io.File
-import java.text.SimpleDateFormat
-import java.util.*
 
 class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
@@ -37,9 +33,7 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         }
 
         setupPagedListAdapter()
-
         setupListeners()
-        checkDayForDialogProm()
     }
 
     private fun openActivityFromModule() {
@@ -77,41 +71,11 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupListeners() {
-//        viewModel.showSnackbar.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//            it?.let {
-//                SnackbarUtils.showSnackbar(view, getString(it))
-//            }
-//        })
-//        viewModel.startConfirmationDialog.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-//            viewModel.startConfirmationDialog(requireActivity())
-//        })
-    }
-
-    private fun checkDayForDialogProm() {
-        val dialogShowed = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(DIALOG_SHOWED, false)
-        if (dialogShowed) return
-        val currentDayInString = SimpleDateFormat("DDD", Locale.US).format(Calendar.getInstance().time)
-        val currentDay = currentDayInString.toInt()
-        val lastDay = PreferenceManager.getDefaultSharedPreferences(context).getInt(LAST_DAY, 0)
-        if (currentDay == lastDay + 1) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(DIALOG_SHOWED, true).apply()
-            showDialogRate()
-        } else {
-            PreferenceManager.getDefaultSharedPreferences(context).edit().putInt(LAST_DAY, currentDay).apply()
+        viewModel.showSnackbar.observe(viewLifecycleOwner) {
+            it?.let { Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show() }
         }
-    }
-
-    private fun showDialogRate() {
-        if (context == null) return
-        val binding: DialogRateAppBinding = DataBindingUtil.inflate(layoutInflater, R.layout.dialog_rate_app, null, false)
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setView(binding.root)
-        val dialog = builder.create()
-        dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
-        dialog.show()
-        binding.bDialogRateApp.setOnClickListener {
-            openAppStore()
-            dialog.dismiss()
+        viewModel.startConfirmationDialog.observe(viewLifecycleOwner) {
+            it?.let { viewModel.startConfirmationDialog(requireActivity()) }
         }
     }
 
@@ -163,11 +127,6 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
     companion object {
         const val MODULE_NAME = "MODULE_NAME"
-        private const val LAST_DAY = "LAST_DAY"
-        private const val DIALOG_SHOWED = "DIALOG_SHOWED"
-        fun newInstance(): ModulesFragment {
-            return ModulesFragment()
-        }
 
         /** Use external media if it is available, our app's file directory otherwise */
 //        fun getOutputDirectory(context: Context): File {
