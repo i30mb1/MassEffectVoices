@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/MassEffectVoices.iml" filepath="$PROJECT_DIR$/MassEffectVoices.iml" group="MassEffectVoices" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="MassEffectVoices/app" />
       <module fileurl="file://$PROJECT_DIR$/buildSrc/buildSrc.iml" filepath="$PROJECT_DIR$/buildSrc/buildSrc.iml" group="MassEffectVoices/buildSrc" />
+      <module fileurl="file://$PROJECT_DIR$/feature_miranda/feature_miranda.iml" filepath="$PROJECT_DIR$/feature_miranda/feature_miranda.iml" group="MassEffectVoices/feature_miranda" />
     </modules>
   </component>
 </project>
