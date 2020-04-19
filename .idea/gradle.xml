@@ -11,10 +11,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/avina" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/dlc_citadel" />
             <option value="$PROJECT_DIR$/edi" />
+            <option value="$PROJECT_DIR$/feature_avina" />
             <option value="$PROJECT_DIR$/garrus" />
             <option value="$PROJECT_DIR$/grunt" />
             <option value="$PROJECT_DIR$/illusive_man" />

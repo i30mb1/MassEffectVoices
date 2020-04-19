@@ -1,6 +1,6 @@
 include ':app' ,
         ':legion',
-        ':avina',
+        ':feature_avina',
         ':edi',
         ':garrus',
         ':grunt',

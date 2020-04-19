@@ -25,8 +25,8 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 
 
     private fun setupToolbar() {
-        (activity as MainActivity?)!!.setSupportActionBar(binding.toolbar)
-        requireActivity().title = ""
+//        (activity as MainActivity?)!!.setSupportActionBar(binding.toolbar)
+//        requireActivity().title = ""
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

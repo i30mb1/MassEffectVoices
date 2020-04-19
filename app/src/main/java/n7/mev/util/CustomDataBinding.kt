@@ -9,14 +9,15 @@ import androidx.databinding.BindingAdapter
 object CustomDataBinding {
     @kotlin.jvm.JvmStatic
     @BindingAdapter("animateWhenLoading")
-    fun animateWhenLoading(view: View, isLoading: Boolean) {
-        val animation = view.animation
-        if (isLoading && animation == null) {
-            view.startAnimation(animation)
-        } else if (animation != null) {
-            animation.cancel()
-            view.animation = null
-        }
+    fun animateWhenLoading(view: View?, isLoading: Boolean) {
+//        if(view==null) return
+//        val animation = view.animation
+//        if (isLoading && animation == null) {
+//            view.startAnimation(animation)
+//        } else if (animation != null) {
+//            animation.cancel()
+//            view.animation = null
+//        }
     }
 
     private val animation: Animation

@@ -11,11 +11,15 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.android.play.core.splitinstall.*
+import com.google.android.play.core.splitinstall.SplitInstallException
+import com.google.android.play.core.splitinstall.SplitInstallManager
+import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+import com.google.android.play.core.splitinstall.SplitInstallRequest
+import com.google.android.play.core.splitinstall.SplitInstallSessionState
+import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallErrorCode
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import n7.mev.R
-import java.util.*
 
 fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
     this.value = value
@@ -45,10 +49,10 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
     var pbProgressValue = ObservableInt()
     private var splitInstallSessionState = MutableLiveData<SplitInstallSessionState>()
     private var context: Context
-    private val allModules = HashSet(Arrays.asList(
+    private val allModules = hashSetOf(
             "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "avina",
             "jacob", "joker", "kasumi", "liara", "miranda", "mordin", "zaeed",
-            "vega", "thane", "tali", "samara", "reaper", "javik", "dlc_citadel"))
+            "vega", "thane", "tali", "samara", "reaper", "javik", "dlc_citadel")
 
     fun startConfirmationDialog(activity: Activity?) {
         try {
@@ -58,7 +62,7 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
         }
     }
 
-    fun updateModulesInSystem() {
+    private fun updateModulesInSystem() {
         val installedModules = splitInstallManager.installedModules
         availableModules.value = installedModules
         if (allModules.size == installedModules.size) {

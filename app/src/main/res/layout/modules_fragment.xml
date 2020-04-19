@@ -18,30 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:actionBarSize"
-                android:background="@color/backColor"
-                android:minHeight="?attr/actionBarSize">
-
-                <ImageView
-                    android:id="@+id/iv_modules_fragment_n7"
-                    android:transitionName="iv2"
-                    android:onLongClick="@{fragment::test}"
-                    animateWhenLoading="@{viewModel.isLoading}"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/n7"
-                    android:contentDescription="@string/n7"
-                    tools:ignore="UnusedAttribute" />
-            </androidx.appcompat.widget.Toolbar>
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"

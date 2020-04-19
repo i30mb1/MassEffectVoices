@@ -1,26 +1,18 @@
 package n7.mev.modules
 
-import android.animation.ObjectAnimator
-import android.animation.PropertyValuesHolder
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.view.ActionMode
-import androidx.core.app.ActivityOptionsCompat
-import androidx.core.util.Pair
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -28,7 +20,6 @@ import n7.mev.R
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.databinding.DialogRateAppBinding
 import n7.mev.databinding.ModulesFragmentBinding
-import n7.mev.main.MainActivity
 import n7.mev.util.SnackbarUtils
 import java.io.File
 import java.text.SimpleDateFormat
@@ -38,7 +29,6 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 
     private val viewModel: ModulesViewModel by viewModels()
     private lateinit var binding: ModulesFragmentBinding
-    private var scaleDown: ObjectAnimator? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,43 +39,8 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         }
 
         setupListeners()
-        setupToolbar()
         setupPagedListAdapter()
         checkDayForDialogProm()
-        setupAnimation()
-    }
-
-    fun test(view: View?): Boolean {
-//        openActivityFromModule();
-//        startActionMode();
-//        sendErrorResponse();
-        return true
-    }
-
-    private fun sendErrorResponse() {
-        val intent = Intent(Intent.ACTION_APP_ERROR)
-        startActivity(intent)
-    }
-
-    private fun startActionMode() {
-        val actionMode = (activity as AppCompatActivity).startSupportActionMode(object : ActionMode.Callback {
-            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
-                mode.menuInflater.inflate(R.menu.menu_multi_download, menu)
-                return true
-            }
-
-            override fun onPrepareActionMode(mode: ActionMode, menu: Menu): Boolean {
-                // при вызове invalidate
-                return false
-            }
-
-            override fun onActionItemClicked(mode: ActionMode, item: MenuItem): Boolean {
-                // обработка нажатий на айтемы меню
-                return false
-            }
-
-            override fun onDestroyActionMode(mode: ActionMode) {}
-        })
     }
 
     private fun openActivityFromModule() {
@@ -120,32 +75,6 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
             true
         }
         bottomSheetDialog.show()
-    }
-
-    private fun setupAnimation() {
-        scaleDown = ObjectAnimator.ofPropertyValuesHolder(
-                binding.ivModulesFragmentN7,
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 0.8f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 0.8f)
-        ).apply {
-            duration = 1000L
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.RESTART
-        }
-    }
-
-    override fun onPause() {
-        if (scaleDown != null) {
-            scaleDown!!.cancel()
-        }
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (scaleDown != null) {
-            scaleDown!!.start()
-        }
     }
 
     private fun setupListeners() {
@@ -195,20 +124,15 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         }
     }
 
-    private fun setupToolbar() {
-        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        requireActivity().title = ""
-    }
-
     fun openModule(view: View?, moduleName: String?) {
-        val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra(MODULE_NAME, moduleName)
-        if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), Pair(binding.ivModulesFragmentN7, "iv2"))
-            startActivity(intent, options.toBundle())
-        } else {
-            startActivity(intent)
-        }
+//        val intent = Intent(context, MainActivity::class.java)
+//        intent.putExtra(MODULE_NAME, moduleName)
+//        if (activity != null) {
+//            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), Pair(binding.ivModulesFragmentN7, "iv2"))
+//            startActivity(intent, options.toBundle())
+//        } else {
+//            startActivity(intent)
+//        }
     }
 
     fun showDialogDeleteModule(moduleName: String?): Boolean {
@@ -249,7 +173,8 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
         fun getOutputDirectory(context: Context): File {
             val appContext = context.applicationContext
             val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() } }
+                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
+            }
             return if (mediaDir != null && mediaDir.exists())
                 mediaDir else appContext.filesDir
         }
