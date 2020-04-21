@@ -9,6 +9,7 @@ import androidx.navigation.navGraphViewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.modules.ModulesViewModel
+import java.util.*
 
 class BottomModulesSheetDialog : BottomSheetDialogFragment() {
 
@@ -17,18 +18,24 @@ class BottomModulesSheetDialog : BottomSheetDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.bottom_drawer, container, false)
+        binding.nav.elevation = 0f
         return binding.root
     }
 
+    @ExperimentalStdlibApi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val installedModules = viewModel.installedModules()
-        installedModules.forEach {
-            binding.nav.menu.add(it.featureName)
+        val mapOfModules: Map<String, String> = ConvertFeaturesToMapUseCase().invoke(installedModules)
+
+        mapOfModules.forEach {
+            val item = binding.nav.menu.add(it.key)
+            val resourceId = resources.getIdentifier(it.key.toLowerCase(Locale.ROOT), "drawable", requireContext().packageName)
+            item.setIcon(resourceId)
         }
         binding.nav.setNavigationItemSelectedListener { item ->
             dismiss()
-            viewModel.installModule(item.title.toString())
+            viewModel.installModule(mapOfModules[item.title]!!)
             true
         }
     }
