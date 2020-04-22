@@ -1,22 +1,15 @@
 package n7.mev.modules
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.snackbar.Snackbar
 import n7.mev.R
-import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.databinding.ModulesFragmentBinding
 
 class ModulesFragment : Fragment(R.layout.modules_fragment) {
@@ -56,25 +49,28 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     fun showAvailableModules(view: View?) {
-       findNavController().navigate(R.id.action_modulesFragment_to_bottomModulesSheetDialog)
+        findNavController().navigate(R.id.action_modulesFragment_to_bottomModulesSheetDialog)
     }
 
     private fun setupListeners() {
-        viewModel.showMessage.observe(viewLifecycleOwner) {
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
             it?.let { Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show() }
+        }
+        viewModel.simpleMessage.observe(viewLifecycleOwner) {
+
         }
         viewModel.showConfirmationDialog.observe(viewLifecycleOwner) {
             it?.let { viewModel.startConfirmationDialog(requireActivity()) }
         }
     }
 
-    private fun openAppStore() {
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + requireActivity().packageName)))
-        } catch (a: ActivityNotFoundException) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + requireActivity().packageName)))
-        }
-    }
+//    private fun openAppStore() {
+//        try {
+//            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + requireActivity().packageName)))
+//        } catch (a: ActivityNotFoundException) {
+//            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + requireActivity().packageName)))
+//        }
+//    }
 
     fun openModule(view: View?, moduleName: String?) {
 //        val intent = Intent(context, MainActivity::class.java)
@@ -88,18 +84,18 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     fun showDialogDeleteModule(moduleName: String): Boolean {
-        if (context != null) {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setMessage(getString(R.string.dialog_delete_module))
-            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                viewModel.deleteModule(moduleName)
-                dialog.dismiss()
-            }
-            builder.setNegativeButton(android.R.string.no) { dialog, which -> dialog.dismiss() }
-            val dialog = builder.create()
-            dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
-            dialog.show()
-        }
+//        if (context != null) {
+//            val builder = AlertDialog.Builder(requireContext())
+//            builder.setMessage(getString(R.string.dialog_delete_module))
+//            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+//                viewModel.deleteModule(moduleName)
+//                dialog.dismiss()
+//            }
+//            builder.setNegativeButton(android.R.string.no) { dialog, which -> dialog.dismiss() }
+//            val dialog = builder.create()
+//            dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
+//            dialog.show()
+//        }
         return true
     }
 

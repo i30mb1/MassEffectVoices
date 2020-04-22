@@ -27,7 +27,7 @@
         <Button
             android:id="@+id/b_modules_fragment_add"
             style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            isVisible="@{viewModel.buttonVisibility}"
+            isVisible="@{viewModel.loadButtonVisibility}"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
