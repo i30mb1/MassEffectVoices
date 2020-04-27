@@ -2,9 +2,11 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     package="ad2.n7.dlc_citadel">
 
-    <!--dist:onDemand="true"  если true то модуль доступен для скачивания по требованию
-                              если false то модуль будет скачан при первой инсталяции -->
+    <!--dist:onDemand="true" будет ли модуль включён в сборку при установке -->
+    <!--dist:instant="false" помечаем instant-Enable модуль-->
+    <!--dist:include="false" указываем будет ли бодуль включён в APK для preLollipop-->
     <dist:module
+
         dist:instant="false"
         dist:onDemand="true"
         dist:title="@string/title_dlc_citadel">
