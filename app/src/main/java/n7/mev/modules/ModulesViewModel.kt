@@ -9,12 +9,16 @@ import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.asLiveData
+import com.google.android.play.core.ktx.requestProgressFlow
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallSessionState
 import com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
 import n7.mev.data.source.local.FeatureModule
 import kotlin.math.roundToInt
 
@@ -42,6 +46,15 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
     val showConfirmationDialog: LiveData<Boolean?> = _showConfirmationDialog
 
     private val splitInstallManager: SplitInstallManager = SplitInstallManagerFactory.create(application)
+    val statusManager: LiveData<String> = splitInstallManager.requestProgressFlow()
+            .map {state ->
+                when (state.status()) {
+                    SplitInstallSessionStatus.CANCELED -> {""}
+                    else -> {""}
+                }
+            }
+            .catch {  }
+            .asLiveData()
 
     private val _isLoading = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = _isLoading
