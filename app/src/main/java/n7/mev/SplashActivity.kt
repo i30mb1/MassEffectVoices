@@ -24,6 +24,7 @@ class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_splash)
 

@@ -1,4 +1,14 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import com.android.build.gradle.internal.plugins.AppPlugin
+import com.android.build.gradle.internal.plugins.DynamicFeaturePlugin
+import com.android.build.gradle.internal.plugins.LibraryPlugin
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
 
 buildscript {
     repositories {
@@ -6,18 +16,34 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.5.2")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:2.2.2")
-        classpath(kotlin("gradle-plugin", version = "1.3.70"))
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath("com.android.tools.build:gradle:${Versions.gradlePlugin}")
+        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.safeArgs}")
+        classpath(kotlin("gradle-plugin", version = Versions.kotlin))
     }
 }
 
-allprojects {
-    repositories {
-        google()
-        jcenter()
+subprojects {
+    plugins.matching { it is AppPlugin || it is DynamicFeaturePlugin || it is LibraryPlugin }.whenPluginAdded {
+        configure<com.android.build.gradle.BaseExtension> {
+            compileSdkVersion(Apps.compileSdk)
+
+            defaultConfig {
+                minSdkVersion(Apps.minSdk)
+                targetSdkVersion(Apps.targetSdk)
+            }
+
+            compileOptions {
+                sourceCompatibility = JavaVersion.VERSION_1_8
+                targetCompatibility = JavaVersion.VERSION_1_8
+            }
+
+            tasks.withType<KotlinCompile> {
+                kotlinOptions {
+                    noStdlib = true
+                    jvmTarget = JavaVersion.VERSION_1_8.toString()
+                }
+            }
+        }
     }
 }
 
