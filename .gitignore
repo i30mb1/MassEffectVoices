@@ -7,7 +7,6 @@
 /build
 /captures
 .externalNativeBuild
-*.ogg
-buildSrc/**/*
-!buildSrc/src/**/*
 *.log
+/buildSrc/build/**
+

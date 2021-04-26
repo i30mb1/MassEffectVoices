@@ -14,7 +14,7 @@ android {
         versionCode = Apps.versionCode
         versionName = Apps.versionName
 
-//        buildConfigField("FEATURE_MODULE_NAMES", ModuleDependency.getDynamicFeatureModules().toSet())
+        buildConfigField("FEATURE_MODULE_NAMES", ModuleDependency.getDynamicFeatureModules().toSet())
     }
 
     buildFeatures {
