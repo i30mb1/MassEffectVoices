@@ -11,31 +11,24 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?android:actionBarSize"
-            android:background="@color/backColor"
-            android:minHeight="?attr/actionBarSize">
+            android:background="@color/backColor">
 
             <ImageView
-                android:id="@+id/iv_modules_fragment_n7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="4dp"
                 android:contentDescription="@string/n7"
-                app:srcCompat="@drawable/n7"
-                tools:ignore="UnusedAttribute" />
+                app:srcCompat="@drawable/n7" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <fragment
-        android:id="@+id/nav_main_activity"
-        android:name="androidx.navigation.fragment.NavHostFragment"
+    <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?android:actionBarSize"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        android:layout_marginTop="?android:actionBarSize" />
 
 </FrameLayout>

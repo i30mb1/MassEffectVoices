@@ -1,7 +1,9 @@
 package n7.mev
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
+import n7.mev.ui.heroes.HeroesFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -9,6 +11,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        BuildConfig.APPLICATION_ID
+        if (savedInstanceState == null) {
+            supportFragmentManager.commit {
+                replace(R.id.container, HeroesFragment.newInstance())
+            }
+        }
     }
 }

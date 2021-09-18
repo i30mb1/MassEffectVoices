@@ -36,7 +36,7 @@
     <string name="title_samara" translatable="false">Samara</string>
     <string name="title_reaper" translatable="false">Reaper</string>
     <string name="title_javik" translatable="false">Javik</string>
-    <string name="modules_fragment_add_module">Module</string>
+    <string name="add_module">Module</string>
     <string name="dialog_delete_module">delete module?</string>
     <string name="n7" translatable="false">n7</string>
     <string name="dialog_rate_app_summary">Rate this app in Google Play and leave the comment that this is the your favorite application on the citadel</string>

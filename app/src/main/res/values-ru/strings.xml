@@ -16,7 +16,7 @@
     <string name="all_enable">ДА</string>
     <string name="all_enable_permission_from_setting">Дайте разрешение из настроек</string>
     <string name="all_permission_denied">Отклоненно</string>
-    <string name="modules_fragment_add_module">добавить модуль</string>
+    <string name="add_module">добавить модуль</string>
     <string name="dialog_rate_app_title">Человечеству нужна твоя помощь!</string>
     <string name="dialog_rate_app_summary">Оцени приложение в Google Play и напиши что это лучшее приложение на цитодели</string>
     <string name="dialog_delete_module">удалить модуль?</string>

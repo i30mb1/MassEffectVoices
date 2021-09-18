@@ -4,24 +4,30 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import n7.mev.MainActivity
 import n7.mev.R
-import n7.mev.databinding.ModulesFragmentBinding
-import n7.mev.modules.ModulesPagedListAdapter
+import n7.mev.databinding.HeroesFragmentBinding
+import n7.mev.ui.heroes.vo.HeroVO
 
-class HeroesFragment : Fragment(R.layout.modules_fragment) {
+class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) {
 
-    private val viewModel: HeroesViewModel by navGraphViewModels(R.id.nav_graph)
-    private lateinit var binding: ModulesFragmentBinding
+    companion object {
+        fun newInstance(): HeroesFragment {
+            return HeroesFragment()
+        }
+    }
+
+    private val viewModel: HeroesViewModel by viewModels()
+    private lateinit var binding: HeroesFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ModulesFragmentBinding.bind(view)
+        binding = HeroesFragmentBinding.bind(view)
 
         setupPagedListAdapter()
         setupListeners()
@@ -52,13 +58,12 @@ class HeroesFragment : Fragment(R.layout.modules_fragment) {
 
     private fun setupListeners() {
         viewModel.errorMessage.observe(viewLifecycleOwner) {
-            it?.let { Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show() }
-        }
-        viewModel.simpleMessage.observe(viewLifecycleOwner) {
-
+            if (it == null) return@observe
+            Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
         }
         viewModel.showConfirmationDialog.observe(viewLifecycleOwner) {
-            it?.let { viewModel.startConfirmationDialog(requireActivity()) }
+            if (it == null) return@observe
+            viewModel.startConfirmationDialog(requireActivity())
         }
     }
 
@@ -72,7 +77,7 @@ class HeroesFragment : Fragment(R.layout.modules_fragment) {
 
     fun openModule(view: View?, moduleName: String?) {
         val intent = Intent(context, MainActivity::class.java)
-        intent.putExtra(MODULE_NAME, moduleName)
+//        intent.putExtra(MODULE_NAME, moduleName)
         startActivity(intent)
     }
 
@@ -93,7 +98,8 @@ class HeroesFragment : Fragment(R.layout.modules_fragment) {
     }
 
     private fun setupPagedListAdapter() {
-        val modulesPagedListAdapter = ModulesPagedListAdapter(this)
+        val onHeroClickListener: (model: HeroVO) -> Unit = { }
+        val modulesPagedListAdapter = HeroesAdapter(layoutInflater, onHeroClickListener)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = modulesPagedListAdapter
@@ -102,18 +108,4 @@ class HeroesFragment : Fragment(R.layout.modules_fragment) {
         viewModel.installedModules.observe(viewLifecycleOwner, modulesPagedListAdapter::submitList)
     }
 
-
-    companion object {
-        const val MODULE_NAME = "MODULE_NAME"
-
-        /** Use external media if it is available, our app's file directory otherwise */
-//        fun getOutputDirectory(context: Context): File {
-//            val appContext = context.applicationContext
-//            val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
-//                File(it, appContext.resources.getString(R.string.app_name)).apply { mkdirs() }
-//            }
-//            return if (mediaDir != null && mediaDir.exists())
-//                mediaDir else appContext.filesDir
-//        }
-    }
 }
