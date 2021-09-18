@@ -13,20 +13,15 @@ import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.ModulesFragmentBinding
 import n7.mev.modules.ModulesPagedListAdapter
-import n7.mev.modules.ModulesViewModel
 
 class HeroesFragment : Fragment(R.layout.modules_fragment) {
 
-    private val viewModel: ModulesViewModel by navGraphViewModels(R.id.nav_graph)
+    private val viewModel: HeroesViewModel by navGraphViewModels(R.id.nav_graph)
     private lateinit var binding: ModulesFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ModulesFragmentBinding.bind(view).also {
-            it.lifecycleOwner = viewLifecycleOwner
-            it.viewModel = viewModel
-            it.fragment = this
-        }
+        binding = ModulesFragmentBinding.bind(view)
 
         setupPagedListAdapter()
         setupListeners()

@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout-land/main_fragment.xml" value="0.14814814814814814" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/activity_main.xml" value="0.175" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/activity_splash.xml" value="0.175" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/bottom_drawer.xml" value="0.22192028985507245" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/dialog_rate_app.xml" value="0.175" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/main_fragment.xml" value="0.175" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/modules_activity.xml" value="0.175" />
         <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/modules_fragment.xml" value="0.215625" />
         <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/modules_item.xml" value="0.2708333333333333" />
+        <entry key="..\:/Users/i30mb1/AndroidProjects/MassEffectVoices/app/src/main/res/layout/sound_item.xml" value="0.175" />
       </map>
     </option>
   </component>

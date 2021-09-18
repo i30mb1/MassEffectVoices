@@ -1,52 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <data>
-
-        <variable
-            name="fragment"
-            type="n7.mev.ui.heroes.HeroesFragment" />
-
-        <variable
-            name="viewModel"
-            type="n7.mev.modules.ModulesViewModel" />
-    </data>
-
-    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:listitem="@layout/modules_item" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:listitem="@layout/modules_item" />
+    <Button
+        android:id="@+id/b_modules_fragment_add"
+        style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom"
+        android:text="@string/modules_fragment_add_module"
+        android:textAllCaps="true"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="14sp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <Button
-            android:id="@+id/b_modules_fragment_add"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom"
-            android:onClick="@{fragment::showAvailableModules}"
-            android:text="@string/modules_fragment_add_module"
-            android:textAllCaps="true"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="14sp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-        <ProgressBar
-            android:id="@+id/pb_modules_fragment"
-            style="?android:attr/progressBarStyleHorizontal"
-            isVisible="@{viewModel.isLoading}"
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:indeterminate="false"
-            android:max="@{viewModel.pbMaxValue}"
-            android:progress="@{viewModel.pbProgressValue}"
-            android:scaleY="3" />
-    </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-</layout>
+    <ProgressBar
+        android:id="@+id/pb_modules_fragment"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:indeterminate="false"
+        android:scaleY="3" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

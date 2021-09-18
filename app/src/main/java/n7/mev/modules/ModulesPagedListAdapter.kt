@@ -22,9 +22,7 @@ class ModulesPagedListAdapter constructor(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindTo(model: FeatureModule, fragment: HeroesFragment) {
-            binding.fragment = fragment
-            binding.model = model
-            binding.executePendingBindings()
+
         }
 
         companion object {

@@ -1,7 +1,6 @@
 package n7.mev.main
 
 import android.Manifest
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.Application
 import android.app.DownloadManager
@@ -17,16 +16,18 @@ import android.os.Environment
 import android.provider.MediaStore
 import android.provider.Settings
 import androidx.core.content.ContextCompat
-import androidx.databinding.ObservableBoolean
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import n7.mev.R
-import java.io.*
-import java.util.concurrent.Executor
-import java.util.concurrent.Executors
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.util.concurrent.*
 
 class MainViewModel(application: Application, moduleName: String) : AndroidViewModel(application) {
     val grandSettingEvent = SingleLiveEvent<Void?>()
@@ -36,20 +37,20 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     val showSnackBarFolder = SingleLiveEvent<Void?>()
 
     @kotlin.jvm.JvmField
-    var isLoading = ObservableBoolean(true)
-    private var lastPlaying: ObservableBoolean? = null
+    var isLoading = MutableLiveData(true)
+    private var lastPlaying = MutableLiveData(false)
     private val soundStorage: SoundStorage
     private val diskIO: Executor
     private var mediaPlayer: MediaPlayer? = null
     fun createPagedListData(lastVisibleItem: Int): LiveData<PagedList<SoundModel?>> {
         val soundSourceFactory = SoundSourceFactory(soundStorage)
         val config = PagedList.Config.Builder()
-                .setEnablePlaceholders(false)
-                .setPageSize(100)
-                .build()
+            .setEnablePlaceholders(false)
+            .setPageSize(100)
+            .build()
         return LivePagedListBuilder(soundSourceFactory, config)
-                .setInitialLoadKey(lastVisibleItem)
-                .build()
+            .setInitialLoadKey(lastVisibleItem)
+            .build()
     }
 
     fun getStartActivityForResultSaveFile(): LiveData<Intent?> {
@@ -72,7 +73,11 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     }
 
     private fun canWriteExternalStorage(): Boolean {
-        return if (ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        return if (ContextCompat.checkSelfPermission(
+                getApplication(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             grandSPermission.call()
             false
         } else {
@@ -108,9 +113,9 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     fun startPlay(context: Context, soundModel: SoundModel) {
         try {
             if (lastPlaying != null) {
-                lastPlaying!!.set(false)
+                lastPlaying!!.value = (false)
             }
-            soundModel.playing!!.set(true)
+            soundModel.playing!!.value = (true)
             if (mediaPlayer != null) {
                 mediaPlayer!!.release()
             }
@@ -120,9 +125,9 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
             mediaPlayer!!.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
             mediaPlayer!!.prepareAsync()
             mediaPlayer!!.setOnPreparedListener { mediaPlayer!!.start() }
-            mediaPlayer!!.setOnCompletionListener { soundModel.playing!!.set(false) }
+            mediaPlayer!!.setOnCompletionListener { soundModel.playing!!.value = (false) }
         } catch (e: IOException) {
-            soundModel.playing!!.set(false)
+            soundModel.playing!!.value = (false)
             e.printStackTrace()
         }
     }
@@ -180,7 +185,10 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         val request = DownloadManager.Request(Uri.parse("file:///android_asset/" + soundModel.path))
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(Environment.getExternalStorageDirectory().path, File.separator + context.getString(R.string.app_name) + File.separator + soundModel.name)
+        request.setDestinationInExternalPublicDir(
+            Environment.getExternalStorageDirectory().path,
+            File.separator + context.getString(R.string.app_name) + File.separator + soundModel.name
+        )
         val referese = dm.enqueue(request)
         //        Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
     }

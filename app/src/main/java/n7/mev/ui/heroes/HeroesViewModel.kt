@@ -5,7 +5,6 @@ import android.app.Application
 import android.content.Context
 import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
-import androidx.databinding.ObservableInt
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,7 +27,7 @@ fun <T> MutableLiveData<T>.setSingleEvent(value: T) {
     this.value = null
 }
 
-class ModulesViewModel(application: Application) : AndroidViewModel(application), SplitInstallStateUpdatedListener {
+class HeroesViewModel(application: Application) : AndroidViewModel(application), SplitInstallStateUpdatedListener {
 
     companion object {
         const val PREFIX = "feature_"
@@ -48,27 +47,32 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     private val splitInstallManager: SplitInstallManager = SplitInstallManagerFactory.create(application)
     val statusManager: LiveData<String> = splitInstallManager.requestProgressFlow()
-            .map {state ->
-                when (state.status()) {
-                    SplitInstallSessionStatus.CANCELED -> {""}
-                    else -> {""}
+        .map { state ->
+            when (state.status()) {
+                SplitInstallSessionStatus.CANCELED -> {
+                    ""
+                }
+                else -> {
+                    ""
                 }
             }
-            .catch {  }
-            .asLiveData()
+        }
+        .catch { }
+        .asLiveData()
 
     private val _isLoading = MutableLiveData<Boolean>()
     var isLoading: LiveData<Boolean> = _isLoading
 
-    var pbMaxValue = ObservableInt()
-    var pbProgressValue = ObservableInt()
+    var pbMaxValue = MutableLiveData(0)
+    var pbProgressValue = MutableLiveData(0)
 
     private var splitInstallSessionState = MutableLiveData<SplitInstallSessionState>()
     private var context: Context
     private val allModules = hashSetOf(
-            "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "feature_avina",
-            "jacob", "joker", "kasumi", "liara", "miranda", "mordin", "zaeed",
-            "vega", "thane", "tali", "samara", "reaper", "javik", "dlc_citadel")
+        "legion", "edi", "garrus", "grunt", "illusive_man", "jack", "feature_avina",
+        "jacob", "joker", "kasumi", "liara", "miranda", "mordin", "zaeed",
+        "vega", "thane", "tali", "samara", "reaper", "javik", "dlc_citadel"
+    )
 
 
     init {
@@ -107,22 +111,22 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     fun installModule(moduleName: String) {
         val request = SplitInstallRequest.newBuilder()
-                .addModule(moduleName)
-                .build()
+            .addModule(moduleName)
+            .build()
         splitInstallManager.startInstall(request)
-                .addOnFailureListener { e ->
-                    _errorMessage.setSingleEvent(e.message)
-                    _isLoading.value = false
-                }
-                .addOnSuccessListener {
-                    _isLoading.value = false
-                    updateInstalledModules()
-                }
+            .addOnFailureListener { e ->
+                _errorMessage.setSingleEvent(e.message)
+                _isLoading.value = false
+            }
+            .addOnSuccessListener {
+                _isLoading.value = false
+                updateInstalledModules()
+            }
     }
 
     private fun refreshContext() {
         try {
-            SplitInstallHelper.updateAppInfo(context)
+            SplitInstallHelper.updateAppInfo(getApplication())
             context = context.createPackageContext(context.packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
@@ -156,9 +160,9 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     private fun displayLoadingState(state: SplitInstallSessionState) {
         val max = state.totalBytesToDownload().toFloat().roundToInt()
-        pbMaxValue.set(max)
+        pbMaxValue.value = max
         val progress = state.bytesDownloaded().toFloat().roundToInt()
-        pbProgressValue.set(progress)
+        pbProgressValue.value = progress
     }
 
     override fun onCleared() {

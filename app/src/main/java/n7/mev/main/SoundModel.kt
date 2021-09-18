@@ -1,6 +1,6 @@
 package n7.mev.main
 
-import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 import java.io.File
 
 class SoundModel(name: String, hero: String?, id: Int) {
@@ -23,7 +23,7 @@ class SoundModel(name: String, hero: String?, id: Int) {
     }
 
     @kotlin.jvm.JvmField
-    var playing: ObservableBoolean? = ObservableBoolean(false)
+    var playing = MutableLiveData(false)
     var name: String?
     val path: String?
     val id: Int

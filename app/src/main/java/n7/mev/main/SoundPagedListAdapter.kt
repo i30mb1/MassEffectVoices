@@ -5,11 +5,9 @@ import android.animation.ObjectAnimator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import n7.mev.R
 import n7.mev.databinding.SoundItemBinding
 
 class SoundPagedListAdapter internal constructor(private val mainViewModel: MainViewModel?) : PagedListAdapter<SoundModel, SoundPagedListAdapter.ViewHolder>(diffCallback) {
@@ -34,7 +32,7 @@ class SoundPagedListAdapter internal constructor(private val mainViewModel: Main
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         if (inflater == null) inflater = LayoutInflater.from(parent.context)
-        val binding: SoundItemBinding = DataBindingUtil.inflate(inflater!!, R.layout.sound_item, parent, false)
+        val binding: SoundItemBinding = SoundItemBinding.inflate(inflater!!, parent, false)
         return ViewHolder(binding)
     }
 
@@ -50,9 +48,7 @@ class SoundPagedListAdapter internal constructor(private val mainViewModel: Main
 
     inner class ViewHolder(var binding: SoundItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bindTo(model: SoundModel?) {
-            binding.sound = model
-            binding.model = mainViewModel
-            binding.executePendingBindings()
+
         }
 
         fun clear() {

@@ -1,4 +1,4 @@
-package n7.mev.main
+package n7.mev.ui.sounds
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import n7.mev.R
 import n7.mev.databinding.MainFragmentBinding
+import n7.mev.main.MainViewModel
+import n7.mev.main.MainViewModelFactory
+import n7.mev.main.SoundPagedListAdapter
 import n7.mev.ui.heroes.HeroesFragment
 
-class MainFragment : Fragment(R.layout.main_fragment) {
+class SoundsFragment : Fragment(R.layout.main_fragment) {
+
+    companion object {
+        fun newInstance(): SoundsFragment {
+            return SoundsFragment()
+        }
+    }
+
     private val mViewModel: MainViewModel by viewModels {
         MainViewModelFactory(requireActivity().application, moduleName)
     }
@@ -47,8 +57,6 @@ class MainFragment : Fragment(R.layout.main_fragment) {
 //        mViewModel.createPagedListData(lastVisibleItem).observe(viewLifecycleOwner, Observer {
 //            soundModels -> adapter.submitList(soundModels)
 //        })
-        binding.viewModel = mViewModel
-        binding.executePendingBindings()
 
 //        int resourceId = getResources().getIdentifier(moduleName, "drawable", getActivity().getPackageName());
 //        binding.ivMainFragmentHero.setImageResource(resourceId);
@@ -79,9 +87,4 @@ class MainFragment : Fragment(R.layout.main_fragment) {
         recyclerView.adapter = adapter
     }
 
-    companion object {
-        fun newInstance(): MainFragment {
-            return MainFragment()
-        }
-    }
 }

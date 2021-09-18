@@ -2,15 +2,15 @@ package n7.mev.main
 
 import android.app.Application
 import android.util.Pair
-import androidx.databinding.ObservableBoolean
+import androidx.lifecycle.MutableLiveData
 import java.io.IOException
 import java.util.*
-import java.util.concurrent.Executor
+import java.util.concurrent.*
 
 class SoundStorage(private val application: Application, private val moduleName: String?, private val executor: Executor) {
     private var currentSounds: Array<String>? = arrayOf()
     var invalidate: Invalidate? = null
-    fun load(isLoading: ObservableBoolean?) {
+    fun load(isLoading: MutableLiveData<Boolean>) {
         executor.execute { //                try {
 //                    Thread.sleep(3000);
 //                } catch (InterruptedException e) {
@@ -22,7 +22,7 @@ class SoundStorage(private val application: Application, private val moduleName:
                 e.printStackTrace()
             } finally {
                 if (invalidate != null) invalidate!!.invalidate()
-                isLoading?.set(false)
+                isLoading?.value = (false)
             }
         }
     }
