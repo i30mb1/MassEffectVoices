@@ -10,7 +10,7 @@
             type="n7.mev.data.source.local.FeatureModule" />
         <variable
             name="fragment"
-            type="n7.mev.modules.ModulesFragment" />
+            type="n7.mev.ui.heroes.HeroesFragment" />
 
     </data>
 

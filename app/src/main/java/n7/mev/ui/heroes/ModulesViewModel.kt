@@ -1,4 +1,4 @@
-package n7.mev.modules
+package n7.mev.ui.heroes
 
 import android.app.Activity
 import android.app.Application

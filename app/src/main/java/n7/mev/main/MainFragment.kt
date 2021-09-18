@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import n7.mev.R
 import n7.mev.databinding.MainFragmentBinding
-import n7.mev.modules.ModulesFragment
+import n7.mev.ui.heroes.HeroesFragment
 
 class MainFragment : Fragment(R.layout.main_fragment) {
     private val mViewModel: MainViewModel by viewModels {
@@ -35,7 +34,7 @@ class MainFragment : Fragment(R.layout.main_fragment) {
             lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
             moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)!!
         } else {
-            moduleName = requireActivity().intent.getStringExtra(ModulesFragment.Companion.MODULE_NAME)
+            moduleName = requireActivity().intent.getStringExtra(HeroesFragment.Companion.MODULE_NAME)
         }
 //        binding = MainFragmentBinding.bind(view).apply {
 //            this.viewModel = mViewModel

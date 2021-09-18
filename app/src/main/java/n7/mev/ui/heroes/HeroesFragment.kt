@@ -1,4 +1,4 @@
-package n7.mev.modules
+package n7.mev.ui.heroes
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,12 +9,13 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
-import n7.mev.BuildConfig
 import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.ModulesFragmentBinding
+import n7.mev.modules.ModulesPagedListAdapter
+import n7.mev.modules.ModulesViewModel
 
-class ModulesFragment : Fragment(R.layout.modules_fragment) {
+class HeroesFragment : Fragment(R.layout.modules_fragment) {
 
     private val viewModel: ModulesViewModel by navGraphViewModels(R.id.nav_graph)
     private lateinit var binding: ModulesFragmentBinding

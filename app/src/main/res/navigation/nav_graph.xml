@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/modulesFragment"
-        android:name="n7.mev.modules.ModulesFragment"
+        android:name="n7.mev.ui.heroes.HeroesFragment"
         android:label="ModulesFragment" >
         <action
             android:id="@+id/action_modulesFragment_to_bottomModulesSheetDialog"

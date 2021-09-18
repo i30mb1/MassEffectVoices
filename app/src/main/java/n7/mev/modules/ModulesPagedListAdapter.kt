@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import n7.mev.data.source.local.FeatureModule
 import n7.mev.databinding.ModulesItemBinding
+import n7.mev.ui.heroes.HeroesFragment
 
 class ModulesPagedListAdapter constructor(
-        private val fragment: ModulesFragment
+        private val fragment: HeroesFragment
 ) : ListAdapter<FeatureModule, ModulesPagedListAdapter.ViewHolder>(DiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder.from(parent)
@@ -20,7 +21,7 @@ class ModulesPagedListAdapter constructor(
             var binding: ModulesItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindTo(model: FeatureModule, fragment: ModulesFragment) {
+        fun bindTo(model: FeatureModule, fragment: HeroesFragment) {
             binding.fragment = fragment
             binding.model = model
             binding.executePendingBindings()
