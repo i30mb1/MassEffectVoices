@@ -5,7 +5,6 @@ plugins {
     androidApp()
     kotlinAndroid()
     kotlinKapt()
-    safeargs()
 }
 
 android {

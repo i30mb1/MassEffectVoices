@@ -11,6 +11,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import com.google.android.play.core.ktx.requestProgressFlow
+import com.google.android.play.core.splitinstall.SplitInstallHelper
 import com.google.android.play.core.splitinstall.SplitInstallManager
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
@@ -85,7 +86,7 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     fun startConfirmationDialog(activity: Activity) {
         try {
-            splitInstallManager.startConfirmationDialogForResult(splitInstallSessionState.value, activity, 0)
+            splitInstallManager.startConfirmationDialogForResult(splitInstallSessionState.value!!, activity, 0)
         } catch (e: SendIntentException) {
             _errorMessage.setSingleEvent(e.message)
         }

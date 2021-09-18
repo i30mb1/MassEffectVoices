@@ -17,7 +17,6 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.2")
-        classpath("androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.safeArgs}")
         classpath(kotlin("gradle-plugin", version = Versions.kotlin))
     }
 }

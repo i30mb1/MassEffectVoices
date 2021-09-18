@@ -1,15 +1,16 @@
 package n7.mev.modules
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import n7.mev.BuildConfig
+import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.ModulesFragmentBinding
 
@@ -74,14 +75,9 @@ class ModulesFragment : Fragment(R.layout.modules_fragment) {
 //    }
 
     fun openModule(view: View?, moduleName: String?) {
-        val intent = intentIntent(context, MainActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java)
         intent.putExtra(MODULE_NAME, moduleName)
-        if (activity != null) {
-            val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), Pair(binding.ivModulesFragmentN7, "iv2"))
-            startActivity(intent, options.toBundle())
-        } else {
-            startActivity(intent)
-        }
+        startActivity(intent)
     }
 
     fun showDialogDeleteModule(moduleName: String): Boolean {
