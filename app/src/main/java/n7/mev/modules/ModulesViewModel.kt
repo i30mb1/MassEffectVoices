@@ -105,8 +105,6 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun installModule(moduleName: String) {
-        if (!allModules.contains(moduleName)) return
-
         val request = SplitInstallRequest.newBuilder()
                 .addModule(moduleName)
                 .build()
@@ -123,6 +121,7 @@ class ModulesViewModel(application: Application) : AndroidViewModel(application)
 
     private fun refreshContext() {
         try {
+            SplitInstallHelper.updateAppInfo(context)
             context = context.createPackageContext(context.packageName, 0)
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()

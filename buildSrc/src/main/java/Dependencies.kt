@@ -4,8 +4,8 @@ object Apps {
     const val applicationId = "n7.mev"
     const val minSdk        = 23
     const val targetSdk     = 30
-    const val versionCode   = 15
-    const val versionName   = "15"
+    const val versionCode   = 16
+    const val versionName   = "16"
 }
 
 object Versions {
