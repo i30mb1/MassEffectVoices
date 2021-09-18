@@ -1,3 +1,4 @@
+import ModuleDependency.getDynamicFeatureModules
 import com.android.build.gradle.internal.dsl.DefaultConfig
 
 plugins {
@@ -14,7 +15,9 @@ android {
         versionCode = Apps.versionCode
         versionName = Apps.versionName
 
-        buildConfigField("FEATURE_MODULE_NAMES", ModuleDependency.getDynamicFeatureModules().toSet())
+        val strValue =
+            getDynamicFeatureModules().toSet().joinToString(prefix = "{", separator = ",", postfix = "}", transform = { "\"$it\"" })
+        buildConfigField("String[]", name, strValue)
     }
 
     buildFeatures {
@@ -28,7 +31,7 @@ android {
     }
 
     // Each feature module that is included in settings.gradle.kts is added here as dynamic feature
-    dynamicFeatures = ModuleDependency.getDynamicFeatureModules().toMutableSet()
+    setDynamicFeatures(getDynamicFeatureModules().toMutableSet())
 
 }
 
@@ -60,7 +63,7 @@ dependencies {
     api("androidx.navigation:navigation-runtime-ktx:2.2.2")
 }
 
-fun DefaultConfig.buildConfigField(name: String, value: Set<String>) {
+fun DefaultConfig.buildConfigField1(name: String, value: Set<String>) {
     // Generates String that holds Java String Array code
     val strValue =
         value.joinToString(prefix = "{", separator = ",", postfix = "}", transform = { "\"$it\"" })
