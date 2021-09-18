@@ -27,8 +27,8 @@ subprojects {
             compileSdkVersion(Apps.compileSdk)
 
             defaultConfig {
-                minSdkVersion(Apps.minSdk)
-                targetSdkVersion(Apps.targetSdk)
+                minSdk = Apps.minSdk
+                targetSdk = Apps.targetSdk
             }
 
             compileOptions {

@@ -50,9 +50,6 @@ dependencies {
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
-    implementation("androidx.test.ext:junit-ktx:1.1.1")
-    implementation("androidx.test.ext:truth:1.2.0")
-
     // Libraries which can be re-used in other modules should use the `api` keyword.
     // This way they can be shared with dependent feature modules.
 
