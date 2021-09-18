@@ -9,9 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import n7.mev.R
 import n7.mev.databinding.MainFragmentBinding
 import n7.mev.main.MainViewModel
-import n7.mev.main.MainViewModelFactory
 import n7.mev.main.SoundPagedListAdapter
-import n7.mev.ui.heroes.HeroesFragment
 
 class SoundsFragment : Fragment(R.layout.main_fragment) {
 
@@ -21,9 +19,7 @@ class SoundsFragment : Fragment(R.layout.main_fragment) {
         }
     }
 
-    private val mViewModel: MainViewModel by viewModels {
-        MainViewModelFactory(requireActivity().application, moduleName)
-    }
+    private val mViewModel: MainViewModel by viewModels()
     private val LAST_VISIBLE_ITEM = "LAST_VISIBLE_ITEM"
     private val LAST_SELECTED_HERO = "LAST_SELECTED_HERO"
     private lateinit var binding: MainFragmentBinding
@@ -43,8 +39,6 @@ class SoundsFragment : Fragment(R.layout.main_fragment) {
         if (savedInstanceState != null) {
             lastVisibleItem = savedInstanceState.getInt(LAST_VISIBLE_ITEM)
             moduleName = savedInstanceState.getString(LAST_SELECTED_HERO)!!
-        } else {
-            moduleName = requireActivity().intent.getStringExtra(HeroesFragment.Companion.MODULE_NAME)
         }
 //        binding = MainFragmentBinding.bind(view).apply {
 //            this.viewModel = mViewModel

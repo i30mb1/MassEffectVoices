@@ -11,7 +11,9 @@
     </dist:module>
 
     <application>
-        <activity android:name="n7.mev.avina.SecretActivity">
+        <activity
+            android:name="n7.mev.avina.SecretActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>

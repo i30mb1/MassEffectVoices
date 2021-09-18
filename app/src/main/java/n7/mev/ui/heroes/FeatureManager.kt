@@ -38,7 +38,7 @@ class FeatureManager(
     private val installManager = SplitInstallManagerFactory.create(application)
 
     val status: MutableStateFlow<FeatureState> = MutableStateFlow(FeatureState.Nothing)
-    val installManagerStatus = installManager.requestProgressFlow()
+    private val installManagerStatus = installManager.requestProgressFlow()
         .map { state: SplitInstallSessionState ->
             when (state.status()) {
                 REQUIRES_USER_CONFIRMATION -> FeatureState.RequiredInformation(state)
@@ -66,6 +66,14 @@ class FeatureManager(
             .addModule(moduleName)
             .build()
         installManager.startInstall(request)
+    }
+
+    fun getInstalledModules(): Set<String> {
+        return installManager.installedModules
+    }
+
+    fun getAvailableModules() {
+
     }
 
 }

@@ -1,10 +1,10 @@
 // when we have all version's here how can we know there is new version available for our lib?
 object Apps {
-    const val compileSdk = 30
+    const val compileSdk = 31
     const val applicationId = "n7.mev"
-    const val minSdk        = 23
-    const val targetSdk     = 30
-    const val versionCode   = 16
+    const val minSdk = 23
+    const val targetSdk = 31
+    const val versionCode = 16
     const val versionName   = "16"
 }
 

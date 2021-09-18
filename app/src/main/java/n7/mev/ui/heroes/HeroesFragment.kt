@@ -5,14 +5,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
@@ -61,13 +55,13 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     }
 
     private fun setupListeners() {
-        viewModel.error.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .onEach { error -> Snackbar.make(binding.root, error.message.toString(), Snackbar.LENGTH_SHORT).show() }
-            .launchIn(lifecycleScope)
-
-        viewModel.showConfirmationDialog.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .onEach { viewModel.startConfirmationDialog(requireActivity()) }
-            .launchIn(lifecycleScope)
+//        viewModel.error.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+//            .onEach { error -> Snackbar.make(binding.root, error.message.toString(), Snackbar.LENGTH_SHORT).show() }
+//            .launchIn(lifecycleScope)
+//
+//        viewModel.showConfirmationDialog.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+//            .onEach { viewModel.startConfirmationDialog(requireActivity()) }
+//            .launchIn(lifecycleScope)
     }
 
 //    private fun openAppStore() {
