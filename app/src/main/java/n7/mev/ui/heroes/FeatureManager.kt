@@ -21,19 +21,21 @@ import kotlinx.coroutines.flow.onEach
 import n7.mev.BuildConfig
 import kotlin.math.roundToInt
 
-sealed class FeatureState {
-    object Nothing : FeatureState()
-    object Canceled : FeatureState()
-    object Error : FeatureState()
-    object Installed : FeatureState()
-    data class RequiredInformation(val state: SplitInstallSessionState) : FeatureState()
-    data class Downloading(val totalBytes: Int, val currentBytes: Int) : FeatureState()
-}
 
 class FeatureManager(
     private val scope: CoroutineScope,
     private val application: Application,
 ) {
+
+    sealed class FeatureState {
+        object Nothing : FeatureState()
+        object Canceled : FeatureState()
+        object Error : FeatureState()
+        object Installed : FeatureState()
+
+        data class RequiredInformation(val state: SplitInstallSessionState) : FeatureState()
+        data class Downloading(val totalBytes: Int, val currentBytes: Int) : FeatureState()
+    }
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
@@ -69,12 +71,20 @@ class FeatureManager(
         installManager.startInstall(request)
     }
 
+    fun getReadyToInstallModules(): Set<String> {
+        val availableModules = getAvailableModules()
+        val installedModules = getInstalledModules()
+        return availableModules - installedModules
+    }
+
     fun getInstalledModules(): Set<String> {
         return installManager.installedModules
     }
 
-    fun getAvailableModules(): Set<String> {
-        return BuildConfig.modules.toSet()
+    private fun getAvailableModules(): Set<String> {
+        return BuildConfig.modules
+            .map { name -> name.drop(1) }
+            .toSet()
     }
 
 }

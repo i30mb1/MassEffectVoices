@@ -25,6 +25,7 @@ class HeroesAdapter constructor(
 
         fun bind(model: HeroVO, onHeroClickListener: (model: HeroVO) -> Unit) {
             binding.tvName.text = model.name
+            binding.ivPhoto.setImageResource(model.icon)
             binding.root.setOnClickListener { onHeroClickListener(model) }
         }
 

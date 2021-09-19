@@ -5,5 +5,5 @@ import androidx.annotation.DrawableRes
 data class HeroVO(
     val name: String,
     @DrawableRes val icon: Int,
-    val featureName: String
+    val moduleName: String
 )

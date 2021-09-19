@@ -26,6 +26,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
     private val viewModel: HeroesViewModel by viewModels()
     private lateinit var binding: HeroesFragmentBinding
+    private lateinit var heroesAdapter: HeroesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,12 +60,8 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
         viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 when (it) {
-                    FeatureState.Canceled -> Unit
-                    is FeatureState.Downloading -> Unit
-                    FeatureState.Error -> Unit
-                    FeatureState.Installed -> Unit
-                    FeatureState.Nothing -> Unit
-                    is FeatureState.RequiredInformation -> Unit
+                    is HeroesViewModel.State.Data -> heroesAdapter.submitList(it.list)
+                    HeroesViewModel.State.Loading -> Unit
                 }
             }
             .launchIn(lifecycleScope)
@@ -78,13 +75,12 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
     private fun setupPagedListAdapter() {
         val onHeroClickListener: (model: HeroVO) -> Unit = { }
-        val modulesPagedListAdapter = HeroesAdapter(layoutInflater, onHeroClickListener)
+        heroesAdapter = HeroesAdapter(layoutInflater, onHeroClickListener)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            adapter = modulesPagedListAdapter
+            adapter = heroesAdapter
         }
-
     }
 
 }
