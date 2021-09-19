@@ -32,15 +32,15 @@ class FeatureManager(
         object Canceled : FeatureState()
         object Error : FeatureState()
         object Installed : FeatureState()
+        data class Data(val availableModules: Set<String>, val readyToInstallModules: Set<String>) : FeatureState()
         data class RequiredInformation(val state: SplitInstallSessionState) : FeatureState()
         data class Downloading(val totalBytes: Int, val currentBytes: Int) : FeatureState()
     }
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
+    val status: MutableStateFlow<FeatureState> = MutableStateFlow(FeatureState.Data(getAvailableModules(), getReadyToInstallModules()))
 
-    val isModulesAvailable: MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val status: MutableStateFlow<FeatureState> = MutableStateFlow(FeatureState.Nothing)
     private val installManagerStatus = installManager.requestProgressFlow()
         .map { state: SplitInstallSessionState ->
             when (state.status()) {
@@ -58,7 +58,6 @@ class FeatureManager(
         }
         .filterIsInstance<FeatureState>()
         .onEach { featureState -> status.emit(featureState) }
-        .onEach { isModulesAvailable.emit(getReadyToInstallModules().isNotEmpty()) }
         .launchIn(scope)
 
     fun startConfirmationDialog(fragment: Fragment, state: SplitInstallSessionState) {
@@ -75,10 +74,10 @@ class FeatureManager(
     fun getReadyToInstallModules(): Set<String> {
         val availableModules = getAvailableModules()
         val installedModules = getInstalledModules()
-        return availableModules - installedModules
+        return availableModules
     }
 
-    fun getInstalledModules(): Set<String> {
+    private fun getInstalledModules(): Set<String> {
         return installManager.installedModules
     }
 

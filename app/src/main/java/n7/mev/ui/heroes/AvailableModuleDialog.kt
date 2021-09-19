@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import n7.mev.databinding.BottomDrawerBinding
 import n7.mev.ui.heroes.adapter.HeroesSmallAdapter
 import n7.mev.ui.heroes.adapter.OffsetItemDecorator
@@ -20,6 +23,7 @@ class AvailableModuleDialog private constructor() : BottomSheetDialogFragment() 
 
     private lateinit var binding: BottomDrawerBinding
     private val viewModel: HeroesViewModel by activityViewModels()
+    private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = BottomDrawerBinding.inflate(inflater, container, false)
@@ -40,7 +44,10 @@ class AvailableModuleDialog private constructor() : BottomSheetDialogFragment() 
             adapter = heroesAdapter
         }
 
-        viewModel.getReadyToInstallModules().observe(viewLifecycleOwner, heroesAdapter::submitList)
+        scope.launch {
+            val list = viewModel.getReadyToInstallModules()
+            heroesAdapter.submitList(list)
+        }
     }
 
 }

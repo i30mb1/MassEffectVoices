@@ -3,6 +3,7 @@ package n7.mev.ui.heroes
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -36,7 +37,6 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
         setupPagedListAdapter()
         setupListeners()
-        viewModel.load()
     }
 
     private fun setupListeners() {
@@ -44,17 +44,28 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             val dialog = AvailableModuleDialog.newInstance()
             dialog.show(childFragmentManager, null)
         }
-        viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-            .onEach {
-                when (it) {
-                    is HeroesViewModel.State.Data -> heroesAdapter.submitList(it.list)
-                    HeroesViewModel.State.Loading -> Unit
+        viewModel.status.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach { state ->
+                when (state) {
+                    is HeroesViewModel.State.Data -> {
+                        heroesAdapter.submitList(state.list)
+                        binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
+                    }
+                    is HeroesViewModel.State.FeatureState -> when (state.featureState) {
+                        FeatureManager.FeatureState.Canceled -> Unit
+                        FeatureManager.FeatureState.Error -> Unit
+                        FeatureManager.FeatureState.Installed -> Unit
+                        FeatureManager.FeatureState.Nothing -> Unit
+                        is FeatureManager.FeatureState.Data -> Unit
+                        is FeatureManager.FeatureState.Downloading -> Unit
+                        is FeatureManager.FeatureState.RequiredInformation -> Unit
+                    }
                 }
             }
             .launchIn(lifecycleScope)
     }
 
-    fun openModule(view: View?, moduleName: String?) {
+    fun openModule(moduleName: String) {
         val intent = Intent(context, MainActivity::class.java)
 //        intent.putExtra(MODULE_NAME, moduleName)
         startActivity(intent)
