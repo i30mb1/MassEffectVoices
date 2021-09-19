@@ -10,3 +10,9 @@
 *.log
 /buildSrc/build/**
 
+/app.apks
+/app/release/app-release.aab
+/bundletool.jar
+/.idea/shelf/Default_Changelist.xml
+/.idea/misc.xml
+/.idea/shelf/Default_Changelist/shelved.patch
