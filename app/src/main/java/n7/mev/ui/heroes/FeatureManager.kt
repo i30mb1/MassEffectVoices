@@ -39,7 +39,7 @@ class FeatureManager(
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
-    val status: MutableStateFlow<State> = MutableStateFlow(State.Data(getAvailableModules(), getReadyToInstallModules()))
+    val status: MutableStateFlow<State> = MutableStateFlow(State.Data(getInstalledModules(), getModulesThatCanBeInstalled()))
 
     private val installManagerStatus = installManager.requestProgressFlow()
         .map { state: SplitInstallSessionState ->
@@ -58,7 +58,7 @@ class FeatureManager(
         }
         .filterIsInstance<State>()
         .onEach { featureState -> status.emit(featureState) }
-        .onEach { status.emit(State.Data(getAvailableModules(), getReadyToInstallModules())) }
+        .onEach { status.emit(State.Data(getInstalledModules(), getModulesThatCanBeInstalled())) }
         .launchIn(scope)
 
     fun startConfirmationDialog(fragment: Fragment, state: SplitInstallSessionState) {
@@ -72,8 +72,8 @@ class FeatureManager(
         installManager.startInstall(request)
     }
 
-    fun getReadyToInstallModules(): Set<String> {
-        val availableModules = getAvailableModules()
+    fun getModulesThatCanBeInstalled(): Set<String> {
+        val availableModules = getAllModules()
         val installedModules = getInstalledModules()
         return availableModules - installedModules
     }
@@ -82,7 +82,7 @@ class FeatureManager(
         return installManager.installedModules
     }
 
-    private fun getAvailableModules(): Set<String> {
+    private fun getAllModules(): Set<String> {
         return BuildConfig.modules
             .map { name -> name.drop(1) }
             .toSet()

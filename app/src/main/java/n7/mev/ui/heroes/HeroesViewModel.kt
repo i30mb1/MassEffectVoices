@@ -34,7 +34,7 @@ class HeroesViewModel(
     }
 
     suspend fun getReadyToInstallModules(): List<HeroVO> = flow {
-        val list = featureManager.getReadyToInstallModules()
+        val list = featureManager.getModulesThatCanBeInstalled()
         val result = getHeroesVOUseCase(list).single()
         emit(result)
     }.single()
