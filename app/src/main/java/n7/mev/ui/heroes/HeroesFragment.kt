@@ -51,14 +51,14 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                         heroesAdapter.submitList(state.list)
                         binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
                     }
-                    is HeroesViewModel.State.FeatureState -> when (state.featureState) {
-                        FeatureManager.FeatureState.Canceled -> Unit
-                        FeatureManager.FeatureState.Error -> Unit
-                        FeatureManager.FeatureState.Installed -> Unit
-                        FeatureManager.FeatureState.Nothing -> Unit
-                        is FeatureManager.FeatureState.Data -> Unit
-                        is FeatureManager.FeatureState.Downloading -> Unit
-                        is FeatureManager.FeatureState.RequiredInformation -> Unit
+                    is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
+                        FeatureManager.State.Canceled -> Unit
+                        FeatureManager.State.Error -> Unit
+                        FeatureManager.State.Installed -> Unit
+                        FeatureManager.State.Nothing -> Unit
+                        is FeatureManager.State.Data -> Unit
+                        is FeatureManager.State.Downloading -> Unit
+                        is FeatureManager.State.RequiredInformation -> Unit
                     }
                 }
             }

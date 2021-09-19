@@ -27,37 +27,38 @@ class FeatureManager(
     private val application: Application,
 ) {
 
-    sealed class FeatureState {
-        object Nothing : FeatureState()
-        object Canceled : FeatureState()
-        object Error : FeatureState()
-        object Installed : FeatureState()
-        data class Data(val availableModules: Set<String>, val readyToInstallModules: Set<String>) : FeatureState()
-        data class RequiredInformation(val state: SplitInstallSessionState) : FeatureState()
-        data class Downloading(val totalBytes: Int, val currentBytes: Int) : FeatureState()
+    sealed class State {
+        object Nothing : State()
+        object Canceled : State()
+        object Error : State()
+        object Installed : State()
+        data class Data(val availableModules: Set<String>, val readyToInstallModules: Set<String>) : State()
+        data class RequiredInformation(val state: SplitInstallSessionState) : State()
+        data class Downloading(val totalBytes: Int, val currentBytes: Int) : State()
     }
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
-    val status: MutableStateFlow<FeatureState> = MutableStateFlow(FeatureState.Data(getAvailableModules(), getReadyToInstallModules()))
+    val status: MutableStateFlow<State> = MutableStateFlow(State.Data(getAvailableModules(), getReadyToInstallModules()))
 
     private val installManagerStatus = installManager.requestProgressFlow()
         .map { state: SplitInstallSessionState ->
             when (state.status()) {
-                REQUIRES_USER_CONFIRMATION -> FeatureState.RequiredInformation(state)
+                REQUIRES_USER_CONFIRMATION -> State.RequiredInformation(state)
                 DOWNLOADING -> {
                     val totalBytes = state.totalBytesToDownload().toFloat().roundToInt()
                     val currentBytes = state.bytesDownloaded().toFloat().roundToInt()
-                    FeatureState.Downloading(totalBytes, currentBytes)
+                    State.Downloading(totalBytes, currentBytes)
                 }
-                CANCELED -> FeatureState.Canceled
-                INSTALLED -> FeatureState.Installed
-                FAILED -> FeatureState.Error
+                CANCELED -> State.Canceled
+                INSTALLED -> State.Installed
+                FAILED -> State.Error
                 else -> Unit
             }
         }
-        .filterIsInstance<FeatureState>()
+        .filterIsInstance<State>()
         .onEach { featureState -> status.emit(featureState) }
+        .onEach { status.emit(State.Data(getAvailableModules(), getReadyToInstallModules())) }
         .launchIn(scope)
 
     fun startConfirmationDialog(fragment: Fragment, state: SplitInstallSessionState) {
@@ -74,7 +75,7 @@ class FeatureManager(
     fun getReadyToInstallModules(): Set<String> {
         val availableModules = getAvailableModules()
         val installedModules = getInstalledModules()
-        return availableModules
+        return availableModules - installedModules
     }
 
     private fun getInstalledModules(): Set<String> {
