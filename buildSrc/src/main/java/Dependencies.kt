@@ -9,41 +9,44 @@ object Apps {
 }
 
 object Versions {
-    const val gradlePlugin   = "4.1.0"
-    const val kotlin         = "1.4.10"
-    const val safeArgs       = "2.2.2"
+    const val gradlePlugin = "7.0.2"
+    const val kotlin = "1.4.10"
+    const val safeArgs = "2.2.2"
+    const val lifecycle = "2.4.0-beta01"
 }
 
 object Lib {
-    const val appcompat        = "androidx.appcompat:appcompat:1.1.0" // Degrade gracefully on older versions of Android.
-    const val coreKtx          = "androidx.core:core-ktx:1.2.0" // Write more concise, idiomatic Kotlin code.
-    const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
-    const val material         = "com.google.android.material:material:1.2.0-alpha06" // Build beautiful products, faster.
-    const val coil             = "io.coil-kt:coil:0.8.0"
-    const val paging           = "androidx.paging:paging-runtime:2.1.2"
-    const val playCore         = "com.google.android.play:core:1.7.2"
+    const val appcompat = "androidx.appcompat:appcompat:1.1.0" // Degrade gracefully on older versions of Android.
+    const val coreKtx = "androidx.core:core-ktx:1.6.0" // Write more concise, idiomatic Kotlin code.
+    const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.0"
+    const val material = "com.google.android.material:material:1.5.0-alpha03" // Build beautiful products, faster.
+    const val coil = "io.coil-kt:coil:0.13.0"
+    const val paging = "androidx.paging:paging-runtime:2.1.2"
+    const val playCore = "com.google.android.play:core:1.10.1"
+    const val playCoreKtx = "com.google.android.play:core-ktx:1.8.1"
 
     // --- Preference ---
-    const val preference       = "androidx.preference:preference:1.1.0"
-    const val preferenceKtx    = "androidx.preference:preference-ktx:1.1.0"
+    const val preference = "androidx.preference:preference:1.1.0"
+    const val preferenceKtx = "androidx.preference:preference-ktx:1.1.0"
 
     // --- Coroutines ---
-    const val coroutines          = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2"
-    const val coroutinesAndroid   = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2" // for testing coroutines
-    const val coroutinesLifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0" // lifecycleScope + launchWhenResumed and ets.
-    const val coroutinesLivedata  = "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0" // liveData (LiveData + coroutines)
-    const val coroutinesViewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0" // viewModelScope + savedStateHandle
-    const val lifecycleAnnotation = "androidx.lifecycle:lifecycle-common-java8:2.2.0" // that's only needed if you have lifecycle-related annotations in your code, specifically @OnLifecycleEvent
-    const val fragmentKtx         = "androidx.fragment:fragment-ktx:1.2.4" // easy fragment transaction + by viewModels()
-    const val activityKtx         = "androidx.activity:activity-ktx:1.1.0" // on BackPress support for Fragment
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
+    const val coroutinesAndroid = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2" // for testing coroutines
+    const val coroutinesLifecycle = "androidx.lifecycle:lifecycle-runtime-ktx:${Versions.lifecycle}" // lifecycleScope + launchWhenResumed and ets.
+    const val coroutinesLivedata = "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.lifecycle}" // liveData (LiveData + coroutines)
+    const val coroutinesViewmodel = "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.lifecycle}" // viewModelScope + savedStateHandle
+    const val lifecycleAnnotation =
+        "androidx.lifecycle:lifecycle-common-java8:2.2.0" // that's only needed if you have lifecycle-related annotations in your code, specifically @OnLifecycleEvent
+    const val fragmentKtx = "androidx.fragment:fragment-ktx:1.3.6" // easy fragment transaction + by viewModels()
+    const val activityKtx = "androidx.activity:activity-ktx:1.3.1" // on BackPress support for Fragment
 
     // --- Firebase Coroutines ---
     const val coroutinesPlayServices = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.3.2"
 
     // --- Dagger ---
-    const val dagger                   = "com.google.dagger:dagger:2.25.2"
-    const val daggerAnnotation         = "com.google.dagger:dagger-compiler:2.25.2"
-    const val daggerAssisted           = "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
+    const val dagger = "com.google.dagger:dagger:2.25.2"
+    const val daggerAnnotation = "com.google.dagger:dagger-compiler:2.25.2"
+    const val daggerAssisted = "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
     const val daggerAssistedAnnotation = "com.squareup.inject:assisted-inject-processor-dagger2:0.5.2"
 
     //  --- Navigation ---
