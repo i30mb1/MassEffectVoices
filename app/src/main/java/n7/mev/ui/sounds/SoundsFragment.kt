@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import n7.mev.R
 import n7.mev.databinding.MainFragmentBinding
 import n7.mev.main.MainViewModel
-import n7.mev.main.SoundPagedListAdapter
 
 class SoundsFragment : Fragment(R.layout.main_fragment) {
 
@@ -24,7 +23,6 @@ class SoundsFragment : Fragment(R.layout.main_fragment) {
     private val LAST_SELECTED_HERO = "LAST_SELECTED_HERO"
     private lateinit var binding: MainFragmentBinding
     private lateinit var linearLayoutManager: LinearLayoutManager
-    private lateinit var adapter: SoundPagedListAdapter
     private var lastVisibleItem = 0
     private lateinit var moduleName: String
 
@@ -77,8 +75,6 @@ class SoundsFragment : Fragment(R.layout.main_fragment) {
         val recyclerView = binding.rvMainFragment
         linearLayoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         recyclerView.layoutManager = linearLayoutManager
-        adapter = SoundPagedListAdapter(mViewModel)
-        recyclerView.adapter = adapter
     }
 
 }

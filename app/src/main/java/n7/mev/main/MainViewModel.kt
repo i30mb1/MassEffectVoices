@@ -19,8 +19,6 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
 import n7.mev.R
 import java.io.File
 import java.io.FileOutputStream
@@ -42,16 +40,6 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     private val soundStorage: SoundStorage
     private val diskIO: Executor
     private var mediaPlayer: MediaPlayer? = null
-    fun createPagedListData(lastVisibleItem: Int): LiveData<PagedList<SoundModel?>> {
-        val soundSourceFactory = SoundSourceFactory(soundStorage)
-        val config = PagedList.Config.Builder()
-            .setEnablePlaceholders(false)
-            .setPageSize(100)
-            .build()
-        return LivePagedListBuilder(soundSourceFactory, config)
-            .setInitialLoadKey(lastVisibleItem)
-            .build()
-    }
 
     fun getStartActivityForResultSaveFile(): LiveData<Intent?> {
         return startActivityForResultSaveFile
