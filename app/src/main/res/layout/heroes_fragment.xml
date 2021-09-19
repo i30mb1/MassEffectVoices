@@ -12,14 +12,13 @@
 
     <Button
         android:id="@+id/b_add_module"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="50dp"
         android:layout_gravity="bottom"
-        android:padding="16dp"
+        android:layout_margin="16dp"
         android:text="@string/add_module"
         android:textAllCaps="true"
-        android:textColor="@color/colorPrimaryDark"
         android:textSize="14sp" />
 
     <ProgressBar
