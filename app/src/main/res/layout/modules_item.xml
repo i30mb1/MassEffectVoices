@@ -7,7 +7,8 @@
     android:layout_marginTop="4dp"
     android:layout_marginEnd="8dp"
     android:layout_marginBottom="4dp"
-    android:foreground="?android:attr/selectableItemBackground">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:stateListAnimator="@animator/select_animation">
 
     <ImageView
         android:id="@+id/iv_photo"
