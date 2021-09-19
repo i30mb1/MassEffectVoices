@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -26,7 +26,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
         }
     }
 
-    private val viewModel: HeroesViewModel by viewModels()
+    private val viewModel: HeroesViewModel by activityViewModels()
     private lateinit var binding: HeroesFragmentBinding
     private lateinit var heroesAdapter: HeroesAdapter
 
@@ -39,26 +39,11 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
         viewModel.load()
     }
 
-    private fun openActivityFromModule() {
-//        if (viewModel.installedModules().contains("avina")) {
-//            return
-//        }
-//
-//        val packageName = "n7.mev.avina"
-//        val avinaSampleClassName = "$packageName.SecretActivity"
-//        val intent = Intent()
-//        intent.setClassName(packageName, avinaSampleClassName)
-//
-//        try {
-//            Class.forName(avinaSampleClassName, false, javaClass.classLoader)
-//        } catch (ignored: ClassNotFoundException) {
-//
-//        }
-//
-//        startActivity(intent)
-    }
-
     private fun setupListeners() {
+        binding.bAddModule.setOnClickListener {
+            val dialog = AvailableModuleDialog.newInstance()
+            dialog.show(childFragmentManager, null)
+        }
         viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach {
                 when (it) {

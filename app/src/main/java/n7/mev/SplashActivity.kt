@@ -23,6 +23,8 @@ class SplashActivity : AppCompatActivity() {
     lateinit var binding: ActivitySplashBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        finish()
+        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         setTheme(R.style.SplashTheme)
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)

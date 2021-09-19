@@ -10,7 +10,7 @@
         android:layoutAnimation="@anim/item_animation"
         android:layout_height="match_parent"
         android:overScrollMode="never"
-        tools:listitem="@layout/modules_item" />
+        tools:listitem="@layout/item_heroes" />
 
     <Button
         android:id="@+id/b_add_module"

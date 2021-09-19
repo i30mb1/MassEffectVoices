@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginStart="75dp"
-        android:layout_weight="1"
         android:gravity="center"
         android:textAllCaps="true"
         android:textSize="18sp"

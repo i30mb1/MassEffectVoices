@@ -6,8 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
 class OffsetItemDecorator(
-    topOffset: Int = 12,
-    botOffset: Int = 72,
+    topOffset: Int = 24,
+    botOffset: Int = 24,
 ) : RecyclerView.ItemDecoration() {
 
     private val Int.toPx: Int

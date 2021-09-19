@@ -3,11 +3,11 @@ package n7.mev.ui.heroes.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import n7.mev.databinding.ItemHeroesBinding
+import n7.mev.databinding.ItemHeroesSmallBinding
 import n7.mev.ui.heroes.vo.HeroVO
 
-class HeroViewHolder private constructor(
-    private var binding: ItemHeroesBinding
+class HeroSmallViewHolder private constructor(
+    private var binding: ItemHeroesSmallBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: HeroVO, onHeroClickListener: (model: HeroVO) -> Unit) {
@@ -21,9 +21,9 @@ class HeroViewHolder private constructor(
     }
 
     companion object {
-        fun from(inflater: LayoutInflater, parent: ViewGroup): HeroViewHolder {
-            val binding = ItemHeroesBinding.inflate(inflater, parent, false)
-            return HeroViewHolder(binding)
+        fun from(inflater: LayoutInflater, parent: ViewGroup): HeroSmallViewHolder {
+            val binding = ItemHeroesSmallBinding.inflate(inflater, parent, false)
+            return HeroSmallViewHolder(binding)
         }
     }
 }
