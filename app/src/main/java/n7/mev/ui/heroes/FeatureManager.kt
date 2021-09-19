@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import n7.mev.BuildConfig
 import kotlin.math.roundToInt
 
 sealed class FeatureState {
@@ -72,8 +73,8 @@ class FeatureManager(
         return installManager.installedModules
     }
 
-    fun getAvailableModules() {
-
+    fun getAvailableModules(): Set<String> {
+        return BuildConfig.modules.toSet()
     }
 
 }

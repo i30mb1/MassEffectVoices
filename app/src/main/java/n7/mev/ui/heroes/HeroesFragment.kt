@@ -5,7 +5,12 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
@@ -28,6 +33,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
         setupPagedListAdapter()
         setupListeners()
+        viewModel.load()
     }
 
     private fun openActivityFromModule() {
@@ -49,48 +55,25 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 //        startActivity(intent)
     }
 
-    fun showAvailableModules(view: View?) {
-
-    }
-
     private fun setupListeners() {
-//        viewModel.error.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-//            .onEach { error -> Snackbar.make(binding.root, error.message.toString(), Snackbar.LENGTH_SHORT).show() }
-//            .launchIn(lifecycleScope)
-//
-//        viewModel.showConfirmationDialog.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
-//            .onEach { viewModel.startConfirmationDialog(requireActivity()) }
-//            .launchIn(lifecycleScope)
+        viewModel.state.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
+            .onEach {
+                when (it) {
+                    FeatureState.Canceled -> Unit
+                    is FeatureState.Downloading -> Unit
+                    FeatureState.Error -> Unit
+                    FeatureState.Installed -> Unit
+                    FeatureState.Nothing -> Unit
+                    is FeatureState.RequiredInformation -> Unit
+                }
+            }
+            .launchIn(lifecycleScope)
     }
-
-//    private fun openAppStore() {
-//        try {
-//            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + requireActivity().packageName)))
-//        } catch (a: ActivityNotFoundException) {
-//            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + requireActivity().packageName)))
-//        }
-//    }
 
     fun openModule(view: View?, moduleName: String?) {
         val intent = Intent(context, MainActivity::class.java)
 //        intent.putExtra(MODULE_NAME, moduleName)
         startActivity(intent)
-    }
-
-    fun showDialogDeleteModule(moduleName: String): Boolean {
-//        if (context != null) {
-//            val builder = AlertDialog.Builder(requireContext())
-//            builder.setMessage(getString(R.string.dialog_delete_module))
-//            builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-//                viewModel.deleteModule(moduleName)
-//                dialog.dismiss()
-//            }
-//            builder.setNegativeButton(android.R.string.no) { dialog, which -> dialog.dismiss() }
-//            val dialog = builder.create()
-//            dialog.window?.attributes?.windowAnimations = R.style.DialogTheme
-//            dialog.show()
-//        }
-        return true
     }
 
     private fun setupPagedListAdapter() {

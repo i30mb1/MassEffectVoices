@@ -1,19 +1,24 @@
 package n7.mev.ui.heroes
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.receiveAsFlow
 import n7.mev.ui.heroes.usecase.GetHeroesVOUseCase
 
 class HeroesViewModel(
-    private val application: Application
-) : ViewModel() {
+    application: Application
+) : AndroidViewModel(application) {
+
+    private val featureManager = FeatureManager(viewModelScope, application)
 
     val getHeroesVOUseCase = GetHeroesVOUseCase(application, Dispatchers.IO)
 
-    private val _error = Channel<Throwable>(Channel.BUFFERED)
-    val error = _error.receiveAsFlow()
+    val state = featureManager.status
+
+    fun load() {
+        featureManager.getAvailableModules()
+    }
+
 
 }

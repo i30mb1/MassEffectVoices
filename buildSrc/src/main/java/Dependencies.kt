@@ -34,7 +34,6 @@ object Lib {
     const val dagger = "com.google.dagger:dagger:2.25.2"
     const val daggerAnnotation = "com.google.dagger:dagger-compiler:2.25.2"
     const val daggerAssisted = "com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2"
-    const val daggerAssistedAnnotation = "com.squareup.inject:assisted-inject-processor-dagger2:0.5.2"
 
     // --- Retrofit ---
     const val retrofit               = "com.squareup.retrofit2:retrofit:2.7.1"
