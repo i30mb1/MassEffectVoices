@@ -15,6 +15,7 @@ import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
 import n7.mev.ui.heroes.adapter.HeroesAdapter
+import n7.mev.ui.heroes.adapter.OffsetItemDecorator
 import n7.mev.ui.heroes.vo.HeroVO
 
 class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) {
@@ -80,6 +81,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
         binding.rv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
+            addItemDecoration(OffsetItemDecorator())
             adapter = heroesAdapter
         }
     }
