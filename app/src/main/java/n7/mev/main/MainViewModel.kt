@@ -20,7 +20,10 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import n7.mev.R
-import java.io.*
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
@@ -34,7 +37,6 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     @kotlin.jvm.JvmField
     var isLoading = MutableLiveData(true)
     private var lastPlaying = MutableLiveData(false)
-    private val soundStorage: SoundStorage
     private val diskIO: Executor
     private var mediaPlayer: MediaPlayer? = null
 
@@ -72,17 +74,17 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         showSnackBarFolder
     }
 
-    fun showMenu(context: Context, soundModel: SoundModel): Boolean {
+    fun showMenu(context: Context): Boolean {
         val builder = AlertDialog.Builder(context)
         builder.setItems(R.array.hero_responses_menu) { dialog, which ->
             when (which) {
                 0 -> if (canWriteExternalStorage()) {
-                    downloadInFolderNew(context, soundModel)
-                    downloadInFolder(context, soundModel)
+//                    downloadInFolderNew(context, soundModel)
+//                    downloadInFolder(context, soundModel)
                     //                            callForShowSnackbarForFolder();
                 }
                 1 -> if (canWriteExternalStorage() && canWriteInSystem()) {
-                    setAsRingtone(getApplication(), soundModel)
+//                    setAsRingtone(getApplication(), soundModel)
                 }
             }
             dialog.dismiss()
@@ -93,40 +95,40 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         return true
     }
 
-    fun startPlay(context: Context, soundModel: SoundModel) {
+    fun startPlay(context: Context) {
         try {
             if (lastPlaying != null) {
                 lastPlaying!!.value = (false)
             }
-            soundModel.playing!!.value = (true)
+//            soundModel.playing!!.value = (true)
             if (mediaPlayer != null) {
                 mediaPlayer!!.release()
             }
-            lastPlaying = soundModel.playing
+//            lastPlaying = soundModel.playing
             mediaPlayer = MediaPlayer()
-            val fileDescriptor = context.assets.openFd(soundModel.path!!)
-            mediaPlayer!!.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
-            mediaPlayer!!.prepareAsync()
-            mediaPlayer!!.setOnPreparedListener { mediaPlayer!!.start() }
-            mediaPlayer!!.setOnCompletionListener { soundModel.playing!!.value = (false) }
+//            val fileDescriptor = context.assets.openFd(soundModel.path!!)
+//            mediaPlayer!!.setDataSource(fileDescriptor.fileDescriptor, fileDescriptor.startOffset, fileDescriptor.length)
+//            mediaPlayer!!.prepareAsync()
+//            mediaPlayer!!.setOnPreparedListener { mediaPlayer!!.start() }
+//            mediaPlayer!!.setOnCompletionListener { soundModel.playing!!.value = (false) }
         } catch (e: IOException) {
-            soundModel.playing!!.value = (false)
+//            soundModel.playing!!.value = (false)
             e.printStackTrace()
         }
     }
 
-    fun setAsRingtone(context: Context, soundModel: SoundModel) {
+    fun setAsRingtone(context: Context) {
         val assetManager = context.assets
         var outFile: File? = null
         var `in`: InputStream? = null
         var out: OutputStream? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
-            val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
-            if (!path.exists()) path.mkdirs()
-            outFile = File(path, "MEV.RINGTONE.ogg")
-            out = FileOutputStream(outFile)
-            copyFile(`in`, out)
+//            `in` = assetManager.open(soundModel.path!!)
+//            val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
+//            if (!path.exists()) path.mkdirs()
+//            outFile = File(path, "MEV.RINGTONE.ogg")
+//            out = FileOutputStream(outFile)
+//            copyFile(`in`, out)
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
@@ -140,7 +142,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         val myFile = outFile ?: return
         val values = ContentValues()
         values.put(MediaStore.MediaColumns.DATA, myFile.absolutePath)
-        values.put(MediaStore.MediaColumns.TITLE, "MEV." + soundModel.id)
+//        values.put(MediaStore.MediaColumns.TITLE, "MEV." + soundModel.id)
         values.put(MediaStore.MediaColumns.MIME_TYPE, "audio/ogg")
         values.put(MediaStore.MediaColumns.SIZE, myFile.length())
         values.put(MediaStore.Audio.Media.IS_RINGTONE, true)
@@ -164,28 +166,28 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         }
     }
 
-    fun downloadManager(context: Context, soundModel: SoundModel) {
+    fun downloadManager(context: Context) {
         val dm = context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        val request = DownloadManager.Request(Uri.parse("file:///android_asset/" + soundModel.path))
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-        request.setDestinationInExternalPublicDir(
-            Environment.getExternalStorageDirectory().path,
-            File.separator + context.getString(R.string.app_name) + File.separator + soundModel.name
-        )
-        val referese = dm.enqueue(request)
+//        val request = DownloadManager.Request(Uri.parse("file:///android_asset/" + soundModel.path))
+//        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//        request.setDestinationInExternalPublicDir(
+//            Environment.getExternalStorageDirectory().path,
+//            File.separator + context.getString(R.string.app_name) + File.separator + soundModel.name
+//        )
+//        val referese = dm.enqueue(request)
         //        Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
     }
 
-    fun downloadInFolderNew(context: Context, soundModel: SoundModel) {
+    fun downloadInFolderNew(context: Context) {
         val assetManager = context.assets
         var `in`: InputStream? = null
         val out: OutputStream? = null
         var fileBytes: ByteArray? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
-            fileBytes = ByteArray(`in`.available())
-            `in`.read(fileBytes)
-            `in`.close()
+//            `in` = assetManager.open(soundModel.path!!)
+//            fileBytes = ByteArray(`in`.available())
+//            `in`.read(fileBytes)
+//            `in`.close()
         } catch (e: IOException) {
             e.printStackTrace()
         }
@@ -193,7 +195,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
             intent.type = "audio/ogg"
-            intent.putExtra(Intent.EXTRA_TITLE, soundModel.name)
+//            intent.putExtra(Intent.EXTRA_TITLE, soundModel.name)
             if (intent.resolveActivity(context.packageManager) != null) {
                 fileToSaveFile.value = fileBytes
                 fileToSaveFile.value = null
@@ -203,17 +205,17 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         }
     }
 
-    fun downloadInFolder(context: Context, soundModel: SoundModel) {
+    fun downloadInFolder(context: Context) {
         val assetManager = context.assets
         var `in`: InputStream? = null
         var out: OutputStream? = null
         try {
-            `in` = assetManager.open(soundModel.path!!)
-            val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
-            if (!path.exists()) path.mkdirs()
-            val outFile = File(path, "MEV." + soundModel.hashCode() + ".ogg")
-            out = FileOutputStream(outFile)
-            copyFile(`in`, out)
+//            `in` = assetManager.open(soundModel.path!!)
+//            val path = File(Environment.getExternalStorageDirectory().path + File.separator + context.getString(R.string.app_name))
+//            if (!path.exists()) path.mkdirs()
+//            val outFile = File(path, "MEV." + soundModel.hashCode() + ".ogg")
+//            out = FileOutputStream(outFile)
+//            copyFile(`in`, out)
         } catch (e: IOException) {
             e.printStackTrace()
         } finally {
@@ -241,7 +243,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
 
     init {
         diskIO = Executors.newSingleThreadExecutor()
-        soundStorage = SoundStorage(application, moduleName, diskIO)
-        soundStorage.load(isLoading)
+//        soundStorage = SoundStorage(application, moduleName, diskIO)
+//        soundStorage.load(isLoading)
     }
 }
