@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import n7.mev.ui.heroes.usecase.GetHeroesVOUseCase
@@ -25,18 +24,18 @@ class HeroesViewModel(
 
     val status: Flow<State> = featureManager.status.map { status: FeatureManager.State ->
         when (status) {
-            is FeatureManager.FeatureState.State.Data -> {
+            is FeatureManager.State.Data -> {
                 val list = getHeroesVOUseCase(status.availableModules).single()
-                State.Data(list, status.readyToInstallModules.isNotEmpty())
+                val isVisibleDownloadFeatureButton = status.readyToInstallModules.isNotEmpty()
+                State.Data(list, isVisibleDownloadFeatureButton)
             }
             else -> State.FeatureManagerState(status)
         }
     }
 
-    suspend fun getReadyToInstallModules(): List<HeroVO> = flow {
+    suspend fun getReadyToInstallModules(): List<HeroVO> {
         val list = featureManager.getModulesThatCanBeInstalled()
-        val result = getHeroesVOUseCase(list).single()
-        emit(result)
-    }.single()
+        return getHeroesVOUseCase(list).single()
+    }
 
 }

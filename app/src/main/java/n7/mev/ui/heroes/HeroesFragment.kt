@@ -1,6 +1,5 @@
 package n7.mev.ui.heroes
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
@@ -12,12 +11,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import n7.mev.MainActivity
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
 import n7.mev.ui.heroes.adapter.HeroesAdapter
 import n7.mev.ui.heroes.adapter.OffsetItemDecorator
 import n7.mev.ui.heroes.vo.HeroVO
+import n7.mev.ui.sounds.SoundsFragment
 
 class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) {
 
@@ -30,6 +29,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     private val viewModel: HeroesViewModel by activityViewModels()
     private lateinit var binding: HeroesFragmentBinding
     private lateinit var heroesAdapter: HeroesAdapter
+    private val onHeroClickListener: (model: HeroVO) -> Unit = { model -> openModule(model.moduleName) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,14 +65,11 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             .launchIn(lifecycleScope)
     }
 
-    fun openModule(moduleName: String) {
-        val intent = Intent(context, MainActivity::class.java)
-//        intent.putExtra(MODULE_NAME, moduleName)
-        startActivity(intent)
+    private fun openModule(moduleName: String) {
+        SoundsFragment.newInstance(moduleName)
     }
 
     private fun setupPagedListAdapter() {
-        val onHeroClickListener: (model: HeroVO) -> Unit = { }
         heroesAdapter = HeroesAdapter(layoutInflater, onHeroClickListener)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(requireContext())
