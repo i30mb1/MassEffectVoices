@@ -20,19 +20,16 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import n7.mev.R
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
-import java.util.concurrent.*
+import java.io.*
+import java.util.concurrent.Executor
+import java.util.concurrent.Executors
 
 class MainViewModel(application: Application, moduleName: String) : AndroidViewModel(application) {
-    val grandSettingEvent = SingleLiveEvent<Void?>()
+    val grandSettingEvent = MutableLiveData<Void?>()
     val startActivityForResultSaveFile = MutableLiveData<Intent?>()
     val fileToSaveFile = MutableLiveData<ByteArray?>()
-    val grandSPermission = SingleLiveEvent<Void?>()
-    val showSnackBarFolder = SingleLiveEvent<Void?>()
+    val grandSPermission = MutableLiveData<Void?>()
+    val showSnackBarFolder = MutableLiveData<Void?>()
 
     @kotlin.jvm.JvmField
     var isLoading = MutableLiveData(true)
@@ -50,14 +47,12 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
 
 
     private fun canWriteInSystem(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (Settings.System.canWrite(getApplication())) {
-                true
-            } else {
-                grandSettingEvent.call()
-                false
-            }
-        } else true
+        if (Settings.System.canWrite(getApplication())) {
+            return true
+        } else {
+            grandSettingEvent
+            return false
+        }
     }
 
     private fun canWriteExternalStorage(): Boolean {
@@ -66,7 +61,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            grandSPermission.call()
+            grandSPermission
             false
         } else {
             true
@@ -74,7 +69,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
     }
 
     private fun callForShowSnackbarForFolder() {
-        showSnackBarFolder.call()
+        showSnackBarFolder
     }
 
     fun showMenu(context: Context, soundModel: SoundModel): Boolean {

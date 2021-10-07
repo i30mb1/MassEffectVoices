@@ -70,17 +70,17 @@ class SplashActivity : AppCompatActivity() {
 
 }
 
-fun getErrorEmote(): String? {
+fun getErrorEmote(): String {
     val emotes = arrayOf(
-            "('.')",
-            "('x')",
-            "(>_<)",
-            "(>.<)",
-            "(;-;)",
-            "\\(o_o)/",
-            "(O_o)",
-            "(o_0)",
-            "(≥o≤)",
+        "('.')",
+        "('x')",
+        "(>_<)",
+        "(>.<)",
+        "(;-;)",
+        "\\(o_o)/",
+        "(O_o)",
+        "(o_0)",
+        "(≥o≤)",
             "(≥o≤)",
             "(·.·)",
             "(·_·)"
