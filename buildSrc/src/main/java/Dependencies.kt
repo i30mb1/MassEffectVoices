@@ -19,7 +19,7 @@ object Lib {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.0"
     const val material = "com.google.android.material:material:1.5.0-alpha03" // Build beautiful products, faster.
     const val coil = "io.coil-kt:coil:0.13.0"
-    const val playCore = "com.google.android.play:core:1.10.1"
+    const val playCore = "com.google.android.play:core:1.10.2"
     const val playCoreKtx = "com.google.android.play:core-ktx:1.8.1"
 
     // --- Coroutines ---
