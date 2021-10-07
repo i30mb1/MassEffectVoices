@@ -9,10 +9,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.transition.Slide
+import androidx.transition.TransitionManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
+import n7.mev.lazyUnsafe
 import n7.mev.ui.heroes.adapter.HeroesAdapter
 import n7.mev.ui.heroes.adapter.OffsetItemDecorator
 import n7.mev.ui.heroes.vo.HeroVO
@@ -29,7 +32,13 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     private val viewModel: HeroesViewModel by activityViewModels()
     private lateinit var binding: HeroesFragmentBinding
     private lateinit var heroesAdapter: HeroesAdapter
+    private val offsetItemDecorator = OffsetItemDecorator()
     private val onHeroClickListener: (model: HeroVO) -> Unit = { model -> openModule(model.moduleName) }
+    private val buttonAnimation by lazyUnsafe {
+        Slide().apply {
+            addTarget(binding.bAddModule)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,7 +58,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                 when (state) {
                     is HeroesViewModel.State.Data -> {
                         heroesAdapter.submitList(state.list)
-                        binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
+//                        binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
                     }
                     is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
                         FeatureManager.State.Canceled -> Unit
@@ -67,6 +76,10 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
     private fun openModule(moduleName: String) {
         SoundsFragment.newInstance(moduleName)
+        TransitionManager.beginDelayedTransition(binding.root, buttonAnimation)
+        binding.bAddModule.isVisible = !binding.bAddModule.isVisible
+        offsetItemDecorator.isExtraPaddingBot = binding.bAddModule.isVisible
+        binding.rv.invalidateItemDecorations()
     }
 
     private fun setupPagedListAdapter() {
@@ -74,7 +87,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
         binding.rv.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
-            addItemDecoration(OffsetItemDecorator())
+            addItemDecoration(offsetItemDecorator)
             adapter = heroesAdapter
         }
     }

@@ -10,6 +10,8 @@ class OffsetItemDecorator(
     botOffset: Int = 24,
 ) : RecyclerView.ItemDecoration() {
 
+    var isExtraPaddingBot = false
+
     private val Int.toPx: Int
         get() = (this * Resources.getSystem().displayMetrics.density.toInt())
 
@@ -25,6 +27,7 @@ class OffsetItemDecorator(
         with(outRect) {
             if (position == 0) top = topOffset
             if (position == childCount - 1) bottom = botOffset
+            if (position == childCount - 1 && isExtraPaddingBot) bottom = botOffset + 56.toPx
         }
 
     }
