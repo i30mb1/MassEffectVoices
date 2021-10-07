@@ -5,14 +5,14 @@ import com.android.build.gradle.internal.plugins.LibraryPlugin
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:${Versions.gradlePlugin}")
