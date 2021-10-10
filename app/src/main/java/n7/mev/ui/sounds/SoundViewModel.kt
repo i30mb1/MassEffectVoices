@@ -1,4 +1,4 @@
-package n7.mev.main
+package n7.mev.ui.sounds
 
 import android.Manifest
 import android.app.AlertDialog
@@ -19,7 +19,14 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import n7.mev.R
+import n7.mev.data.source.local.SoundRepository
+import n7.mev.ui.sounds.usecase.GetSoundsVOUseCase
+import n7.mev.ui.sounds.vo.SoundVO
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -27,7 +34,15 @@ import java.io.OutputStream
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-class MainViewModel(application: Application, moduleName: String) : AndroidViewModel(application) {
+class SoundViewModel(
+    private val applicationContext: Application
+) : AndroidViewModel(applicationContext) {
+
+    private val soundRepository = SoundRepository(applicationContext)
+    private val getSoundsVOUseCase = GetSoundsVOUseCase(applicationContext, soundRepository, Dispatchers.IO)
+    private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
+    val state: LiveData<State> = _state
+
     val grandSettingEvent = MutableLiveData<Void?>()
     val startActivityForResultSaveFile = MutableLiveData<Intent?>()
     val fileToSaveFile = MutableLiveData<ByteArray?>()
@@ -49,7 +64,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
 
 
     private fun canWriteInSystem(): Boolean {
-        if (Settings.System.canWrite(getApplication())) {
+        if (Settings.System.canWrite(applicationContext)) {
             return true
         } else {
             grandSettingEvent
@@ -59,7 +74,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
 
     private fun canWriteExternalStorage(): Boolean {
         return if (ContextCompat.checkSelfPermission(
-                getApplication(),
+                applicationContext,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
@@ -84,7 +99,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
                     //                            callForShowSnackbarForFolder();
                 }
                 1 -> if (canWriteExternalStorage() && canWriteInSystem()) {
-//                    setAsRingtone(getApplication(), soundModel)
+//                    setAsRingtone(application(), soundModel)
                 }
             }
             dialog.dismiss()
@@ -159,10 +174,10 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
             val scanIntent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE)
             val contentUri = Uri.fromFile(myFile)
             scanIntent.data = contentUri
-            getApplication<Application>().sendBroadcast(scanIntent)
+            this.applicationContext.sendBroadcast(scanIntent)
         } else {
             val intent = Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStorageDirectory()))
-            getApplication<Application>().sendBroadcast(intent)
+            this.applicationContext.sendBroadcast(intent)
         }
     }
 
@@ -175,7 +190,7 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
 //            File.separator + context.getString(R.string.app_name) + File.separator + soundModel.name
 //        )
 //        val referese = dm.enqueue(request)
-        //        Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+        //        Toast.makeText(applicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
     }
 
     fun downloadInFolderNew(context: Context) {
@@ -241,9 +256,21 @@ class MainViewModel(application: Application, moduleName: String) : AndroidViewM
         }
     }
 
+    fun load(moduleName: String) = viewModelScope.launch {
+        _state.value = State.Data(getSoundsVOUseCase(moduleName).first())
+    }
+
     init {
         diskIO = Executors.newSingleThreadExecutor()
 //        soundStorage = SoundStorage(application, moduleName, diskIO)
 //        soundStorage.load(isLoading)
     }
+
+    companion object {
+        sealed class State {
+            object Loading : State()
+            data class Data(val list: List<SoundVO>) : State()
+        }
+    }
+
 }

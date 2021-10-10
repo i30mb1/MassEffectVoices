@@ -2,7 +2,6 @@ package n7.mev.ui.heroes
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -10,16 +9,15 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.transition.Slide
-import androidx.transition.TransitionManager
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import n7.mev.Navigator
 import n7.mev.R
 import n7.mev.databinding.HeroesFragmentBinding
 import n7.mev.lazyUnsafe
 import n7.mev.ui.heroes.adapter.HeroesAdapter
 import n7.mev.ui.heroes.adapter.OffsetItemDecorator
 import n7.mev.ui.heroes.vo.HeroVO
-import n7.mev.ui.sounds.SoundsFragment
 
 class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) {
 
@@ -75,11 +73,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     }
 
     private fun openModule(moduleName: String) {
-        SoundsFragment.newInstance(moduleName)
-        TransitionManager.beginDelayedTransition(binding.root, buttonAnimation)
-        binding.bAddModule.isVisible = !binding.bAddModule.isVisible
-        offsetItemDecorator.isExtraPaddingBot = binding.bAddModule.isVisible
-        binding.rv.invalidateItemDecorations()
+        (activity as Navigator).openSoundsFragment(moduleName)
     }
 
     private fun setupPagedListAdapter() {

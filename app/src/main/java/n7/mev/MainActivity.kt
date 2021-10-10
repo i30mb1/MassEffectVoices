@@ -4,8 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import n7.mev.ui.heroes.HeroesFragment
+import n7.mev.ui.sounds.SoundsFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Navigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,4 +18,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun openSoundsFragment(moduleName: String) {
+        supportFragmentManager.commit {
+            add(R.id.container, SoundsFragment.newInstance(moduleName))
+        }
+    }
+
+}
+
+interface Navigator {
+
+    fun openSoundsFragment(moduleName: String)
+
 }
