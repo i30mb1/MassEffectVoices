@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity(), Navigator {
 
     override fun openSoundsFragment(moduleName: String) {
         supportFragmentManager.commit {
+            addToBackStack(null)
             add(R.id.container, SoundsFragment.newInstance(moduleName))
         }
     }
