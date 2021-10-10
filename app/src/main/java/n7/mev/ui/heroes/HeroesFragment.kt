@@ -85,7 +85,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     private fun setupPagedListAdapter() {
         heroesAdapter = HeroesAdapter(layoutInflater, onHeroClickListener)
         binding.rv.apply {
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             addItemDecoration(offsetItemDecorator)
             adapter = heroesAdapter

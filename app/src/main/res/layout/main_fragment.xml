@@ -5,48 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:background="@color/backColor"
-            android:minHeight="?attr/actionBarSize"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <ImageView
-                android:id="@+id/iv_main_fragment_n7"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="@string/n7"
-                android:transitionName="iv2"
-                app:srcCompat="@drawable/n7"
-                tools:ignore="UnusedAttribute" />
-        </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!--<ImageView-->
-    <!--android:id="@+id/iv_main_fragment_hero"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="300dp"-->
-    <!--android:layout_gravity="bottom"-->
-
-    <!--android:contentDescription="@string/title_legion"-->
-    <!--app:srcCompat="@drawable/garrus"-->
-    <!--android:transitionName="iv"-->
-    <!--tools:targetApi="lollipop" />-->
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_main_fragment"
+        android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:itemCount="4"
-        tools:listitem="@layout/sound_item" />
+        tools:listitem="@layout/item_sound" />
 
     <ProgressBar
         android:layout_width="wrap_content"

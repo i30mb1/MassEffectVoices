@@ -7,7 +7,7 @@ import n7.mev.databinding.ItemHeroesBinding
 import n7.mev.ui.heroes.vo.HeroVO
 
 class HeroViewHolder private constructor(
-    private var binding: ItemHeroesBinding
+    private val binding: ItemHeroesBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(model: HeroVO, onHeroClickListener: (model: HeroVO) -> Unit) {
