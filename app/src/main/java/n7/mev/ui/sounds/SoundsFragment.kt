@@ -1,8 +1,8 @@
 package n7.mev.ui.sounds
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -29,7 +29,7 @@ class SoundsFragment private constructor() : Fragment(R.layout.main_fragment) {
     private lateinit var soundsAdapter: SoundsAdapter
     private lateinit var binding: MainFragmentBinding
     private val moduleName: String by lazyUnsafe { requireArguments().getString(MODULE_NAME)!! }
-    private val onSoundClickListener: (model: SoundVO) -> Unit = { model -> Toast.makeText(context, "$model", Toast.LENGTH_SHORT).show() }
+    private val onSoundClickListener: (model: SoundVO) -> Unit = { model -> playSound(model.soundUri) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,6 +49,10 @@ class SoundsFragment private constructor() : Fragment(R.layout.main_fragment) {
                 SoundViewModel.Companion.State.Loading -> binding.pb.isVisible = true
             }
         }
+    }
+
+    private fun playSound(uri: Uri) {
+        soundViewModel.play(uri)
     }
 
     private fun setupRecyclerView() {

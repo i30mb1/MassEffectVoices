@@ -38,10 +38,12 @@ class SoundViewModel(
     private val applicationContext: Application
 ) : AndroidViewModel(applicationContext) {
 
-    private val soundRepository = SoundRepository(applicationContext)
-    private val getSoundsVOUseCase = GetSoundsVOUseCase(applicationContext, soundRepository, Dispatchers.IO)
     private val _state: MutableLiveData<State> = MutableLiveData(State.Loading)
     val state: LiveData<State> = _state
+
+    private val soundRepository = SoundRepository(applicationContext)
+    private val getSoundsVOUseCase = GetSoundsVOUseCase(applicationContext, soundRepository, Dispatchers.IO)
+    private val player = Player(applicationContext)
 
     val grandSettingEvent = MutableLiveData<Void?>()
     val startActivityForResultSaveFile = MutableLiveData<Intent?>()
@@ -55,13 +57,9 @@ class SoundViewModel(
     private val diskIO: Executor
     private var mediaPlayer: MediaPlayer? = null
 
-    fun getStartActivityForResultSaveFile(): LiveData<Intent?> {
-        return startActivityForResultSaveFile
+    fun play(url: Uri) {
+        player.play(url)
     }
-
-    val fileSaveFile: LiveData<ByteArray?>
-        get() = fileToSaveFile
-
 
     private fun canWriteInSystem(): Boolean {
         if (Settings.System.canWrite(applicationContext)) {

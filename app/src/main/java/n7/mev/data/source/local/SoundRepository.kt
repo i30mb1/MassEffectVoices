@@ -8,12 +8,14 @@ class SoundRepository(
     private val application: Application,
 ) {
 
-    fun getSoundFolders(moduleName: String): Flow<String> = flow {
-        application.assets.list(moduleName)?.forEach { emit(it) }
+    data class Sound(val name: String, val folder: String, val url: String)
+
+    fun getSoundFolders(module: String): Flow<String> = flow {
+        application.assets.list(module)?.forEach { emit(it) }
     }
 
-    fun getSounds(pathToFolder: String): Flow<String> = flow {
-        application.assets.list(pathToFolder)?.forEach { emit(it) }
+    fun getSounds(folder: String): Flow<Sound> = flow {
+        application.assets.list(folder)?.forEach { name -> emit(Sound(name, folder, "asset:///$folder/$name")) }
     }
 
 }

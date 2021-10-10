@@ -21,6 +21,7 @@ object Lib {
     const val coil = "io.coil-kt:coil:0.13.0"
     const val playCore = "com.google.android.play:core:1.10.2"
     const val playCoreKtx = "com.google.android.play:core-ktx:1.8.1"
+    const val exoPlayer = "com.google.android.exoplayer:exoplayer-core:2.14.2"
 
     // --- Coroutines ---
     const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2"
