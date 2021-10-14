@@ -2,8 +2,10 @@ package n7.mev.ui.heroes
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
@@ -47,16 +49,13 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
     }
 
     private fun setupListeners() {
-        binding.bAddModule.setOnClickListener {
-            val dialog = AvailableModuleDialog.newInstance()
-            dialog.show(childFragmentManager, null)
-        }
+        binding.bAddModule.setOnClickListener { openAvailableModuleDialog() }
         viewModel.status.flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.STARTED)
             .onEach { state ->
                 when (state) {
                     is HeroesViewModel.State.Data -> {
                         heroesAdapter.submitList(state.list)
-//                        binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
+                        binding.bAddModule.isVisible = true
                     }
                     is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
                         FeatureManager.State.Canceled -> Unit
@@ -70,6 +69,15 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                 }
             }
             .launchIn(lifecycleScope)
+    }
+
+    private fun openAvailableModuleDialog() {
+        setFragmentResultListener(AvailableModuleDialog.AVAILABLE_MODULE_LISTENER_KEY) { _, result ->
+            val moduleName = result.getString(AvailableModuleDialog.AVAILABLE_MODULE_LISTENER_RESULT)!!
+            viewModel.installModule(moduleName)
+        }
+        val dialog = AvailableModuleDialog.newInstance()
+        dialog.show(parentFragmentManager, null)
     }
 
     private fun openModule(moduleName: String) {

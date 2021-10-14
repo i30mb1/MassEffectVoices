@@ -33,6 +33,10 @@ class HeroesViewModel(
         }
     }
 
+    fun installModule(moduleName: String) {
+        featureManager.installModule(moduleName)
+    }
+
     suspend fun getReadyToInstallModules(): List<HeroVO> {
         val list = featureManager.getModulesThatCanBeInstalled()
         return getHeroesVOUseCase(list).single()

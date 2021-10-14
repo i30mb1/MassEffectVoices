@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.CoroutineScope
@@ -18,12 +20,21 @@ import n7.mev.ui.heroes.vo.HeroVO
 class AvailableModuleDialog private constructor() : BottomSheetDialogFragment() {
 
     companion object {
+        const val AVAILABLE_MODULE_LISTENER_KEY = "AVAILABLE_MODULE_LISTENER_KEY"
+        const val AVAILABLE_MODULE_LISTENER_RESULT = "AVAILABLE_MODULE_LISTENER_RESULT"
         fun newInstance() = AvailableModuleDialog()
     }
 
     private lateinit var binding: BottomDrawerBinding
     private val viewModel: HeroesViewModel by activityViewModels()
     private val scope: CoroutineScope = CoroutineScope(Dispatchers.Main)
+    private val onHeroClickListener: (model: HeroVO) -> Unit = { model ->
+        setFragmentResult(
+            AVAILABLE_MODULE_LISTENER_KEY,
+            bundleOf(AVAILABLE_MODULE_LISTENER_RESULT to model.moduleName)
+        )
+        dismiss()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = BottomDrawerBinding.inflate(inflater, container, false)
@@ -36,7 +47,6 @@ class AvailableModuleDialog private constructor() : BottomSheetDialogFragment() 
     }
 
     private fun setupRecycler() {
-        val onHeroClickListener: (model: HeroVO) -> Unit = { }
         val heroesAdapter = HeroesSmallAdapter(layoutInflater, onHeroClickListener)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(requireContext())
