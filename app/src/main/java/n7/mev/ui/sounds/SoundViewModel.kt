@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import n7.mev.data.source.local.MePart
 import n7.mev.data.source.local.SoundRepository
 import n7.mev.ui.sounds.usecase.GetSoundsVOUseCase
 import n7.mev.ui.sounds.vo.SoundVO
@@ -29,7 +30,7 @@ class SoundViewModel(
     }
 
     fun load(moduleName: String) = viewModelScope.launch {
-        _state.value = State.Data(getSoundsVOUseCase(moduleName).first())
+        _state.value = State.Data(getSoundsVOUseCase(moduleName, MePart.ME1).first())
     }
 
     companion object {
