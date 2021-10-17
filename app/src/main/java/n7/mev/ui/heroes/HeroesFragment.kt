@@ -63,7 +63,10 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                         FeatureManager.State.Installed -> Unit
                         FeatureManager.State.Nothing -> Unit
                         is FeatureManager.State.Data -> Unit
-                        is FeatureManager.State.Downloading -> Unit
+                        is FeatureManager.State.Downloading -> {
+                            binding.pb.progress = state.featureState.currentBytes
+                            binding.pb.max = state.featureState.totalBytes
+                        }
                         is FeatureManager.State.RequiredInformation -> Unit
                     }
                 }

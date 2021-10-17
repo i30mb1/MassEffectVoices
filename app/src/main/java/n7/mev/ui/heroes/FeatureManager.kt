@@ -10,6 +10,7 @@ import com.google.android.play.core.splitinstall.SplitInstallSessionState
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 import n7.mev.BuildConfig
 import kotlin.math.roundToInt
 
@@ -31,27 +32,34 @@ class FeatureManager(
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
-    val status: MutableStateFlow<State> = MutableStateFlow(State.Data(getInstalledModules(), getModulesThatCanBeInstalled()))
+    val status: MutableSharedFlow<State> = MutableSharedFlow()
 
-    private val installManagerStatus = installManager.requestProgressFlow()
-        .map { state: SplitInstallSessionState ->
-            when (state.status()) {
-                REQUIRES_USER_CONFIRMATION -> State.RequiredInformation(state)
-                DOWNLOADING -> {
-                    val totalBytes = state.totalBytesToDownload().toFloat().roundToInt()
-                    val currentBytes = state.bytesDownloaded().toFloat().roundToInt()
-                    State.Downloading(totalBytes, currentBytes)
+    init {
+        scope.launch {
+            status.emit(State.Data(getInstalledModules(), getModulesThatCanBeInstalled()))
+            installManager.requestProgressFlow()
+                .map { state: SplitInstallSessionState ->
+                    when (state.status()) {
+                        REQUIRES_USER_CONFIRMATION -> State.RequiredInformation(state)
+                        DOWNLOADING -> {
+                            val totalBytes = state.totalBytesToDownload().toFloat().roundToInt()
+                            val currentBytes = state.bytesDownloaded().toFloat().roundToInt()
+                            State.Downloading(totalBytes, currentBytes)
+                        }
+                        CANCELED -> State.Canceled
+                        INSTALLED -> State.Installed
+                        FAILED -> State.Error
+                        else -> Unit
+                    }
                 }
-                CANCELED -> State.Canceled
-                INSTALLED -> State.Installed
-                FAILED -> State.Error
-                else -> Unit
-            }
+                .filterIsInstance<State>()
+                .onEach { featureState ->
+                    status.emit(featureState)
+                    status.emit(State.Data(getInstalledModules(), getModulesThatCanBeInstalled()))
+                }
+                .collect()
         }
-        .filterIsInstance<State>()
-        .onEach { featureState -> status.emit(featureState) }
-        .onEach { status.emit(State.Data(getInstalledModules(), getModulesThatCanBeInstalled())) }
-        .launchIn(scope)
+    }
 
     fun startConfirmationDialog(fragment: Fragment, state: SplitInstallSessionState) {
         installManager.startConfirmationDialogForResult(state, fragment, 0)
@@ -66,7 +74,6 @@ class FeatureManager(
 
     fun getModulesThatCanBeInstalled(): Set<String> {
         val availableModules = getAllModules()
-        return availableModules
         val installedModules = getInstalledModules()
         return availableModules - installedModules
     }

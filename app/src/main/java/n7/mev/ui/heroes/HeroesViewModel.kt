@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
 import n7.mev.ui.heroes.usecase.GetHeroesVOUseCase
@@ -22,7 +21,7 @@ class HeroesViewModel(
     private val featureManager = FeatureManager(viewModelScope, application)
     private val getHeroesVOUseCase = GetHeroesVOUseCase(application, Dispatchers.IO)
 
-    val status: Flow<State> = featureManager.status.map { status: FeatureManager.State ->
+    val status = featureManager.status.map { status: FeatureManager.State ->
         when (status) {
             is FeatureManager.State.Data -> {
                 val list = getHeroesVOUseCase(status.availableModules).single()
