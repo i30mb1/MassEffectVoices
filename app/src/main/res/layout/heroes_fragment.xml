@@ -1,14 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/backColor">
+
+        <ProgressBar
+            android:id="@+id/pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="?android:actionBarSize"
+            android:indeterminate="false"
+            android:scaleY="20" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/n7"
+            app:srcCompat="@drawable/n7" />
+
+    </FrameLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layoutAnimation="@anim/item_animation"
         android:layout_height="match_parent"
+        android:layout_marginTop="?android:actionBarSize"
+        android:layoutAnimation="@anim/item_animation"
         android:overScrollMode="never"
         tools:listitem="@layout/item_heroes" />
 
@@ -22,13 +47,5 @@
         android:text="@string/add_module"
         android:textAllCaps="true"
         android:textSize="14sp" />
-
-    <ProgressBar
-        android:id="@+id/pb"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:indeterminate="false"
-        android:scaleY="3" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
