@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/white"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layoutAnimation="@anim/item_animation"
+        android:overScrollMode="never"
         tools:itemCount="4"
         tools:listitem="@layout/item_sound" />
 
@@ -20,4 +20,4 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

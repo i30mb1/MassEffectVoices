@@ -32,7 +32,7 @@ class FeatureManager(
 
     //    FakeSplitInstallManagerFactory
     private val installManager = SplitInstallManagerFactory.create(application)
-    val status: MutableSharedFlow<State> = MutableSharedFlow()
+    val status: MutableSharedFlow<State> = MutableSharedFlow(1)
 
     init {
         scope.launch {

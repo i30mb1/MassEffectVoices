@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import n7.mev.R
-import n7.mev.databinding.MainFragmentBinding
+import n7.mev.databinding.SoundsFragmentBinding
 import n7.mev.lazyUnsafe
 import n7.mev.ui.sounds.adapter.SoundsAdapter
 import n7.mev.ui.sounds.vo.SoundVO
 
-class SoundsFragment private constructor() : Fragment(R.layout.main_fragment) {
+class SoundsFragment private constructor() : Fragment(R.layout.sounds_fragment) {
 
     companion object {
         private const val MODULE_NAME = "MODULE_NAME"
@@ -27,13 +27,13 @@ class SoundsFragment private constructor() : Fragment(R.layout.main_fragment) {
 
     private val soundViewModel: SoundViewModel by viewModels()
     private lateinit var soundsAdapter: SoundsAdapter
-    private lateinit var binding: MainFragmentBinding
+    private lateinit var binding: SoundsFragmentBinding
     private val moduleName: String by lazyUnsafe { requireArguments().getString(MODULE_NAME)!! }
     private val onSoundClickListener: (model: SoundVO) -> Unit = { model -> playSound(model.soundUri) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = MainFragmentBinding.bind(view)
+        binding = SoundsFragmentBinding.bind(view)
 
         setupRecyclerView()
         setupState()
@@ -61,6 +61,7 @@ class SoundsFragment private constructor() : Fragment(R.layout.main_fragment) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = soundsAdapter
+            itemAnimator = null
         }
 
         soundViewModel.load(moduleName)
