@@ -58,16 +58,15 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                         binding.bAddModule.isVisible = true
                     }
                     is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
-                        FeatureManager.State.Canceled -> Unit
-                        FeatureManager.State.Error -> Unit
-                        FeatureManager.State.Installed -> Unit
-                        FeatureManager.State.Nothing -> Unit
-                        is FeatureManager.State.Data -> Unit
+                        FeatureManager.State.Canceled -> binding.pb.isVisible = false
+                        FeatureManager.State.Error -> binding.pb.isVisible = false
+                        FeatureManager.State.Installed -> binding.pb.isVisible = false
                         is FeatureManager.State.Downloading -> {
+                            binding.pb.isVisible = true
                             binding.pb.progress = state.featureState.currentBytes
                             binding.pb.max = state.featureState.totalBytes
                         }
-                        is FeatureManager.State.RequiredInformation -> Unit
+                        is FeatureManager.State.RequiredInformation -> viewModel.startConfirmationDialog(this, state.featureState.state)
                     }
                 }
             }

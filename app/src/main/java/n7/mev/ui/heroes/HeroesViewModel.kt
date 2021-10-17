@@ -3,6 +3,7 @@ package n7.mev.ui.heroes
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.play.core.splitinstall.SplitInstallSessionState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
@@ -34,6 +35,10 @@ class HeroesViewModel(
 
     fun installModule(moduleName: String) {
         featureManager.installModule(moduleName)
+    }
+
+    fun startConfirmationDialog(fragment: HeroesFragment, state: SplitInstallSessionState) {
+        featureManager.startConfirmationDialog(fragment, state)
     }
 
     suspend fun getReadyToInstallModules(): List<HeroVO> {
