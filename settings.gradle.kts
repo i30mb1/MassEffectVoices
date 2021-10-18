@@ -20,5 +20,6 @@ include(
         ":feature_tali",
         ":feature_thane",
         ":feature_vega",
-        ":feature_zaeed"
+        ":feature_zaeed",
+        ":feature_wrex",
 )

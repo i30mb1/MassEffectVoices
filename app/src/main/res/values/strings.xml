@@ -51,4 +51,5 @@
     <string name="deleted" translatable="false">will be deleted when system needs space</string>
     <string name="require" translatable="false">requires_user_confirmation</string>
     <string name="title_dlc_citadel" translatable="false">dlc_citadel</string>
+    <string name="title_feature_wrex" translatable="false">wrex</string>
 </resources>
