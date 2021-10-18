@@ -54,8 +54,9 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             .onEach { state ->
                 when (state) {
                     is HeroesViewModel.State.Data -> {
-                        heroesAdapter.submitList(state.list)
+                        heroesAdapter.submitList(state.list) { binding.rv.invalidateItemDecorations() }
                         binding.bAddModule.isVisible = true
+
                     }
                     is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
                         FeatureManager.State.Canceled -> binding.pb.isVisible = false
@@ -92,6 +93,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             addItemDecoration(offsetItemDecorator)
+            itemAnimator = null
             adapter = heroesAdapter
         }
     }
