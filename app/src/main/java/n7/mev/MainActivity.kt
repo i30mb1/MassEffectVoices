@@ -2,6 +2,7 @@ package n7.mev
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.commit
 import n7.mev.ui.heroes.HeroesFragment
 import n7.mev.ui.sounds.SoundsFragment
@@ -10,6 +11,7 @@ class MainActivity : AppCompatActivity(), Navigator {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        installSplashScreen()
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {

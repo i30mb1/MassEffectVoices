@@ -43,6 +43,7 @@ dependencies {
     implementation(Lib.activityKtx)
     implementation(Lib.coroutines)
     implementation(Lib.exoPlayer)
+    implementation(Lib.splashScreen)
 
     // Libraries which can be re-used in other modules should use the `api` keyword.
     // This way they can be shared with dependent feature modules.
