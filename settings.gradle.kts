@@ -22,4 +22,8 @@ include(
         ":feature_vega",
         ":feature_zaeed",
         ":feature_wrex",
+        ":feature_anderson",
+        ":feature_kaidan",
+        ":feature_ashley",
+        ":feature_rachni_queen",
 )

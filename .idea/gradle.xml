@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/feature_anderson" />
+            <option value="$PROJECT_DIR$/feature_ashley" />
             <option value="$PROJECT_DIR$/feature_avina" />
             <option value="$PROJECT_DIR$/feature_edi" />
             <option value="$PROJECT_DIR$/feature_garrus" />
@@ -22,11 +24,13 @@
             <option value="$PROJECT_DIR$/feature_jacob" />
             <option value="$PROJECT_DIR$/feature_javik" />
             <option value="$PROJECT_DIR$/feature_joker" />
+            <option value="$PROJECT_DIR$/feature_kaidan" />
             <option value="$PROJECT_DIR$/feature_kasumi" />
             <option value="$PROJECT_DIR$/feature_legion" />
             <option value="$PROJECT_DIR$/feature_liara" />
             <option value="$PROJECT_DIR$/feature_miranda" />
             <option value="$PROJECT_DIR$/feature_mordin" />
+            <option value="$PROJECT_DIR$/feature_rachni_queen" />
             <option value="$PROJECT_DIR$/feature_reaper" />
             <option value="$PROJECT_DIR$/feature_samara" />
             <option value="$PROJECT_DIR$/feature_tali" />

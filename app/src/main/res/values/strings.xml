@@ -52,4 +52,8 @@
     <string name="require" translatable="false">requires_user_confirmation</string>
     <string name="title_dlc_citadel" translatable="false">dlc_citadel</string>
     <string name="title_feature_wrex" translatable="false">wrex</string>
+    <string name="title_feature_anderson" translatable="false">Anderson</string>
+    <string name="title_feature_kaidan" translatable="false">Kaidan</string>
+    <string name="title_feature_ashley" translatable="false">Ashley</string>
+    <string name="title_feature_rachni_queen" translatable="false">Rachni Queen</string>
 </resources>

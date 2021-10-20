@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/MassEffectVoices.iml" filepath="$PROJECT_DIR$/MassEffectVoices.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/MassEffectVoices.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/MassEffectVoices.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/MassEffectVoices.buildSrc.iml" filepath="$PROJECT_DIR$/.idea/modules/MassEffectVoices.buildSrc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_anderson/MassEffectVoices.feature_anderson.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_anderson/MassEffectVoices.feature_anderson.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_ashley/MassEffectVoices.feature_ashley.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_ashley/MassEffectVoices.feature_ashley.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_avina/MassEffectVoices.feature_avina.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_avina/MassEffectVoices.feature_avina.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_edi/MassEffectVoices.feature_edi.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_edi/MassEffectVoices.feature_edi.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_garrus/MassEffectVoices.feature_garrus.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_garrus/MassEffectVoices.feature_garrus.iml" />
@@ -14,11 +16,13 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_jacob/MassEffectVoices.feature_jacob.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_jacob/MassEffectVoices.feature_jacob.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_javik/MassEffectVoices.feature_javik.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_javik/MassEffectVoices.feature_javik.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_joker/MassEffectVoices.feature_joker.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_joker/MassEffectVoices.feature_joker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_kaidan/MassEffectVoices.feature_kaidan.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_kaidan/MassEffectVoices.feature_kaidan.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_kasumi/MassEffectVoices.feature_kasumi.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_kasumi/MassEffectVoices.feature_kasumi.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_legion/MassEffectVoices.feature_legion.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_legion/MassEffectVoices.feature_legion.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_liara/MassEffectVoices.feature_liara.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_liara/MassEffectVoices.feature_liara.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_miranda/MassEffectVoices.feature_miranda.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_miranda/MassEffectVoices.feature_miranda.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_mordin/MassEffectVoices.feature_mordin.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_mordin/MassEffectVoices.feature_mordin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_rachni_queen/MassEffectVoices.feature_rachni_queen.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_rachni_queen/MassEffectVoices.feature_rachni_queen.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_reaper/MassEffectVoices.feature_reaper.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_reaper/MassEffectVoices.feature_reaper.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_samara/MassEffectVoices.feature_samara.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_samara/MassEffectVoices.feature_samara.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/feature_tali/MassEffectVoices.feature_tali.iml" filepath="$PROJECT_DIR$/.idea/modules/feature_tali/MassEffectVoices.feature_tali.iml" />
