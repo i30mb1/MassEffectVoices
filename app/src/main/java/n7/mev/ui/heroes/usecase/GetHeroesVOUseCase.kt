@@ -14,9 +14,8 @@ class GetHeroesVOUseCase constructor(
 
     operator fun invoke(modulesSet: Set<String>): Flow<List<HeroVO>> = flow {
         val result = modulesSet.map { moduleName ->
-            val name = moduleName.drop("feature_".length)
-            val icon = application.resources.getIdentifier(name, "drawable", application.packageName)
-            HeroVO(name, icon, moduleName)
+            val icon = application.resources.getIdentifier(moduleName, "drawable", application.packageName)
+            HeroVO(moduleName, icon, moduleName)
         }
         emit(result)
     }.flowOn(dispatcher)
