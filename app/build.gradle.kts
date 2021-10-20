@@ -1,4 +1,5 @@
 import ModuleDependency.getDynamicFeatureModules
+import ModuleDependency.getDynamicFeatureModulesNames
 import com.android.build.api.dsl.ApplicationDefaultConfig
 
 plugins {
@@ -14,7 +15,7 @@ android {
         versionCode = Apps.versionCode
         versionName = Apps.versionName
 
-        buildConfigField("modules", getDynamicFeatureModules().toSet())
+        buildConfigField("modules", getDynamicFeatureModulesNames().toSet())
     }
 
     buildFeatures {

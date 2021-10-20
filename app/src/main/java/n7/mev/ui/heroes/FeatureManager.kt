@@ -16,12 +16,11 @@ import kotlin.math.roundToInt
 
 
 class FeatureManager(
-    private val scope: CoroutineScope,
-    private val application: Application,
+    scope: CoroutineScope,
+    application: Application,
 ) {
 
     sealed class State {
-        object Nothing : State()
         object Canceled : State()
         object Error : State()
         object Installed : State()
@@ -66,10 +65,13 @@ class FeatureManager(
     }
 
     fun installModule(moduleName: String) {
+        var name = moduleName
         val request = SplitInstallRequest.newBuilder()
-            .addModule(moduleName)
+            .addModule(name)
             .build()
-        installManager.startInstall(request)
+        installManager.startInstall(request).addOnFailureListener { error ->
+            error
+        }
     }
 
     fun getModulesThatCanBeInstalled(): Set<String> {
@@ -84,7 +86,7 @@ class FeatureManager(
 
     private fun getAllModules(): Set<String> {
         return BuildConfig.modules
-            .map { name -> name.drop(1) }
+            .map { name -> name.replace("", "") }
             .toSet()
     }
 
