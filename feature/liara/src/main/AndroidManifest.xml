@@ -1,0 +1,11 @@
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+    package="n7.mev.feature.liara">
+
+    <dist:module
+        dist:instant="false"
+        dist:onDemand="true"
+        dist:title="@string/title_liara">
+        <dist:fusing dist:include="false" />
+    </dist:module>
+</manifest>
+
