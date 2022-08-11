@@ -61,7 +61,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             val statusBarsInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
             val navigationBarsInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
             binding.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                topMargin = toolbarMarginTop + statusBarsInsets.top
+                topMargin = toolbarMarginTop + statusBarsInsets.top + 1.dpToPx
             }
             binding.bAddModule.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = navigationBarsInsets.bottom
