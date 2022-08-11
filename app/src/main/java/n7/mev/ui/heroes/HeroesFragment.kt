@@ -66,7 +66,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             binding.bAddModule.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = navigationBarsInsets.bottom
             }
-            offsetItemDecorator.isExtraPaddingBot = navigationBarsInsets.bottom + 50.dpToPx
+            offsetItemDecorator.extraPaddingBot = navigationBarsInsets.bottom
             binding.rv.invalidateItemDecorations()
             insets
         }
@@ -79,8 +79,8 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                 when (state) {
                     is HeroesViewModel.State.Data -> {
                         heroesAdapter.submitList(state.list) { binding.rv.invalidateItemDecorations() }
-                        binding.bAddModule.isVisible = true
-
+                        binding.bAddModule.isVisible = state.isVisibleDownloadFeatureButton
+                        offsetItemDecorator.isBottomButtonVisible = state.isVisibleDownloadFeatureButton
                     }
                     is HeroesViewModel.State.FeatureManagerState -> when (state.featureState) {
                         FeatureManager.State.Canceled -> binding.pb.isVisible = false
