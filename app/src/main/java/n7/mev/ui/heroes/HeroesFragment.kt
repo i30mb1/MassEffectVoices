@@ -1,5 +1,6 @@
 package n7.mev.ui.heroes
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,10 @@ import n7.mev.lazyUnsafe
 import n7.mev.ui.heroes.adapter.HeroesAdapter
 import n7.mev.ui.heroes.adapter.OffsetItemDecorator
 import n7.mev.ui.heroes.vo.HeroVO
+import kotlin.math.roundToInt
+
+val Int.dpToPx: Int
+    get() = (this * Resources.getSystem().displayMetrics.density.roundToInt())
 
 class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) {
 
@@ -61,7 +66,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
             binding.bAddModule.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 bottomMargin = navigationBarsInsets.bottom
             }
-            offsetItemDecorator.isExtraPaddingBot = navigationBarsInsets.bottom + binding.bAddModule.height
+            offsetItemDecorator.isExtraPaddingBot = navigationBarsInsets.bottom + 50.dpToPx
             binding.rv.invalidateItemDecorations()
             insets
         }
