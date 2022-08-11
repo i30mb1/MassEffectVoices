@@ -1,6 +1,5 @@
 package n7.mev.ui.sounds
 
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -32,7 +31,6 @@ class SoundsFragment private constructor() : Fragment(R.layout.sounds_fragment) 
     private lateinit var soundsAdapter: SoundsAdapter
     private lateinit var binding: SoundsFragmentBinding
     private val moduleName: String by lazyUnsafe { requireArguments().getString(MODULE_NAME)!! }
-    private val onSoundClickListener: (model: SoundVO) -> Unit = { model -> playSound(model.soundUri) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -64,12 +62,12 @@ class SoundsFragment private constructor() : Fragment(R.layout.sounds_fragment) 
         }
     }
 
-    private fun playSound(uri: Uri) {
-        soundViewModel.play(uri)
+    private fun playSound(model: SoundVO) {
+        soundViewModel.play(model.soundUri)
     }
 
     private fun setupRecyclerView() {
-        soundsAdapter = SoundsAdapter(layoutInflater, onSoundClickListener)
+        soundsAdapter = SoundsAdapter(layoutInflater, ::playSound)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
