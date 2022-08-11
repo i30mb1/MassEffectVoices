@@ -5,7 +5,6 @@ import com.android.build.api.dsl.ApplicationDefaultConfig
 plugins {
     androidApp()
     kotlinAndroid()
-    kotlinKapt()
 }
 
 android {
@@ -15,7 +14,7 @@ android {
         versionCode = Apps.versionCode
         versionName = Apps.versionName
 
-        buildConfigField("modules", getDynamicFeatureModulesNames().toSet())
+        buildConfigField("modules", getDynamicFeatureModulesNames())
     }
 
     buildFeatures {
@@ -29,7 +28,7 @@ android {
     }
 
     // Each feature module that is included in settings.gradle.kts is added here as dynamic feature
-    setDynamicFeatures(getDynamicFeatureModules().toMutableSet())
+    setDynamicFeatures(getDynamicFeatureModules())
 }
 
 dependencies {
@@ -46,8 +45,6 @@ dependencies {
     implementation(Lib.exoPlayer)
     implementation(Lib.splashScreen)
 
-    // Libraries which can be re-used in other modules should use the `api` keyword.
-    // This way they can be shared with dependent feature modules.
     api(Lib.playCore)
     api(Lib.playCoreKtx)
 }

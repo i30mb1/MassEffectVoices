@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 import kotlin.reflect.full.memberProperties
 
 const val FEATURE_PREFIX = ":feature"
@@ -41,5 +43,6 @@ object ModuleDependency {
 
     fun getDynamicFeatureModulesNames() = getDynamicFeatureModules()
         .map { it.drop(FEATURE_PREFIX.length + 1) }
+        .toSet()
 
 }
