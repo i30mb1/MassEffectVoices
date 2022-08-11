@@ -4,7 +4,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -37,6 +40,16 @@ class SoundsFragment private constructor() : Fragment(R.layout.sounds_fragment) 
 
         setupRecyclerView()
         setupState()
+        setupInsets()
+    }
+
+    private fun setupInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val statusBarsInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navigationBarsInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            binding.rv.updatePadding(top = statusBarsInsets.top, bottom = navigationBarsInsets.bottom)
+            insets
+        }
     }
 
     private fun setupState() {

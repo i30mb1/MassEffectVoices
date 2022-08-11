@@ -12,6 +12,7 @@
         android:layoutAnimation="@anim/item_animation"
         android:overScrollMode="never"
         tools:itemCount="4"
+        android:clipToPadding="false"
         tools:listitem="@layout/item_sound" />
 
     <ProgressBar
