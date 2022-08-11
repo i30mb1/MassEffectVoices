@@ -10,7 +10,7 @@ object Apps {
 
 object Versions {
     const val gradlePlugin = "7.0.3"
-    const val kotlin = "1.5.30"
+    const val kotlin = "1.5.20"
     const val lifecycle = "2.4.0-beta01"
 }
 

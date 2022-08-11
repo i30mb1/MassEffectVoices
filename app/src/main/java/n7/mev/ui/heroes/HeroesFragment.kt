@@ -2,7 +2,8 @@ package n7.mev.ui.heroes
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.isVisible
+import android.view.ViewGroup
+import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -46,6 +47,24 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
 
         setupPagedListAdapter()
         setupListeners()
+        setupInsets()
+    }
+
+    private fun setupInsets() {
+        val toolbarMarginTop = binding.toolbar.marginTop
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { _, insets ->
+            val statusBarsInsets = insets.getInsets(WindowInsetsCompat.Type.statusBars())
+            val navigationBarsInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            binding.toolbar.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = toolbarMarginTop + statusBarsInsets.top
+            }
+            binding.bAddModule.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = navigationBarsInsets.bottom
+            }
+            offsetItemDecorator.isExtraPaddingBot = navigationBarsInsets.bottom + binding.bAddModule.height
+            binding.rv.invalidateItemDecorations()
+            insets
+        }
     }
 
     private fun setupListeners() {
