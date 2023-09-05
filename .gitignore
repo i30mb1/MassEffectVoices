@@ -1,19 +1,7 @@
-*.iml
-.gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-*.log
-/buildSrc/build/**
+.gradle/
+build/
+**/.idea/*
 
-/app.apks
-/app/release/app-release.aab
-/bundletool.jar
-/.idea/shelf/Default_Changelist.xml
-/.idea/misc.xml
-/.idea/shelf/Default_Changelist/shelved.patch
+local.properties
+
 /apks.apks
