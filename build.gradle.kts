@@ -15,8 +15,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:${Versions.gradlePlugin}")
-        classpath(kotlin("gradle-plugin", version = Versions.kotlin))
+        classpath("com.android.tools.build:gradle:8.1.0")
+        classpath(kotlin("gradle-plugin", version = "1.7.20"))
     }
 }
 
@@ -25,6 +25,8 @@ subprojects {
         configure<com.android.build.gradle.BaseExtension> {
             compileSdkVersion(Apps.compileSdk)
 
+            namespace = "n7.mev"
+
             defaultConfig {
                 minSdk = Apps.minSdk
                 targetSdk = Apps.targetSdk
@@ -32,8 +34,4 @@ subprojects {
 
         }
     }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }
