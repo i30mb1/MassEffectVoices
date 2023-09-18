@@ -14,6 +14,6 @@ class SecretActivity : FragmentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_secret)
+        setContentView(n7.mev.R.layout.activity_secret)
     }
 }

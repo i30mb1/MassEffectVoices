@@ -1,3 +1,13 @@
+rootProject.name = "mev"
+
+pluginManagement {
+        includeBuild("build-logic/build-settings")
+}
+
+plugins {
+        id("n7.plugins.settings")
+}
+
 include(
         ":app",
         ":feature:avina",

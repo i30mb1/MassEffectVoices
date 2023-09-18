@@ -92,6 +92,7 @@ class HeroesFragment private constructor() : Fragment(R.layout.heroes_fragment) 
                             binding.pb.max = state.featureState.totalBytes
                         }
                         is FeatureManager.State.RequiredInformation -> viewModel.startConfirmationDialog(this, state.featureState.state)
+                        else -> Unit
                     }
                 }
             }
