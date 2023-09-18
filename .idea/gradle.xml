@@ -4,6 +4,25 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <compositeConfiguration>
+          <compositeBuild compositeDefinitionSource="SCRIPT">
+            <builds>
+              <build path="$PROJECT_DIR$/build-logic/build-settings" name="build-settings">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic/build-settings" />
+                </projects>
+              </build>
+              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+                <projects>
+                  <project path="$PROJECT_DIR$/build-logic" />
+                  <project path="$PROJECT_DIR$/build-logic/android" />
+                  <project path="$PROJECT_DIR$/build-logic/extensions" />
+                  <project path="$PROJECT_DIR$/build-logic/kotlin" />
+                </projects>
+              </build>
+            </builds>
+          </compositeBuild>
+        </compositeConfiguration>
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -12,7 +31,11 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/build-logic" />
+            <option value="$PROJECT_DIR$/build-logic/android" />
+            <option value="$PROJECT_DIR$/build-logic/build-settings" />
+            <option value="$PROJECT_DIR$/build-logic/extensions" />
+            <option value="$PROJECT_DIR$/build-logic/kotlin" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/anderson" />
             <option value="$PROJECT_DIR$/feature/ashley" />

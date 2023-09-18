@@ -7,9 +7,17 @@ import com.google.android.play.core.ktx.startConfirmationDialogForResult
 import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
 import com.google.android.play.core.splitinstall.SplitInstallRequest
 import com.google.android.play.core.splitinstall.SplitInstallSessionState
-import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.*
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.CANCELED
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.DOWNLOADING
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.FAILED
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.INSTALLED
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import n7.mev.BuildConfig
 import kotlin.math.roundToInt
@@ -65,9 +73,8 @@ class FeatureManager(
     }
 
     fun installModule(moduleName: String) {
-        var name = moduleName
         val request = SplitInstallRequest.newBuilder()
-            .addModule(name)
+            .addModule(moduleName)
             .build()
         installManager.startInstall(request).addOnFailureListener { error ->
             error

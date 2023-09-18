@@ -1,6 +1,6 @@
 plugins {
-    dynamicFeature()
-    kotlinAndroid()
+    id("convention.dynamic-feature")
+
 }
 
 dependencies {

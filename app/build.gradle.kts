@@ -3,16 +3,15 @@ import ModuleDependency.getDynamicFeatureModulesNames
 import com.android.build.api.dsl.ApplicationDefaultConfig
 
 plugins {
-    androidApp()
-    kotlinAndroid()
+    id("convention.android-application")
 }
 
 android {
-
+    namespace = applicationID
     defaultConfig {
-        applicationId = Apps.applicationId
-        versionCode = Apps.versionCode
-        versionName = Apps.versionName
+        applicationId = applicationID
+        versionCode = getVersionCode()
+        versionName = getVersionName()
 
         buildConfigField("modules", getDynamicFeatureModulesNames())
     }
@@ -33,21 +32,19 @@ android {
 }
 
 dependencies {
-    implementation(Lib.material)
-    implementation(Lib.constraintLayout)
-    implementation(Lib.coreKtx)
-    implementation(Lib.coil)
-    implementation(Lib.coroutinesLifecycle)
-    implementation(Lib.coroutinesLivedata)
-    implementation(Lib.coroutinesViewmodel)
-    implementation(Lib.fragmentKtx)
-    implementation(Lib.activityKtx)
-    implementation(Lib.coroutines)
-    implementation(Lib.exoPlayer)
-    implementation(Lib.splashScreen)
+    implementation(libs.material)
+    implementation(libs.constraintLayout)
+    implementation(libs.coreKtx)
+    implementation(libs.coil)
+    implementation(libs.coroutines)
+    implementation(libs.fragmentKtx)
+    implementation(libs.activityKtx)
+    implementation(libs.coroutines)
+    implementation(libs.exoPlayer)
+    implementation(libs.splashScreen)
 
-    api(Lib.playCore)
-    api(Lib.playCoreKtx)
+    api(libs.playCoreKtx)
+    api(libs.playFeatureKtx)
 }
 
 fun ApplicationDefaultConfig.buildConfigField(name: String, value: Set<String>) {

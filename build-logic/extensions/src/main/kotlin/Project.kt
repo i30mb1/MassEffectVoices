@@ -6,7 +6,7 @@ import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.Properties
 
-const val applicationID = "n7.ad2"
+const val applicationID = "n7.mev"
 
 fun Project.getVersionCode(): Int {
     val properties = getProperties("version.properties")
