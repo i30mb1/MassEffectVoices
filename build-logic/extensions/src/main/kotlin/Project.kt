@@ -1,7 +1,6 @@
 import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.the
-import java.io.File
 import java.io.FileInputStream
 import java.io.InputStreamReader
 import java.util.Properties
@@ -26,7 +25,7 @@ fun Project.getVersionName(): String {
 
 fun Project.isCI(): Boolean {
     val properties = Properties()
-    val file = File("local.properties")
+    val file = rootProject.file("local.properties")
     if (file.isFile) {
         InputStreamReader(FileInputStream(file), Charsets.UTF_8).use { reader ->
             properties.load(reader)
@@ -45,7 +44,8 @@ val Project.libs get() = the<LibrariesForLibs>()
 
 private fun Project.getProperties(fileName: String): Properties {
     val properties = Properties()
-    val file = File(fileName)
+    // relative to the project, not to the working directory of the Gradle daemon
+    val file = rootProject.file(fileName)
     if (!file.exists()) {
         logger.error("File $rootDir\\$fileName not found!")
         return properties

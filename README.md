@@ -1,5 +1,4 @@
 # Mass Effect Voices
-All you want to know about dota in one app
 
 [![CC0](google_play.png)](https://play.google.com/store/apps/details?id=n7.mev)
 

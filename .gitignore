@@ -6,3 +6,9 @@ build/
 local.properties
 
 /apks.apks
+
+# signing secrets, see keystore.properties.example
+keystore.properties
+
+# output of Build > Generate Signed App Bundle
+/app/release/

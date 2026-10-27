@@ -1,6 +1,7 @@
 import ModuleDependency.getDynamicFeatureModules
 import ModuleDependency.getDynamicFeatureModulesNames
 import com.android.build.api.dsl.ApplicationDefaultConfig
+import java.util.Properties
 
 plugins {
     id("convention.android-application")
@@ -21,8 +22,23 @@ android {
         buildConfig = true
     }
 
+    // Upload key from keystore.properties (not in git); without the file release stays unsigned
+    val keystoreFile = rootProject.file("keystore.properties")
+    val uploadKey = if (keystoreFile.isFile) {
+        val keystore = Properties().apply { keystoreFile.inputStream().use(::load) }
+        signingConfigs.create("upload") {
+            storeFile = file(keystore.getProperty("storeFile"))
+            storePassword = keystore.getProperty("storePassword")
+            keyAlias = keystore.getProperty("keyAlias")
+            keyPassword = keystore.getProperty("keyPassword")
+        }
+    } else {
+        null
+    }
+
     buildTypes {
         getByName("release") {
+            signingConfig = uploadKey
             // R8 matters for Compose: without it release frames are noticeably slower
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
