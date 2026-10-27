@@ -1,5 +1,6 @@
 package n7.mev.ui.heroes
 
+import androidx.activity.compose.LocalActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -47,12 +48,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import n7.mev.R
 import n7.mev.data.source.local.MePart
 import n7.mev.ui.common.ProgressTrack
+import n7.mev.ui.common.RoundIconButton
 import n7.mev.ui.common.n7Stripes
 import n7.mev.ui.common.rememberPortrait
 import n7.mev.ui.heroes.vo.HeroUI
+import n7.mev.ui.support.SupportSheet
+import n7.mev.ui.support.SupportViewModel
 import n7.mev.ui.theme.MevColors
 import n7.mev.ui.theme.MevTheme
 import kotlin.math.roundToInt
@@ -63,7 +68,11 @@ fun HeroesRoute(
     onHeroClicked: (hero: HeroUI) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val supportViewModel: SupportViewModel = viewModel()
+    val supportState by supportViewModel.state.collectAsStateWithLifecycle()
+    val activity = LocalActivity.current
     var isModulesSheetOpen by rememberSaveable { mutableStateOf(false) }
+    var isSupportSheetOpen by rememberSaveable { mutableStateOf(false) }
     val confirmationLauncher = rememberLauncherForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) {}
 
     LaunchedEffect(viewModel) {
@@ -75,7 +84,12 @@ fun HeroesRoute(
     HeroesScreen(
         state = state,
         onHeroClicked = onHeroClicked,
+        isSupporter = supportState.isSupporter,
         onAddModuleClicked = { isModulesSheetOpen = true },
+        onSupportClicked = {
+            supportViewModel.onSheetOpened()
+            isSupportSheetOpen = true
+        },
     )
 
     if (isModulesSheetOpen) {
@@ -87,13 +101,23 @@ fun HeroesRoute(
             onDismiss = { isModulesSheetOpen = false },
         )
     }
+
+    if (isSupportSheetOpen) {
+        SupportSheet(
+            state = supportState,
+            onBuy = { offer -> activity?.let { supportViewModel.buy(it, offer) } },
+            onDismiss = { isSupportSheetOpen = false },
+        )
+    }
 }
 
 @Composable
 internal fun HeroesScreen(
     state: HeroesViewModel.UiState,
+    isSupporter: Boolean,
     onHeroClicked: (hero: HeroUI) -> Unit,
     onAddModuleClicked: () -> Unit,
+    onSupportClicked: () -> Unit,
 ) {
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -114,7 +138,11 @@ internal fun HeroesScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             item(span = { GridItemSpan(maxLineSpan) }) {
-                HeroesHeader(installedCount = state.installed.size)
+                HeroesHeader(
+                    installedCount = state.installed.size,
+                    isSupporter = isSupporter,
+                    onSupportClicked = onSupportClicked,
+                )
             }
             state.download?.let { download ->
                 item(span = { GridItemSpan(maxLineSpan) }) {
@@ -129,7 +157,7 @@ internal fun HeroesScreen(
 }
 
 @Composable
-private fun HeroesHeader(installedCount: Int) {
+private fun HeroesHeader(installedCount: Int, isSupporter: Boolean, onSupportClicked: () -> Unit) {
     Row(
         modifier = Modifier.padding(bottom = 4.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -140,7 +168,7 @@ private fun HeroesHeader(installedCount: Int) {
             contentDescription = null,
             modifier = Modifier.size(width = 40.dp, height = 35.dp),
         )
-        Column {
+        Column(Modifier.weight(1f)) {
             Text(
                 text = stringResource(R.string.squad).uppercase(),
                 style = MaterialTheme.typography.headlineSmall,
@@ -151,6 +179,21 @@ private fun HeroesHeader(installedCount: Int) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+        if (isSupporter) {
+            Text(
+                text = stringResource(R.string.supporter_badge).uppercase(),
+                style = MaterialTheme.typography.labelSmall,
+                color = MevColors.AccentText,
+                modifier = Modifier
+                    .border(1.dp, MevColors.Accent, MaterialTheme.shapes.small)
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
+            )
+        }
+        RoundIconButton(
+            icon = R.drawable.ic_support,
+            contentDescription = stringResource(R.string.support_title),
+            onClick = onSupportClicked,
+        )
     }
 }
 
@@ -264,8 +307,10 @@ private fun HeroesScreenPreview() {
                 available = listOf(HeroUI("Mordin", R.drawable.mordin, "mordin")),
                 download = HeroesViewModel.Download(0, "mordin", "Mordin", 0.42f),
             ),
+            isSupporter = true,
             onHeroClicked = {},
             onAddModuleClicked = {},
+            onSupportClicked = {},
         )
     }
 }

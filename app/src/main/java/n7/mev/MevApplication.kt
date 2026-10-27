@@ -6,6 +6,7 @@ import com.google.android.play.core.splitcompat.SplitCompatApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import n7.mev.data.billing.BillingRepository
 import n7.mev.data.source.local.SoundRepository
 import n7.mev.ui.common.PortraitCache
 import n7.mev.ui.heroes.usecase.GetHeroesVOUseCase
@@ -30,6 +31,7 @@ class AppGraph(application: Application) {
     val soundFileExporter = SoundFileExporter(application)
     val player = Player(application, appScope)
     val portraitCache = PortraitCache(application.resources, Dispatchers.IO)
+    val billingRepository = BillingRepository(application, appScope)
 
 }
 

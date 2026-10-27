@@ -64,4 +64,17 @@
     <string name="action_ringtone_summary">Нужно разрешение на изменение системных настроек</string>
     <string name="ringtone_set">Рингтон установлен</string>
     <string name="action_failed">Что-то пошло не так</string>
+    <string name="support_title">Поддержать разработчика</string>
+    <string name="support_summary">Приложение остаётся бесплатным со всеми героями. Донат просто помогает Нормандии летать</string>
+    <string name="support_coffee">Кофе</string>
+    <string name="support_coffee_summary">Чашка для ночного кодинга</string>
+    <string name="support_pizza">Пицца</string>
+    <string name="support_pizza_summary">Топливо для следующего обновления</string>
+    <string name="support_normandy">Нормандия SR-2</string>
+    <string name="support_normandy_summary">Полное переоснащение. Благодарность уровня коммандера</string>
+    <string name="support_thanks">Спасибо, коммандер! Значок сторонника теперь твой</string>
+    <string name="support_pending">Платёж в обработке. Значок появится, когда Google Play его подтвердит</string>
+    <string name="support_unavailable">Оплата через Google Play сейчас недоступна на этом устройстве</string>
+    <string name="supporter_badge">Сторонник N7</string>
+    <string name="privacy_policy">Политика конфиденциальности</string>
 </resources>

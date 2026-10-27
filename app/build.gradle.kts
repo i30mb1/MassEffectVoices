@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.coroutines)
     implementation(libs.exoPlayer)
     implementation(libs.splashScreen)
+    implementation(libs.billing)
 
     api(libs.playCoreKtx)
     api(libs.playFeatureKtx)

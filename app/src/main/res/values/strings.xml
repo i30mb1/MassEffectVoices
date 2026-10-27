@@ -88,4 +88,17 @@
     <string name="action_ringtone_summary">Needs permission to modify system settings</string>
     <string name="ringtone_set">Ringtone set</string>
     <string name="action_failed">Something went wrong</string>
+    <string name="support_title">Support the developer</string>
+    <string name="support_summary">The app stays free with every hero. A tip just keeps the Normandy flying</string>
+    <string name="support_coffee">Coffee</string>
+    <string name="support_coffee_summary">A cup for the late-night coding</string>
+    <string name="support_pizza">Pizza</string>
+    <string name="support_pizza_summary">Fuel for the next update</string>
+    <string name="support_normandy">Normandy SR-2</string>
+    <string name="support_normandy_summary">Full refit. Commander-level gratitude</string>
+    <string name="support_thanks">Thank you, Commander! The supporter badge is yours</string>
+    <string name="support_pending">The payment is pending. The badge appears once Google Play confirms it</string>
+    <string name="support_unavailable">Google Play billing is not available on this device right now</string>
+    <string name="supporter_badge">N7 supporter</string>
+    <string name="privacy_policy">Privacy policy</string>
 </resources>
