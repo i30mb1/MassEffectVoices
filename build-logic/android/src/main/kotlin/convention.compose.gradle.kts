@@ -1,26 +1,22 @@
 @file:Suppress("UnstableApiUsage")
 
-import com.android.build.gradle.BaseExtension
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import com.android.build.api.dsl.CommonExtension
 
-configure<BaseExtension> {
-    buildFeatures.compose = true
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.composeCompiler.get()
-    }
+plugins {
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
-tasks.withType<KotlinCompile>().configureEach {
-    kotlinOptions {
-        freeCompilerArgs = freeCompilerArgs + listOf(
-//            "-P",
-//            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=" + buildDir.absolutePath + "\\compose_metrics",
-//            "-P",
-//            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=" + buildDir.absolutePath + "\\compose_metrics",
-        )
-    }
+configure<CommonExtension> {
+    buildFeatures.compose = true
+}
+
+composeCompiler {
+//    metricsDestination = layout.buildDirectory.dir("compose_metrics")
+//    reportsDestination = layout.buildDirectory.dir("compose_metrics")
 }
 
 dependencies {
+    add("implementation", platform(libs.composeBom))
     add("implementation", libs.bundles.compose)
+    add("debugImplementation", libs.composeTooling)
 }

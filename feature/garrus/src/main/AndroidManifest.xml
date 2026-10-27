@@ -1,4 +1,5 @@
-<manifest xmlns:dist="http://schemas.android.com/apk/distribution">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dist="http://schemas.android.com/apk/distribution">
 
     <dist:module
         dist:instant="false"
@@ -6,5 +7,8 @@
         dist:title="@string/title_garrus">
         <dist:fusing dist:include="false" />
     </dist:module>
+
+    <!-- assets only -->
+    <application android:hasCode="false" />
 </manifest>
 

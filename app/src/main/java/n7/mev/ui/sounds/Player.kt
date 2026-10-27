@@ -1,62 +1,74 @@
-@file:UnstableApi
-
 package n7.mev.ui.sounds
 
 import android.app.Application
 import android.net.Uri
-import androidx.lifecycle.MutableLiveData
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
-import androidx.media3.common.util.UnstableApi
-import androidx.media3.common.util.Util
-import androidx.media3.datasource.DefaultDataSourceFactory
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.ProgressiveMediaSource
-import n7.mev.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 
 class Player(
-    private val application: Application
+    private val application: Application,
+    private val scope: CoroutineScope,
 ) : Player.Listener {
 
-    val isPlaying = MutableLiveData(false)
-    private val exoPlayer = ExoPlayer.Builder(application).build()
+    /** Uri of the sound being played, null when nothing plays. */
+    private val _playing = MutableStateFlow<Uri?>(null)
+    val playing: StateFlow<Uri?> = _playing.asStateFlow()
 
-    init {
-        exoPlayer.addListener(this)
+    private val _progress = MutableStateFlow(0f)
+    val progress: StateFlow<Float> = _progress.asStateFlow()
+
+    // built on the first play: building ExoPlayer costs ~13 ms of the main thread
+    private val exoPlayer by lazy {
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_SPEECH)
             .build()
+        ExoPlayer.Builder(application).build().apply {
+            addListener(this@Player)
+            setAudioAttributes(audioAttributes, true)
+        }
+    }
+    private var progressJob: Job? = null
 
-        exoPlayer.setAudioAttributes(audioAttributes, true)
+    override fun onPlaybackStateChanged(playbackState: Int) {
+        if (playbackState == Player.STATE_ENDED) stop()
     }
 
-    override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int) {
-        when (playbackState) {
-            ExoPlayer.STATE_IDLE -> Unit
-            ExoPlayer.STATE_BUFFERING -> Unit
-            ExoPlayer.STATE_READY -> Unit
-            ExoPlayer.STATE_ENDED -> isPlaying.value = false
-            else -> isPlaying.value = false
+    override fun onIsPlayingChanged(isPlaying: Boolean) {
+        progressJob?.cancel()
+        if (isPlaying) progressJob = scope.launch {
+            while (isActive) {
+                val duration = exoPlayer.duration
+                if (duration > 0) _progress.value = exoPlayer.currentPosition.toFloat() / duration
+                delay(50)
+            }
         }
     }
 
     fun play(uri: Uri) {
-        isPlaying.value = true
-        val source = buildMediaSource(uri)
-
-        exoPlayer.setMediaSource(source)
-        exoPlayer.playWhenReady = true
+        _playing.value = uri
+        _progress.value = 0f
+        exoPlayer.setMediaItem(MediaItem.fromUri(uri))
         exoPlayer.prepare()
+        exoPlayer.play()
     }
 
-    private fun buildMediaSource(uri: Uri): ProgressiveMediaSource {
-        val userAgent = Util.getUserAgent(application, application.getString(R.string.app_name))
-        val dataSourceFactory = DefaultDataSourceFactory(application, userAgent)
-        val mediaItem = MediaItem.fromUri(uri)
-        return ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
+    fun stop() {
+        if (_playing.value == null) return
+        exoPlayer.stop()
+        _playing.value = null
+        _progress.value = 0f
     }
 
 }

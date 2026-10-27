@@ -1,5 +1,4 @@
-import com.android.build.gradle.BaseExtension
-import org.gradle.configurationcache.extensions.capitalized
+import com.android.build.api.dsl.CommonExtension
 
 plugins {
     jacoco
@@ -29,7 +28,7 @@ fun isAndroidModule(project: Project): Boolean {
 }
 
 fun setupAndroidReporting() {
-    configure<BaseExtension> {
+    configure<CommonExtension> {
         val productFlavors = productFlavors.map { flavor -> flavor.name }.toMutableList()
         val buildType = buildTypes.map { type -> type.name }
         if (productFlavors.isEmpty()) productFlavors.add("")
@@ -45,14 +44,14 @@ fun setupAndroidReporting() {
                     dependsOn(testTaskName)
                     group = "verification"
                     val dirs = listOf("src/main/kotlin")
-                    val kotlinTree = fileTree("$buildDir/tmp/kotlin-classes/$name")
+                    val kotlinTree = fileTree("${layout.buildDirectory.get().asFile}/tmp/kotlin-classes/$name")
                     classDirectories.setFrom(kotlinTree)
-                    executionData.setFrom("$buildDir/jacoco/$testTaskName.exec")
+                    executionData.setFrom("${layout.buildDirectory.get().asFile}/jacoco/$testTaskName.exec")
                     sourceDirectories.setFrom(dirs)
                     additionalSourceDirs.setFrom(dirs)
                     reports {
                         html.required.set(true)
-                        html.outputLocation.set(file("${buildDir}/reports/jacoco"))
+                        html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
                     }
                 }
             }
@@ -65,15 +64,15 @@ fun setupKotlinReporting() {
         dependsOn(tasks.getByName("test"))
         reports {
             html.required.set(true)
-            html.outputLocation.set(file("${buildDir}/reports/jacoco"))
+            html.outputLocation.set(layout.buildDirectory.dir("reports/jacoco"))
         }
-        sourceDirectories.setFrom(fileTree(project.buildDir) {
+        sourceDirectories.setFrom(fileTree(layout.buildDirectory) {
             exclude("src/main/kotlin/**/*")
         })
-        classDirectories.setFrom(fileTree(project.buildDir) {
+        classDirectories.setFrom(fileTree(layout.buildDirectory) {
 //            exclude(listOf("**/*"))
         })
-        executionData.setFrom(fileTree(project.buildDir) {
+        executionData.setFrom(fileTree(layout.buildDirectory) {
             include("jacoco/test.exec")
         })
 
@@ -82,3 +81,4 @@ fun setupKotlinReporting() {
 //        sourceDirectories.setFrom()
     }
 }
+fun String.capitalized(): String = replaceFirstChar { it.uppercase() }

@@ -26,4 +26,42 @@
     <string name="delete_when_ready">будет удалён как можно скорее</string>
     <string name="dialog_donate_title">Вложись в будущее</string>
     <string name="dialog_donate_summary">Докажи свою поддержку! Задонать в нулевой элемент и на кружку пива создателю!</string>
+    <string name="squad">Отряд</string>
+    <plurals name="modules_installed">
+        <item quantity="one">Установлен %d модуль</item>
+        <item quantity="few">Установлено %d модуля</item>
+        <item quantity="many">Установлено %d модулей</item>
+        <item quantity="other">Установлено %d модуля</item>
+    </plurals>
+    <string name="downloading_module">Загружаем: %s</string>
+    <string name="available_modules">Доступные модули</string>
+    <string name="available_modules_summary">Каждый герой скачивается из Google Play по запросу</string>
+    <string name="install">Скачать</string>
+    <string name="cancel_download">Отменить загрузку</string>
+    <string name="close">Закрыть</string>
+    <string name="back">Назад</string>
+    <string name="cancel">Отмена</string>
+    <string name="line_title">Реплика %s</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d реплика</item>
+        <item quantity="few">%d реплики</item>
+        <item quantity="many">%d реплик</item>
+        <item quantity="other">%d реплики</item>
+    </plurals>
+    <plurals name="games_count">
+        <item quantity="one">%d игра</item>
+        <item quantity="few">%d игры</item>
+        <item quantity="many">%d игр</item>
+        <item quantity="other">%d игры</item>
+    </plurals>
+    <string name="play_line">Воспроизвести реплику %s</string>
+    <string name="pause_line">Остановить реплику %s</string>
+    <string name="stop">Стоп</string>
+    <string name="more_actions">Ещё</string>
+    <string name="action_download">Скачать</string>
+    <string name="action_download_summary">Сохранить .ogg в «Загрузки»</string>
+    <string name="action_ringtone">Поставить на звонок</string>
+    <string name="action_ringtone_summary">Нужно разрешение на изменение системных настроек</string>
+    <string name="ringtone_set">Рингтон установлен</string>
+    <string name="action_failed">Что-то пошло не так</string>
 </resources>

@@ -8,6 +8,7 @@ class GitHooksPlugin: Plugin<Settings> {
     override fun apply(target: Settings) = with(target) {
        val output = providers.exec {
             commandLine("git", "config", "core.hooksPath", ".githooks")
+            isIgnoreExitValue = true
         }
         println("setup core.hooksPath: exitValue=${output.result.orNull?.exitValue}")
     }

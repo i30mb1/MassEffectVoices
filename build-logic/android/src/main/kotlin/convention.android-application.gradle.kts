@@ -1,15 +1,13 @@
-import com.android.build.gradle.AppExtension
-
 plugins {
     id("com.android.application")
     id("convention.android-base")
     id("convention.kotlin-base")
 }
 
-configure<AppExtension> {
+android {
     buildTypes {
         getByName("debug") {
-            setMatchingFallbacks("release")
+            matchingFallbacks += "release"
         }
     }
 }

@@ -36,7 +36,7 @@
     <string name="title_samara" translatable="false">Samara</string>
     <string name="title_reaper" translatable="false">Reaper</string>
     <string name="title_javik" translatable="false">Javik</string>
-    <string name="add_module">Module</string>
+    <string name="add_module">Add module</string>
     <string name="dialog_delete_module">delete module?</string>
     <string name="n7" translatable="false">n7</string>
     <string name="dialog_rate_app_summary">Rate this app in Google Play and leave the comment that this is the your favorite application on the citadel</string>
@@ -56,4 +56,36 @@
     <string name="title_feature_kaidan" translatable="false">Kaidan</string>
     <string name="title_feature_ashley" translatable="false">Ashley</string>
     <string name="title_feature_rachni_queen" translatable="false">Rachni Queen</string>
+    <string name="squad">Squad</string>
+    <plurals name="modules_installed">
+        <item quantity="one">%d module installed</item>
+        <item quantity="other">%d modules installed</item>
+    </plurals>
+    <string name="downloading_module">Downloading %s</string>
+    <string name="available_modules">Available modules</string>
+    <string name="available_modules_summary">Each hero downloads on demand from Google Play</string>
+    <string name="install">Install</string>
+    <string name="cancel_download">Cancel download</string>
+    <string name="close">Close</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="line_title">Line %s</string>
+    <plurals name="lines_count">
+        <item quantity="one">%d line</item>
+        <item quantity="other">%d lines</item>
+    </plurals>
+    <plurals name="games_count">
+        <item quantity="one">%d game</item>
+        <item quantity="other">%d games</item>
+    </plurals>
+    <string name="play_line">Play line %s</string>
+    <string name="pause_line">Pause line %s</string>
+    <string name="stop">Stop</string>
+    <string name="more_actions">More actions</string>
+    <string name="action_download">Download</string>
+    <string name="action_download_summary">Save the .ogg file to Downloads</string>
+    <string name="action_ringtone">Set as ringtone</string>
+    <string name="action_ringtone_summary">Needs permission to modify system settings</string>
+    <string name="ringtone_set">Ringtone set</string>
+    <string name="action_failed">Something went wrong</string>
 </resources>
