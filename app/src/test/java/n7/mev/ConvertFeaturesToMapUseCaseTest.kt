@@ -1,7 +1,7 @@
 package n7.mev
 
 import com.google.common.truth.Truth.assertThat
-import n7.mev.ui.heroes.vo.HeroVO
+import n7.mev.ui.heroes.vo.HeroUI
 import org.junit.Test
 
 class ConvertFeaturesToMapUseCaseTest {
@@ -10,7 +10,7 @@ class ConvertFeaturesToMapUseCaseTest {
 
     @Test
     fun `fields in map equal to object`() {
-        val featureModule = HeroVO("Avina", "feature_avina")
+        val featureModule = HeroUI("Avina", "feature_avina")
 
         val map: Map<String,String> = convertFeatureModuleToMap(listOf(featureModule))
 

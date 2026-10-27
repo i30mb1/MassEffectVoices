@@ -4,6 +4,7 @@ import com.android.build.api.dsl.ApplicationDefaultConfig
 
 plugins {
     id("convention.android-application")
+    id("convention.compose")
 }
 
 android {
@@ -17,28 +18,23 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         buildConfig = true
     }
 
     buildTypes {
         getByName("release") {
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro", "proguard-rules-dynamic-features.pro")
+            // R8 matters for Compose: without it release frames are noticeably slower
+            isMinifyEnabled = true
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
 
     // Each feature module that is included in settings.gradle.kts is added here as dynamic feature
-    setDynamicFeatures(getDynamicFeatureModules())
+    dynamicFeatures += getDynamicFeatureModules()
 }
 
 dependencies {
-    implementation(libs.material)
-    implementation(libs.constraintLayout)
     implementation(libs.coreKtx)
-    implementation(libs.coil)
-    implementation(libs.coroutines)
-    implementation(libs.fragmentKtx)
-    implementation(libs.activityKtx)
     implementation(libs.coroutines)
     implementation(libs.exoPlayer)
     implementation(libs.splashScreen)
