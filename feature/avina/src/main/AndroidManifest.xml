@@ -10,13 +10,10 @@
     </dist:module>
 
     <application>
+        <!-- internal only: no other app has a reason to start it -->
         <activity
             android:name="n7.mev.feature.avina.SecretActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
     </application>
 
 </manifest>

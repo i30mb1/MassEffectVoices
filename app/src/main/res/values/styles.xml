@@ -1,9 +1,8 @@
 <resources>
 
     <style name="AppTheme" parent="android:Theme.Material.NoActionBar">
+        <!-- system bars are made transparent by enableEdgeToEdge() in MainActivity -->
         <item name="android:windowBackground">@color/window_background</item>
-        <item name="android:navigationBarColor">@android:color/transparent</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">false</item>
     </style>
 

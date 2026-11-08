@@ -1,11 +1,13 @@
 import ModuleDependency.getDynamicFeatureModules
 import ModuleDependency.getDynamicFeatureModulesNames
 import com.android.build.api.dsl.ApplicationDefaultConfig
+import com.github.triplet.gradle.androidpublisher.ReleaseStatus
 import java.util.Properties
 
 plugins {
     id("convention.android-application")
     id("convention.compose")
+    alias(libs.plugins.playPublisher)
 }
 
 android {
@@ -39,14 +41,27 @@ android {
     buildTypes {
         getByName("release") {
             signingConfig = uploadKey
-            // R8 matters for Compose: without it release frames are noticeably slower
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // R8 code and resource shrinking. Matters for Compose: without it release frames are noticeably slower.
+            // Resources looked up by name are kept in res/raw/keep.xml
+            optimization {
+                enable = true
+                keepRules {
+                    files.add(file("proguard-rules.pro"))
+                }
+            }
         }
     }
 
     // Each feature module that is included in settings.gradle.kts is added here as dynamic feature
     dynamicFeatures += getDynamicFeatureModules()
+}
+
+// ./gradlew :app:publishReleaseBundle uploads the signed bundle to production (key file is not in git)
+play {
+    serviceAccountCredentials.set(rootProject.file("play-service-account.json"))
+    defaultToAppBundles.set(true)
+    track.set("production")
+    releaseStatus.set(ReleaseStatus.COMPLETED)
 }
 
 dependencies {
@@ -56,8 +71,12 @@ dependencies {
     implementation(libs.splashScreen)
     implementation(libs.billing)
 
-    api(libs.playCoreKtx)
     api(libs.playFeatureKtx)
+
+    constraints {
+        // Play libraries still pull androidx.fragment 1.1.0, which Play Console reports as outdated
+        implementation(libs.fragment)
+    }
 }
 
 fun ApplicationDefaultConfig.buildConfigField(name: String, value: Set<String>) {

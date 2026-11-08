@@ -10,5 +10,8 @@ local.properties
 # signing secrets, see keystore.properties.example
 keystore.properties
 
+# Google Play service account key for Gradle Play Publisher
+play-service-account.json
+
 # output of Build > Generate Signed App Bundle
 /app/release/

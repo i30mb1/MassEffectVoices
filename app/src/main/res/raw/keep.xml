@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Kept by resource shrinking although nothing references them by id:
+     hero portraits are looked up by module name (GetHeroesVOUseCase), so a new hero needs its portrait here;
+     module titles are referenced only from the feature manifests. -->
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@drawable/anderson,@drawable/ashley,@drawable/avina,@drawable/edi,@drawable/garrus,@drawable/grunt,@drawable/illusive_man,@drawable/jack,@drawable/jacob,@drawable/javik,@drawable/joker,@drawable/kaidan,@drawable/kasumi,@drawable/legion,@drawable/liara,@drawable/miranda,@drawable/mordin,@drawable/rachni_queen,@drawable/reaper,@drawable/samara,@drawable/tali,@drawable/thane,@drawable/vega,@drawable/wrex,@drawable/zaeed,@string/title_*" />

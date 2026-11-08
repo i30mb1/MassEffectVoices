@@ -48,6 +48,7 @@ livedata = { module = "androidx.lifecycle:lifecycle-livedata-ktx", version.ref =
 viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" } # viewModelScope + savedStateHandle
 lifecycleRuntime = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" } # flowWithLifecycle
 
+fragment = "androidx.fragment:fragment:1.9.1" # constraint only: Play libraries pull the outdated 1.1.0
 fragmentKtx = "androidx.fragment:fragment-ktx:1.9.1" # easy fragment transaction + by viewModels()
 activityKtx = "androidx.activity:activity-ktx:1.13.0" # onBackPress support for Fragment
 
@@ -135,3 +136,4 @@ test = ["coroutinesTest", "testCore", "testRunner", "testRules", "testJunitKtx",
 compose = ["composeAnimation", "composeMaterial3", "composeFoundation", "composeToolingPreview", "composeActivity", "composeViewModel", "lifecycleRuntimeCompose"]
 
 [plugins]
+playPublisher = { id = "com.github.triplet.play", version = "4.1.1" } # Gradle Play Publisher
